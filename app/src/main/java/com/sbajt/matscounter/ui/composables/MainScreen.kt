@@ -1,77 +1,68 @@
 package com.sbajt.matscounter.ui.composables
 
+import android.content.res.Resources
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Text
-import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.painter.Painter
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.dp
-import com.sbajt.matscounter.ui.models.InputScreenUiState
+import com.sbajt.matscounter.data.models.ItemGroupType
 import com.sbajt.matscounter.ui.models.MainUiState
 import com.sbajt.matscounter.ui.theme.MatsCounterTheme
 
+typealias OnItemSelected = (String?, ItemGroupType?) -> Unit
+
 @Composable
-fun MainScreen(
+internal fun MainScreen(
     uiState: MainUiState,
+    onItemSelected: OnItemSelected,
     modifier: Modifier = Modifier
 ) {
-    Scaffold { paddingValues ->
-        Column(
-            modifier = modifier
-                .fillMaxSize()
-                .padding(paddingValues),
-        ) {
-            InputScreenPart(
-                uiState = uiState.inputScreenUiState,
+    Column(modifier = modifier.fillMaxSize()) {
+        with(uiState) {
+            DescriptionSection(
+                modifier = Modifier.weight(1f),
+                uiState = descriptionUiState
+            )
+            InputSection(
+                modifier = Modifier.weight(1f),
+                uiState = inputSectionUiState
+            )
+            GridSection(
+                modifier = Modifier.weight(1f),
+                uiState = itemUiStateList,
+                onItemSelected = onItemSelected,
             )
         }
     }
 }
 
 @Composable
-private fun InputScreenPart(
-    uiState: InputScreenUiState?,
-    modifier: Modifier = Modifier
-) {
-    Column(
-        modifier = modifier.fillMaxSize(),
-    ) {
-        TextField(
-            modifier = modifier,
-            label = {
-                Text(text = remember {
-                    mutableStateOf(uiState?.selectedItem?.name)
-                }.value.toString())
-            },
-            value = uiState?.itemCount.toString(),
-            onValueChange = { newItemCount ->
-
-            }
-        )
-        Text(
-            text = "Count: ${uiState?.itemCount}",
-            modifier = Modifier.padding(16.dp)
-        )
+fun painterName(resImageName: String?, resources: Resources): Painter {
+    if (resImageName == null) {
+        return painterResource(id = android.R.drawable.ic_menu_help)
+    }
+    val resId: Int = resources.getIdentifier(resImageName, "drawable", null)
+    return if (resId == 0) {
+        painterResource(id = android.R.drawable.ic_menu_help)
+    } else {
+        painterResource(id = 0)
     }
 }
 
 @Preview(showBackground = true)
 @Composable
-fun GreetingPreview() {
+fun MainScreenPreview() {
     MatsCounterTheme {
         MainScreen(
             uiState = MainUiState(
-                inputScreenUiState = InputScreenUiState(
-                    selectedItem = null,
-                    itemCount = 0,
-                ),
-            )
+                descriptionUiState = mockDescriptionSectionUiState(),
+                inputSectionUiState = mockInputSectionUiState(),
+                itemUiStateList = mockItemUiStateList(),
+            ),
+            onItemSelected = { _, _ -> }
         )
     }
 }

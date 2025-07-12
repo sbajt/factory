@@ -1,11 +1,16 @@
 package com.sbajt.matscounter.ui.models
 
-data class MainUiState(
-    val inputScreenUiState: InputScreenUiState? = null,
-    val itemGridUiState: List<ItemUiState> = emptyList(),
+internal data class MainUiState(
+    val descriptionUiState: DescriptionSectionUiState = DescriptionSectionUiState(),
+    val inputSectionUiState: InputSectionUiState = InputSectionUiState(),
+    val itemUiStateList: List<ItemUiState> = emptyList(),
 )
 
-data class InputScreenUiState(
+data class DescriptionSectionUiState(
+    val selectedItem: ItemUiState? = null
+)
+
+data class InputSectionUiState(
     val selectedItem: ItemUiState? = null,
     val itemCount: Int = 0,
 )

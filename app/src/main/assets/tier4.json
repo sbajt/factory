@@ -1,0 +1,34 @@
+[
+  {
+    "name": "5G Antenna",
+    "imageRes": "ic_5g_antenna",
+    "groupType": 5,
+    "priceSell": 724.0,
+    "priceBuy": 0,
+    "buildMaterials": []
+  },
+  {
+    "name": "Drone",
+    "imageRes": "ic_drone",
+    "groupType": 5,
+    "priceSell": 460.8,
+    "priceBuy": 0,
+    "buildMaterials": []
+  },
+  {
+    "name": "Jet",
+    "imageRes": "ic_jet",
+    "groupType": 5,
+    "priceSell": 3108.48,
+    "priceBuy": 0,
+    "buildMaterials": []
+  },
+  {
+    "name": "Oculus rift",
+    "imageRes": "ic_oculus_rift",
+    "groupType": 5,
+    "priceSell": 267.2,
+    "priceBuy": 0,
+    "buildMaterials": []
+  }
+]

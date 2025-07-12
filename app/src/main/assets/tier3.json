@@ -1,0 +1,66 @@
+[
+  {
+    "name": "Avd logic unit",
+    "imageRes": "ic_avd_logic_unit",
+    "groupType": 4,
+    "priceSell": 66.84,
+    "priceBuy": 0,
+    "buildMaterials": []
+  },
+  {
+    "name": "Assembly line",
+    "imageRes": "ic_assembly_line",
+    "groupType": 4,
+    "priceSell": 715.84,
+    "priceBuy": 0,
+    "buildMaterials": []
+  },
+  {
+    "name": "Jet engine",
+    "imageRes": "ic_jet_engine",
+    "groupType": 4,
+    "priceSell": 180.04,
+    "priceBuy": 0,
+    "buildMaterials": []
+  },
+  {
+    "name": "Sensor",
+    "imageRes": "ic_sensor",
+    "groupType": 4,
+    "priceSell": 41.35,
+    "priceBuy": 0,
+    "buildMaterials": []
+  },
+  {
+    "name": "Bridge",
+    "imageRes": "ic_bridge",
+    "groupType": 4,
+    "priceSell": 1091.16,
+    "priceBuy": 0,
+    "buildMaterials": []
+  },
+  {
+    "name": "Forklift",
+    "imageRes": "ic_forklift",
+    "groupType": 4,
+    "priceSell": 191.8,
+    "priceBuy": 0,
+    "buildMaterials": []
+  },
+  {
+    "name": "Radio tower",
+    "imageRes": "ic_radio_tower",
+    "groupType": 4,
+    "priceSell": 414.0,
+    "priceBuy": 0,
+    "buildMaterials": []
+  },
+  {
+    "name": "Tablet computer",
+    "imageRes": "ic_tablet_computer",
+    "groupType": 4,
+    "priceSell": 73.26,
+    "priceBuy": 0,
+    "buildMaterials": []
+  }
+]
