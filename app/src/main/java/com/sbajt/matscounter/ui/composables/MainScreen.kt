@@ -1,16 +1,21 @@
 package com.sbajt.matscounter.ui.composables
 
-import android.content.res.Resources
+import android.content.Context
+import android.graphics.BitmapFactory
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.asImageBitmap
+import androidx.compose.ui.graphics.painter.BitmapPainter
 import androidx.compose.ui.graphics.painter.Painter
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import com.sbajt.matscounter.data.models.ItemGroupType
 import com.sbajt.matscounter.ui.models.MainUiState
 import com.sbajt.matscounter.ui.theme.MatsCounterTheme
+import java.io.IOException
 
 typealias OnItemSelected = (String?, ItemGroupType?) -> Unit
 
@@ -40,15 +45,34 @@ internal fun MainScreen(
 }
 
 @Composable
-fun painterName(resImageName: String?, resources: Resources): Painter {
+fun painterName(resImageName: String?): Painter {
     if (resImageName == null) {
         return painterResource(id = android.R.drawable.ic_menu_help)
     }
-    val resId: Int = resources.getIdentifier(resImageName, "drawable", null)
+    val resId: Int = LocalContext
+        .current
+        .resources
+        .getIdentifier(resImageName, "drawable", null)
     return if (resId == 0) {
         painterResource(id = android.R.drawable.ic_menu_help)
     } else {
-        painterResource(id = 0)
+        painterResource(id = resId)
+    }
+}
+
+@Composable
+fun painterFromAssets(assetFileName: String?): Painter {
+    val context: Context = LocalContext.current
+    if (assetFileName == null) {
+        return painterResource(id = android.R.drawable.ic_menu_help)
+    }
+
+    return try {
+        val inputStream = context.assets.open("items/$assetFileName")
+        val bitmap = BitmapFactory.decodeStream(inputStream)
+        BitmapPainter(bitmap.asImageBitmap())
+    } catch (e: IOException) {
+        painterResource(id = android.R.drawable.ic_menu_help)
     }
 }
 
