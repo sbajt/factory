@@ -11,7 +11,6 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.sbajt.matscounter.data.models.ItemGroupType
@@ -36,10 +35,7 @@ fun ItemView(
                 color = Color.DarkGray,
                 shape = RoundedCornerShape(size = 4.dp)
             ),
-            painter = painterName(
-                resImageName = uiState.imageName,
-                resources = LocalContext.current.resources,
-            ),
+            painter = assetImagePainter(assetImageName = uiState.imageName),
             contentDescription = uiState.name ?: "Item Icon",
         )
         Text(text = remember { uiState.name ?: "" })

@@ -1,16 +1,29 @@
 package com.sbajt.matscounter.ui.composables
 
-import android.content.res.Resources
+import android.graphics.BitmapFactory
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.ImageBitmap
+import androidx.compose.ui.graphics.asImageBitmap
+import androidx.compose.ui.graphics.painter.BitmapPainter
 import androidx.compose.ui.graphics.painter.Painter
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import com.sbajt.matscounter.data.models.ItemGroupType
 import com.sbajt.matscounter.ui.models.MainUiState
 import com.sbajt.matscounter.ui.theme.MatsCounterTheme
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
+import java.io.IOException
+import java.io.InputStream
 
 typealias OnItemSelected = (String?, ItemGroupType?) -> Unit
 
@@ -40,16 +53,33 @@ internal fun MainScreen(
 }
 
 @Composable
-fun painterName(resImageName: String?, resources: Resources): Painter {
-    if (resImageName == null) {
-        return painterResource(id = android.R.drawable.ic_menu_help)
+fun assetImagePainter(assetImageName: String?): Painter {
+    val context = LocalContext.current
+    val placeholderPainter = painterResource(id = android.R.drawable.ic_menu_close_clear_cancel)
+    var imageBitmap: ImageBitmap? by remember(assetImageName) { mutableStateOf(null) }
+    var painter: Painter by remember(assetImageName) { mutableStateOf(placeholderPainter) }
+
+    if (assetImageName == null) {
+        return placeholderPainter
     }
-    val resId: Int = resources.getIdentifier(resImageName, "drawable", null)
-    return if (resId == 0) {
-        painterResource(id = android.R.drawable.ic_menu_help)
-    } else {
-        painterResource(id = 0)
+
+    // LaunchedEffect to load the image asynchronously
+    // It will re-launch if assetImageName or context changes
+    LaunchedEffect(assetImageName, context) {
+        imageBitmap = try {
+            withContext(Dispatchers.IO) {
+                val inputStream: InputStream = context.assets.open(assetImageName)
+                BitmapFactory.decodeStream(inputStream)?.asImageBitmap()
+            }
+        } catch (e: IOException) {
+            e.printStackTrace()
+            null
+        }
+
+        painter = imageBitmap?.let { BitmapPainter(it) } ?: placeholderPainter
     }
+
+    return painter
 }
 
 @Preview(showBackground = true)
