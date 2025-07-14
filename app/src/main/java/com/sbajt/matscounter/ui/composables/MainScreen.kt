@@ -68,7 +68,7 @@ fun assetImagePainter(assetImageName: String?): Painter {
     LaunchedEffect(assetImageName, context) {
         imageBitmap = try {
             withContext(Dispatchers.IO) {
-                val inputStream: InputStream = context.assets.open(assetImageName)
+                val inputStream: InputStream = context.assets.open("images/$assetImageName.jpg")
                 BitmapFactory.decodeStream(inputStream)?.asImageBitmap()
             }
         } catch (e: IOException) {

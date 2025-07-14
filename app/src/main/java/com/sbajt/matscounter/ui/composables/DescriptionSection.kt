@@ -1,9 +1,11 @@
 package com.sbajt.matscounter.ui.composables
 
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -25,9 +27,11 @@ internal fun DescriptionSection(
     ) {
         Column(
             modifier = Modifier.padding(16.dp),
-            horizontalAlignment = Alignment.CenterHorizontally
+            horizontalAlignment = Alignment.CenterHorizontally,
+            verticalArrangement = Arrangement.spacedBy(4.dp, Alignment.CenterVertically),
         ) {
             Icon(
+                modifier = Modifier.size(60.dp),
                 painter = assetImagePainter(assetImageName = uiState.selectedItem?.imageName),
                 contentDescription = uiState.selectedItem?.name ?: "Item Icon",
             )
