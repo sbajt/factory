@@ -3,16 +3,16 @@ package com.sbajt.matscounter.ui.composables
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.defaultMinSize
-import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.Icon
+import androidx.compose.foundation.layout.size
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import coil3.compose.AsyncImage
 import com.sbajt.matscounter.data.models.ItemGroupType
 import com.sbajt.matscounter.ui.models.ItemUiState
 import com.sbajt.matscounter.ui.theme.MatsCounterTheme
@@ -30,14 +30,17 @@ fun ItemView(
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.spacedBy(4.dp, Alignment.CenterVertically),
     ) {
-        Icon(
-            modifier = Modifier
-                .padding(4.dp)
-                .defaultMinSize(minWidth = 24.dp, minHeight = 24.dp),
-            painter = assetImagePainter(assetImageName = uiState.imageName),
+        AsyncImage(
+            model = "file:///android_asset/images/${uiState.imageName}.jpg",
             contentDescription = uiState.name ?: "Item Icon",
+            modifier = Modifier.size(60.dp),
+            placeholder = painterResource(id = android.R.drawable.sym_contact_card),
+            error = painterResource(id = android.R.drawable.stat_notify_error),
         )
-        Text(text = remember { uiState.name ?: "" })
+        val text = remember(uiState.name) {
+            uiState.name ?: "No item selected"
+        }
+        Text(text = text)
     }
 }
 
