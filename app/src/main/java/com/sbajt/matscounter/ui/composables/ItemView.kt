@@ -13,9 +13,11 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import coil3.compose.AsyncImage
-import com.sbajt.matscounter.data.models.ItemGroupType
+import com.sbajt.matscounter.ui.models.ItemGroupType
 import com.sbajt.matscounter.ui.models.ItemUiState
 import com.sbajt.matscounter.ui.theme.MatsCounterTheme
+import kotlinx.collections.immutable.ImmutableList
+import kotlinx.collections.immutable.toImmutableList
 
 @Composable
 fun ItemView(
@@ -34,8 +36,8 @@ fun ItemView(
             model = "file:///android_asset/images/${uiState.imageName}.jpg",
             contentDescription = uiState.name ?: "Item Icon",
             modifier = Modifier.size(60.dp),
-            placeholder = painterResource(id = android.R.drawable.sym_contact_card),
-            error = painterResource(id = android.R.drawable.stat_notify_error),
+            placeholder = painterResource(id = android.R.drawable.ic_menu_report_image),
+            error = painterResource(id = android.R.drawable.ic_menu_delete),
         )
         val text = remember(uiState.name) {
             uiState.name ?: "No item selected"
@@ -69,7 +71,7 @@ fun mockItemUiState() = ItemUiState(
 
 fun mockItemUiStateList(
     count: Int = 10,
-): List<ItemUiState> {
+): ImmutableList<ItemUiState> {
     return List(count) { index ->
         ItemUiState(
             name = "Item $index",
@@ -77,4 +79,5 @@ fun mockItemUiStateList(
             groupType = ItemGroupType.entries[index % ItemGroupType.entries.size],
         )
     }
+        .toImmutableList()
 }

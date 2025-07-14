@@ -8,10 +8,11 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.sbajt.matscounter.ui.models.ItemUiState
 import com.sbajt.matscounter.ui.theme.MatsCounterTheme
+import kotlinx.collections.immutable.ImmutableList
 
 @Composable
 internal fun GridSection(
-    uiState: List<ItemUiState>,
+    uiState: ImmutableList<ItemUiState>,
     onItemSelected: OnItemSelected,
     modifier: Modifier = Modifier
 ) {

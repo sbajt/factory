@@ -5,7 +5,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
-import com.sbajt.matscounter.data.models.ItemGroupType
+import com.sbajt.matscounter.ui.models.ItemGroupType
 import com.sbajt.matscounter.ui.models.MainUiState
 import com.sbajt.matscounter.ui.theme.MatsCounterTheme
 
@@ -20,15 +20,12 @@ internal fun MainScreen(
     Column(modifier = modifier.fillMaxSize()) {
         with(uiState) {
             DescriptionSection(
-                modifier = Modifier.weight(1f),
                 uiState = descriptionUiState,
             )
             InputSection(
-                modifier = Modifier.weight(1f),
                 uiState = inputSectionUiState
             )
             GridSection(
-                modifier = Modifier.weight(1f),
                 uiState = itemUiStateList,
                 onItemSelected = onItemSelected,
             )
