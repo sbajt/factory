@@ -16,27 +16,27 @@ internal class Cache(private val assetManager: AssetManager?) {
         .create()
 
     fun getBuildingMaterialItemList(): List<Item> = gson.fromJson<List<Item?>>(
-        BufferedReader(InputStreamReader(assetManager?.open("building_materials.json"))),
+        BufferedReader(InputStreamReader(assetManager?.open("json/building_materials.json"))),
         object : TypeToken<List<Item?>>() {}.type
     ).filterNotNull()
 
     fun getTier1ItemList(): List<Item> = gson.fromJson<List<Item?>>(
-        BufferedReader(InputStreamReader(assetManager?.open("tier1.json"))),
+        BufferedReader(InputStreamReader(assetManager?.open("json/tier1.json"))),
         object : TypeToken<List<Item?>>() {}.type
     ).filterNotNull()
 
     fun getTier2ItemList(): List<Item> = gson.fromJson<List<Item?>>(
-        BufferedReader(InputStreamReader(assetManager?.open("tier2.json"))),
+        BufferedReader(InputStreamReader(assetManager?.open("json/tier2.json"))),
         object : TypeToken<List<Item?>>() {}.type
     ).filterNotNull()
 
     fun getTier3ItemList(): List<Item> = gson.fromJson<List<Item?>>(
-        BufferedReader(InputStreamReader(assetManager?.open("tier3.json"))),
+        BufferedReader(InputStreamReader(assetManager?.open("json/tier3.json"))),
         object : TypeToken<List<Item?>>() {}.type
     ).filterNotNull()
 
     fun getTier4ItemList(): List<Item> = gson.fromJson<List<Item?>>(
-        BufferedReader(InputStreamReader(assetManager?.open("tier4.json"))),
+        BufferedReader(InputStreamReader(assetManager?.open("json/tier4.json"))),
         object : TypeToken<List<Item?>>() {}.type
     ).filterNotNull()
 }
