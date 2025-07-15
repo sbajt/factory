@@ -20,15 +20,12 @@ internal fun MainScreen(
     Column(modifier = modifier.fillMaxSize()) {
         with(uiState) {
             DescriptionSection(
-                modifier = Modifier.weight(1f),
                 uiState = descriptionUiState,
             )
             InputSection(
-                modifier = Modifier.weight(1f),
                 uiState = inputSectionUiState
             )
             GridSection(
-                modifier = Modifier.weight(1f),
                 uiState = itemUiStateList,
                 onItemSelected = onItemSelected,
             )

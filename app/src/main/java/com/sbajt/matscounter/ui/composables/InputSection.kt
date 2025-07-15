@@ -26,11 +26,9 @@ internal fun InputSection(
             modifier = modifier,
             label = {
                 Text(
-                    text = remember {
-                        mutableStateOf(uiState?.selectedItem?.name)
-                    }
-                        .value
-                        .toString()
+                    text = uiState?.selectedItem?.name?.let {
+                        "${it} count"
+                    } ?: ""
                 )
             },
             value = uiState?.itemCount.toString(),

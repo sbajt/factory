@@ -81,7 +81,7 @@
   },
   {
     "name": "Toy car",
-    "imageRes": "ic_car",
+    "imageRes": "ic_toy_car",
     "groupType": 3,
     "priceSell": 33.16,
     "priceBuy": 0,

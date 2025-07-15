@@ -4,11 +4,12 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -24,9 +25,13 @@ fun ItemView(
     modifier: Modifier = Modifier.Companion
 ) {
     Column(
-        modifier = modifier.clickable(
-            onClick = { onItemSelected(uiState.name, uiState.groupType) }
-        ),
+        modifier = modifier
+            .clickable(
+                onClick = { onItemSelected(uiState.name, uiState.groupType) }
+            )
+            .clip(
+                shape = RoundedCornerShape(2.dp)
+            ),
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.spacedBy(4.dp, Alignment.CenterVertically),
     ) {
@@ -34,13 +39,10 @@ fun ItemView(
             model = "file:///android_asset/images/${uiState.imageName}.jpg",
             contentDescription = uiState.name ?: "Item Icon",
             modifier = Modifier.size(60.dp),
-            placeholder = painterResource(id = android.R.drawable.sym_contact_card),
-            error = painterResource(id = android.R.drawable.stat_notify_error),
+            placeholder = painterResource(id = android.R.drawable.ic_menu_gallery),
+            error = painterResource(id = android.R.drawable.ic_dialog_alert),
         )
-        val text = remember(uiState.name) {
-            uiState.name ?: "No item selected"
-        }
-        Text(text = text)
+        Text(text = uiState.name ?: "")
     }
 }
 
