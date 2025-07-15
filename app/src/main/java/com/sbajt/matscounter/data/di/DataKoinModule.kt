@@ -8,7 +8,7 @@ val dataModule = module {
 
     single<DataProvider> {
         DataProviderImpl(
-            context = get()
+            context = get(),
         )
     }
 }

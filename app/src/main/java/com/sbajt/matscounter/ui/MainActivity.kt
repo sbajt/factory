@@ -14,6 +14,7 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import com.sbajt.matscounter.ui.composables.MainScreen
+import com.sbajt.matscounter.ui.di.MainScreenViewModelFactory
 import com.sbajt.matscounter.ui.theme.MatsCounterTheme
 import kotlinx.coroutines.launch
 
@@ -41,6 +42,9 @@ class MainActivity : ComponentActivity() {
                                     onItemSelected = { selectedItemName, selectedItemGroupType ->
                                         viewModel.updateSelectedItem(selectedItemName, selectedItemGroupType)
                                     },
+                                    onCountChange = { newItemCount ->
+                                        viewModel.updateItemCount(newItemCount)
+                                    }
                                 )
                             }
                         }

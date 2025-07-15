@@ -10,7 +10,7 @@ import com.sbajt.matscounter.ui.models.DescriptionSectionUiState
 import com.sbajt.matscounter.ui.theme.MatsCounterTheme
 
 @Composable
-internal fun DescriptionSection(
+fun DescriptionSection(
     uiState: DescriptionSectionUiState,
     modifier: Modifier = Modifier
 ) {

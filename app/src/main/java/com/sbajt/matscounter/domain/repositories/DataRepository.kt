@@ -1,4 +1,4 @@
-package com.sbajt.matscounter.domain
+package com.sbajt.matscounter.domain.repositories
 
 import com.sbajt.matscounter.domain.models.ItemDomain
 

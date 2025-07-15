@@ -1,10 +1,10 @@
 package com.sbajt.matscounter.domain.repositories
 
 import com.sbajt.matscounter.data.DataProvider
-import com.sbajt.matscounter.domain.DataRepository
+import com.sbajt.matscounter.domain.repositories.DataRepository
 import com.sbajt.matscounter.domain.models.ItemDomain
 
-internal class DataRepositoryImpl(
+class DataRepositoryImpl(
     private val dataProvider: DataProvider
 ) : DataRepository {
 

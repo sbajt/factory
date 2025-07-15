@@ -8,7 +8,7 @@ import com.sbajt.matscounter.ui.models.ItemUiState
 import com.sbajt.matscounter.ui.models.MainUiState
 import kotlinx.collections.immutable.toImmutableList
 
-internal class MainScreenMapper {
+class MainScreenMapper {
 
     fun mapToUiState(inputData: InputData) = with(inputData) {
         MainUiState(

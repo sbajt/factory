@@ -11,7 +11,7 @@ import com.sbajt.matscounter.ui.theme.MatsCounterTheme
 import kotlinx.collections.immutable.ImmutableList
 
 @Composable
-internal fun GridSection(
+fun GridSection(
     uiState: ImmutableList<ItemUiState>,
     onItemSelected: OnItemSelected,
     modifier: Modifier = Modifier

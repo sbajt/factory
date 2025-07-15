@@ -1,9 +1,8 @@
 package com.sbajt.matscounter.ui
 
-import android.app.Application
-import androidx.lifecycle.AndroidViewModel
+import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.sbajt.matscounter.domain.DataRepository
+import com.sbajt.matscounter.domain.repositories.DataRepository
 import com.sbajt.matscounter.ui.mappers.MainScreenMapper
 import com.sbajt.matscounter.ui.mappers.MainScreenMapper.Companion.InputData
 import com.sbajt.matscounter.ui.models.DescriptionSectionUiState
@@ -18,11 +17,10 @@ import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.plus
 
-internal class MainScreenViewModel(
+class MainScreenViewModel(
     private val dataRepository: DataRepository,
     private val mapper: MainScreenMapper,
-    application: Application,
-) : AndroidViewModel(application) {
+) : ViewModel() {
 
     private val backgroundScope = viewModelScope + Dispatchers.IO
 
@@ -61,6 +59,16 @@ internal class MainScreenViewModel(
                     selectedItem = selectedItem,
                     itemCount = selectedItemCount
                 ),
+            )
+        }
+    }
+
+    fun updateItemCount(newItemCount: Int) {
+        stateSubject.update { uiState ->
+            uiState.copy(
+                inputSectionUiState = uiState.inputSectionUiState.copy(
+                    itemCount = newItemCount
+                )
             )
         }
     }

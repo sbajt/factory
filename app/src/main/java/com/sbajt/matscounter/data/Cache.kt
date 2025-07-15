@@ -7,7 +7,7 @@ import com.sbajt.matscounter.data.models.Item
 import java.io.BufferedReader
 import java.io.InputStreamReader
 
-internal class Cache(private val assetManager: AssetManager?) {
+class Cache(private val assetManager: AssetManager?) {
 
     private val gson = GsonBuilder().create()
 

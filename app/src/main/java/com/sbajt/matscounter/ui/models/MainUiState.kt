@@ -3,7 +3,7 @@ package com.sbajt.matscounter.ui.models
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.persistentListOf
 
-internal data class MainUiState(
+data class MainUiState(
     val descriptionUiState: DescriptionSectionUiState = DescriptionSectionUiState(),
     val inputSectionUiState: InputSectionUiState = InputSectionUiState(),
     val itemUiStateList: ImmutableList<ItemUiState> = persistentListOf(),

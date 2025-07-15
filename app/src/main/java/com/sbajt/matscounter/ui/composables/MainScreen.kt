@@ -10,22 +10,30 @@ import com.sbajt.matscounter.ui.models.MainUiState
 import com.sbajt.matscounter.ui.theme.MatsCounterTheme
 
 typealias OnItemSelected = (String?, ItemGroupType?) -> Unit
+typealias OnCountChange = (Int) -> Unit
 
 @Composable
-internal fun MainScreen(
+fun MainScreen(
     uiState: MainUiState,
     onItemSelected: OnItemSelected,
+    onCountChange: OnCountChange,
     modifier: Modifier = Modifier
 ) {
     Column(modifier = modifier.fillMaxSize()) {
         with(uiState) {
             DescriptionSection(
+                modifier = Modifier.weight(0.1f),
                 uiState = descriptionUiState,
             )
-            InputSection(
-                uiState = inputSectionUiState
-            )
+            inputSectionUiState.selectedItem?.name?.let {
+                InputSection(
+                    modifier = Modifier.weight(0.1f),
+                    uiState = inputSectionUiState,
+                    onCountChange = onCountChange,
+                )
+            }
             GridSection(
+                modifier = Modifier.weight(0.8f),
                 uiState = itemUiStateList,
                 onItemSelected = onItemSelected,
             )
@@ -43,7 +51,8 @@ fun MainScreenPreview() {
                 inputSectionUiState = mockInputSectionUiState(),
                 itemUiStateList = mockItemUiStateList(),
             ),
-            onItemSelected = { _, _ -> }
+            onItemSelected = { _, _ -> },
+            onCountChange = {}
         )
     }
 }

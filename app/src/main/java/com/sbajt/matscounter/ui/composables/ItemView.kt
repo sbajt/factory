@@ -14,9 +14,11 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import coil3.compose.AsyncImage
-import com.sbajt.matscounter.data.models.ItemGroupType
+import com.sbajt.matscounter.ui.models.ItemGroupType
 import com.sbajt.matscounter.ui.models.ItemUiState
 import com.sbajt.matscounter.ui.theme.MatsCounterTheme
+import kotlinx.collections.immutable.ImmutableList
+import kotlinx.collections.immutable.toPersistentList
 
 @Composable
 fun ItemView(
@@ -71,12 +73,12 @@ fun mockItemUiState() = ItemUiState(
 
 fun mockItemUiStateList(
     count: Int = 10,
-): List<ItemUiState> {
+): ImmutableList<ItemUiState> {
     return List(count) { index ->
         ItemUiState(
             name = "Item $index",
             imageName = "ic_item_$index",
             groupType = ItemGroupType.entries[index % ItemGroupType.entries.size],
         )
-    }
+    }.toPersistentList()
 }
