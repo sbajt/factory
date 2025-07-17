@@ -5,9 +5,12 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import com.sbajt.matscounter.ui.models.DescriptionSectionUiState
+import com.sbajt.matscounter.ui.models.InputSectionUiState
 import com.sbajt.matscounter.ui.models.ItemGroupType
 import com.sbajt.matscounter.ui.models.MainUiState
 import com.sbajt.matscounter.ui.theme.MatsCounterTheme
+import kotlinx.collections.immutable.persistentListOf
 
 typealias OnItemSelected = (String?, ItemGroupType?) -> Unit
 typealias OnCountChange = (Int) -> Unit
@@ -22,18 +25,16 @@ fun MainScreen(
     Column(modifier = modifier.fillMaxSize()) {
         with(uiState) {
             DescriptionSection(
-                modifier = Modifier.weight(0.1f),
+                modifier = Modifier.weight(0.2f),
                 uiState = descriptionUiState,
             )
-            inputSectionUiState.selectedItem?.name?.let {
-                InputSection(
-                    modifier = Modifier.weight(0.1f),
-                    uiState = inputSectionUiState,
-                    onCountChange = onCountChange,
-                )
-            }
+            InputSection(
+                modifier = Modifier.weight(0.2f),
+                uiState = inputSectionUiState,
+                onCountChange = onCountChange,
+            )
             GridSection(
-                modifier = Modifier.weight(0.8f),
+                modifier = Modifier.weight(0.6f),
                 uiState = itemUiStateList,
                 onItemSelected = onItemSelected,
             )
@@ -47,9 +48,13 @@ fun MainScreenPreview() {
     MatsCounterTheme {
         MainScreen(
             uiState = MainUiState(
-                descriptionUiState = mockDescriptionSectionUiState(),
-                inputSectionUiState = mockInputSectionUiState(),
-                itemUiStateList = mockItemUiStateList(),
+                descriptionUiState = DescriptionSectionUiState(
+                    selectedItem = null,
+                ),
+                inputSectionUiState = InputSectionUiState(
+                    itemCount = 0
+                ),
+                itemUiStateList = persistentListOf()
             ),
             onItemSelected = { _, _ -> },
             onCountChange = {}

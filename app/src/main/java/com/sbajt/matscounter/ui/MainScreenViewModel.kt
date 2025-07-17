@@ -2,43 +2,50 @@ package com.sbajt.matscounter.ui
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.sbajt.matscounter.domain.repositories.DataRepository
 import com.sbajt.matscounter.ui.mappers.MainScreenMapper
 import com.sbajt.matscounter.ui.mappers.MainScreenMapper.Companion.InputData
 import com.sbajt.matscounter.ui.models.DescriptionSectionUiState
 import com.sbajt.matscounter.ui.models.InputSectionUiState
 import com.sbajt.matscounter.ui.models.ItemGroupType
 import com.sbajt.matscounter.ui.models.MainUiState
+import com.sbajt.matscounter.ui.useCases.ItemDomainListUseCase
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.SharingStarted.Companion.WhileSubscribed
+import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
-import kotlinx.coroutines.launch
 import kotlinx.coroutines.plus
 
 class MainScreenViewModel(
-    private val dataRepository: DataRepository,
     private val mapper: MainScreenMapper,
+    useCase: ItemDomainListUseCase,
 ) : ViewModel() {
 
     private val backgroundScope = viewModelScope + Dispatchers.IO
+    private val initialUiState = MainUiState(
+        descriptionUiState = DescriptionSectionUiState(),
+        inputSectionUiState = InputSectionUiState()
+    )
+    val stateSubject = MutableStateFlow(initialUiState)
 
-    private val stateSubject = MutableStateFlow(MainUiState())
-    val uiState: StateFlow<MainUiState> = stateSubject.asStateFlow()
-
-    fun fetchData() {
-        backgroundScope.launch {
-            val mainUiState = mapper.mapToUiState(
-                InputData(
-                    selectedItem = stateSubject.value.descriptionUiState.selectedItem,
-                    selectedItemCount = stateSubject.value.inputSectionUiState.itemCount,
-                    itemDomainList = dataRepository.getData()
-                )
+    val uiState = combine(
+        stateSubject,
+        useCase(),
+    ) { uiState, itemDomainList ->
+        mapper.mapToUiState(
+            InputData(
+                selectedItem = uiState.descriptionUiState.selectedItem,
+                selectedItemCount = uiState.inputSectionUiState.itemCount,
+                itemDomainList = itemDomainList
             )
-            stateSubject.update { _ -> mainUiState }
-        }
+        )
     }
+        .stateIn(
+            scope = backgroundScope,
+            started = WhileSubscribed(5_000),
+            initialValue = initialUiState
+        )
 
     fun updateSelectedItem(selectedItemName: String?, selectedItemGroupType: ItemGroupType?) {
         stateSubject.update { uiState ->
@@ -56,14 +63,13 @@ class MainScreenViewModel(
                     selectedItem = selectedItem
                 ),
                 inputSectionUiState = InputSectionUiState(
-                    selectedItem = selectedItem,
                     itemCount = selectedItemCount
                 ),
             )
         }
     }
 
-    fun updateItemCount(newItemCount: Int) {
+    fun updateSelectedItemCount(newItemCount: Int) {
         stateSubject.update { uiState ->
             uiState.copy(
                 inputSectionUiState = uiState.inputSectionUiState.copy(

@@ -38,7 +38,7 @@ fun ItemDomain.toUiState() = ItemUiState(
     groupType = this.groupType.mapToGroupType(),
 )
 
-fun Int?.mapToGroupType(): ItemGroupType? = when (this) {
+private fun Int?.mapToGroupType(): ItemGroupType? = when (this) {
     0 -> ItemGroupType.NONE
     1 -> ItemGroupType.BASIC_MATERIAL
     2 -> ItemGroupType.TIER1

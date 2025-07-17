@@ -1,8 +1,9 @@
 package com.sbajt.matscounter.domain.repositories
 
 import com.sbajt.matscounter.domain.models.ItemDomain
+import kotlinx.coroutines.flow.Flow
 
-interface DataRepository {
+interface ItemsRepository {
 
-    fun getData(): List<ItemDomain>
+    fun getData(): Flow<List<ItemDomain>>
 }

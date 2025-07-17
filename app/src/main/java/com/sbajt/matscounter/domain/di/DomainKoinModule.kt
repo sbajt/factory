@@ -1,13 +1,13 @@
 package com.sbajt.matscounter.domain.di
 
-import com.sbajt.matscounter.domain.repositories.DataRepository
-import com.sbajt.matscounter.domain.repositories.DataRepositoryImpl
+import com.sbajt.matscounter.domain.repositories.ItemsRepository
+import com.sbajt.matscounter.domain.repositories.ItemsRepositoryImpl
 import org.koin.dsl.module
 
 val domainModule = module {
 
-    single<DataRepository> {
-        DataRepositoryImpl(
+    single<ItemsRepository> {
+        ItemsRepositoryImpl(
             dataProvider = get(),
         )
     }
