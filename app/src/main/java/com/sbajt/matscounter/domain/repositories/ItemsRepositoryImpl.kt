@@ -22,4 +22,18 @@ class ItemsRepositoryImpl(
                 )
             }
     }
+
+    override fun getItemByName(name: String): ItemDomain? {
+        return dataProvider
+            .getItemByName(name)
+            ?.let { item ->
+                ItemDomain(
+                    name = item.name,
+                    imageName = item.imageName,
+                    groupType = item.groupType,
+                    priceBuy = item.priceBuy,
+                    priceSell = item.priceSell,
+                )
+            }
+    }
 }

@@ -8,6 +8,5 @@ import org.koin.core.component.KoinComponent
 class ItemDomainListUseCase(
     private val itemsRepository: ItemsRepository,
 ) {
-
     operator fun invoke(): Flow<List<ItemDomain>> = itemsRepository.getData()
 }

@@ -8,6 +8,7 @@ import androidx.compose.foundation.layout.asPaddingValues
 import androidx.compose.foundation.layout.navigationBars
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.statusBars
+import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.lifecycle.Lifecycle
@@ -27,32 +28,32 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
-                setupContent()
-                viewModel.uiState.collect { uiState -> }
+                setContent {
+                    setupContent()
+                }
             }
         }
     }
 
+    @Composable
     private fun setupContent() {
-        setContent {
-            MatsCounterTheme {
-                val topPadding = WindowInsets.statusBars.asPaddingValues()
-                val bottomPadding = WindowInsets.navigationBars.asPaddingValues()
-                val mainUiState by viewModel.uiState.collectAsStateWithLifecycle()
-                MainScreen(
-                    modifier = Modifier.padding(
-                        top = topPadding.calculateTopPadding(),
-                        bottom = bottomPadding.calculateBottomPadding()
-                    ),
-                    uiState = mainUiState,
-                    onItemSelected = { selectedItemName, selectedItemGroupType ->
-                        viewModel.updateSelectedItem(selectedItemName, selectedItemGroupType)
-                    },
-                    onCountChange = { newItemCount ->
-                        viewModel.updateSelectedItemCount(newItemCount)
-                    }
-                )
-            }
+        val mainUiState by viewModel.uiState.collectAsStateWithLifecycle()
+        MatsCounterTheme {
+            val topPadding = WindowInsets.statusBars.asPaddingValues()
+            val bottomPadding = WindowInsets.navigationBars.asPaddingValues()
+            MainScreen(
+                modifier = Modifier.padding(
+                    top = topPadding.calculateTopPadding(),
+                    bottom = bottomPadding.calculateBottomPadding()
+                ),
+                uiState = mainUiState,
+                onItemSelected = { selectedItemName, selectedItemGroupType ->
+                    viewModel.updateSelectedItem(selectedItemName, selectedItemGroupType)
+                },
+                onCountChange = { newItemCount ->
+                    viewModel.updateSelectedItemCount(newItemCount)
+                }
+            )
         }
     }
 }

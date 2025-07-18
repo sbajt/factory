@@ -15,10 +15,10 @@
       </SelectionState>
       <SelectionState runConfigName="MainActivity">
         <option name="selectionMode" value="DROPDOWN" />
-        <DropdownSelection timestamp="2025-07-16T09:54:30.109534600Z">
+        <DropdownSelection timestamp="2025-07-18T09:21:00.471517Z">
           <Target type="DEFAULT_BOOT">
             <handle>
-              <DeviceId pluginId="LocalEmulator" identifier="path=C:\Users\stank\.android\avd\Small_screen_emulator.avd" />
+              <DeviceId pluginId="PhysicalDevice" identifier="serial=R3CT305BJBP" />
             </handle>
           </Target>
         </DropdownSelection>

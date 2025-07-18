@@ -5,13 +5,13 @@ import com.sbajt.matscounter.ui.models.DescriptionSectionUiState
 import com.sbajt.matscounter.ui.models.InputSectionUiState
 import com.sbajt.matscounter.ui.models.ItemGroupType
 import com.sbajt.matscounter.ui.models.ItemUiState
-import com.sbajt.matscounter.ui.models.MainUiState
+import com.sbajt.matscounter.ui.models.MainScreenUiState
 import kotlinx.collections.immutable.toImmutableList
 
 class MainScreenMapper {
 
-    fun mapToUiState(inputData: InputData) = with(inputData) {
-        MainUiState(
+    fun mapToUiState(inputData: InputData): MainScreenUiState = with(inputData) {
+        MainScreenUiState.Content(
             descriptionUiState = DescriptionSectionUiState(
                 selectedItem = selectedItem
             ),

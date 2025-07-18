@@ -40,7 +40,7 @@ fun InputSection(
 
 @Preview(showBackground = true)
 @Composable
-fun InputSectionPreview() {
+private fun InputSectionPreview() {
     MatsCounterTheme {
         InputSection(
             uiState = mockInputSectionUiState(),
@@ -48,7 +48,7 @@ fun InputSectionPreview() {
     }
 }
 
-fun mockInputSectionUiState() = InputSectionUiState(
+private fun mockInputSectionUiState() = InputSectionUiState(
     itemCount = 1,
     selectedItem = mockItemUiState()
 )

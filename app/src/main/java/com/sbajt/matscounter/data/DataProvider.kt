@@ -8,4 +8,6 @@ interface DataProvider{
     val context: Context
 
     fun getData(): List<Item>
+
+    fun getItemByName(name: String): Item?
 }

@@ -6,4 +6,6 @@ import kotlinx.coroutines.flow.Flow
 interface ItemsRepository {
 
     fun getData(): Flow<List<ItemDomain>>
+
+    fun getItemByName(name: String): ItemDomain?
 }
