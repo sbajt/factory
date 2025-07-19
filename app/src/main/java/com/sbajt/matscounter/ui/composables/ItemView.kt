@@ -1,10 +1,8 @@
 package com.sbajt.matscounter.ui.composables
 
-import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Text
@@ -13,7 +11,6 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontFamily
@@ -29,14 +26,14 @@ import kotlinx.collections.immutable.toPersistentList
 
 @Composable
 fun ItemView(
-    uiState: ItemUiState,
+    uiState: ItemUiState?,
     onItemSelected: (String?, ItemGroupType?) -> Unit,
     modifier: Modifier = Modifier.Companion
 ) {
     Column(
         modifier = modifier
             .clickable(
-                onClick = {  onItemSelected(uiState.name, uiState.groupType) }
+                onClick = { onItemSelected(uiState?.name, uiState?.groupType) }
             ),
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.spacedBy(4.dp, Alignment.CenterVertically),
@@ -47,16 +44,18 @@ fun ItemView(
                 .clip(
                     shape = RoundedCornerShape(4.dp)
                 ),
-            model = "file:///android_asset/images/${uiState.imageName}.jpg",
+            model = "file:///android_asset/images/${uiState?.imageName}.jpg",
             contentScale = ContentScale.FillHeight,
-            contentDescription = uiState.name ?: "Item Icon",
+            contentDescription = uiState?.name ?: "Item Icon",
             placeholder = painterResource(id = android.R.drawable.ic_menu_gallery),
             error = painterResource(id = android.R.drawable.ic_dialog_alert),
         )
         Text(
             textAlign = TextAlign.Center,
             fontFamily = FontFamily.Serif,
-            text = remember { uiState.name ?: "" }
+            text = remember(uiState?.name ?: "selectedItemKey") {
+                uiState?.name ?: ""
+            }
         )
     }
 }
@@ -72,11 +71,7 @@ fun ItemViewPreview() {
     }
 }
 
-fun mockEmptyItemUiState() = ItemUiState(
-    name = null,
-    imageName = null,
-    groupType = null,
-)
+fun mockEmptyItemUiState() = ItemUiState()
 
 fun mockItemUiState() = ItemUiState(
     name = "Basic Material",

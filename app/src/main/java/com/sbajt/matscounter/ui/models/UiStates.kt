@@ -10,9 +10,9 @@ data class InputSectionUiState(
 )
 
 data class ItemUiState(
-    val name: String?,
-    val imageName: String?,
-    val groupType: ItemGroupType?,
+    val name: String = "",
+    val imageName: String = "",
+    val groupType: ItemGroupType = ItemGroupType.NONE,
 )
 
 enum class ItemGroupType {
@@ -31,6 +31,6 @@ enum class ItemGroupType {
     TASKER_BUY,
     TASKER_SELL,
     TASKER_DELIVERY,
-    NONE
+    NONE,
 }
 

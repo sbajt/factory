@@ -32,12 +32,12 @@ class MainScreenMapper {
     }
 }
 
-fun ItemDomain.toUiState() = ItemUiState(
-    name = this.name,
-    imageName = this.imageName,
-    groupType = this.groupType.mapToGroupType(),
+fun ItemDomain?.toUiState() = ItemUiState(
+    name = this?.name ?: "",
+    imageName = this?.imageName ?: "",
+    groupType = this?.groupType.mapToGroupType(),
 )
 
-private fun Int?.mapToGroupType(): ItemGroupType? = ItemGroupType.entries
-    .firstOrNull { it.ordinal == this }
+private fun Int?.mapToGroupType(): ItemGroupType = ItemGroupType.entries
+    .firstOrNull { it.ordinal == this } ?: ItemGroupType.NONE
 

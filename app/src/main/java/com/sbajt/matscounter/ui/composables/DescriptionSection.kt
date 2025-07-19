@@ -18,12 +18,17 @@ fun DescriptionSection(
 ) {
     Row(modifier = modifier) {
         ItemView(
-            uiState = uiState.selectedItem ?: mockEmptyItemUiState(),
+            modifier = Modifier.padding(start = 8.dp, top = 8.dp),
+            uiState = uiState.selectedItem,
             onItemSelected = { _, _ -> },
-            modifier = Modifier.padding(start = 16.dp, end = 16.dp)
         )
         Text(
-            text = remember { uiState.selectedItem?.name ?: "No item selected" },
+            text = remember(uiState.selectedItem?.name ?: "selectedItemKey") {
+                uiState.selectedItem?.groupType?.name?.lowercase()
+                    ?.replaceFirstChar { it.uppercase() }
+                    ?.replace("_", " ")
+                    ?: ""
+            },
             modifier = Modifier.padding(16.dp)
         )
     }

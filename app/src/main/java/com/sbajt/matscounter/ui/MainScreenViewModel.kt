@@ -11,7 +11,6 @@ import com.sbajt.matscounter.ui.models.MainScreenUiState
 import com.sbajt.matscounter.ui.useCases.ItemDomainListUseCase
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
-import kotlinx.coroutines.flow.SharingStarted.Companion.Eagerly
 import kotlinx.coroutines.flow.SharingStarted.Companion.WhileSubscribed
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.combine
