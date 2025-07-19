@@ -1,7 +1,9 @@
 package com.sbajt.matscounter
 
 import android.app.Application
-import com.sbajt.matscounter.ui.di.appModule
+import com.sbajt.matscounter.data.di.dataModule
+import com.sbajt.matscounter.domain.di.domainModule
+import com.sbajt.matscounter.ui.di.uiModule
 import org.koin.android.ext.koin.androidContext
 import org.koin.android.ext.koin.androidLogger
 import org.koin.core.context.GlobalContext.startKoin
@@ -15,7 +17,7 @@ class FactoryApplication : Application() {
         startKoin {
             androidLogger(Level.DEBUG)
             androidContext(this@FactoryApplication)
-            modules(appModule)
+            modules(dataModule, domainModule, uiModule)
         }
     }
 }

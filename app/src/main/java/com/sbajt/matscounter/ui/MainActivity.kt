@@ -1,8 +1,10 @@
 package com.sbajt.matscounter.ui
 
 import android.os.Bundle
+import android.os.MessageQueue
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.activity.viewModels
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.asPaddingValues
 import androidx.compose.foundation.layout.navigationBars
@@ -12,17 +14,18 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.LifecycleOwner
+import androidx.lifecycle.compose.LocalLifecycleOwner
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import com.sbajt.matscounter.ui.composables.MainScreen
 import com.sbajt.matscounter.ui.theme.MatsCounterTheme
 import kotlinx.coroutines.launch
-import org.koin.androidx.viewmodel.ext.android.viewModel
 
-class MainActivity : ComponentActivity() {
+class MainActivity  : ComponentActivity() {
 
-    private val viewModel: MainScreenViewModel by viewModel()
+    private val viewModel: MainScreenViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -36,13 +39,13 @@ class MainActivity : ComponentActivity() {
     }
 
     @Composable
-    private fun setupContent() {
-        val mainUiState by viewModel.uiState.collectAsStateWithLifecycle()
+    private fun setupContent(modifier: Modifier = Modifier) {
         MatsCounterTheme {
+            val mainUiState by viewModel.uiState.collectAsStateWithLifecycle()
             val topPadding = WindowInsets.statusBars.asPaddingValues()
             val bottomPadding = WindowInsets.navigationBars.asPaddingValues()
             MainScreen(
-                modifier = Modifier.padding(
+                modifier = modifier.padding(
                     top = topPadding.calculateTopPadding(),
                     bottom = bottomPadding.calculateBottomPadding()
                 ),

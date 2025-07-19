@@ -3,13 +3,13 @@ package com.sbajt.matscounter.domain.repositories
 import com.sbajt.matscounter.data.DataProvider
 import com.sbajt.matscounter.domain.models.ItemDomain
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.flowOf
 
 class ItemsRepositoryImpl(
     private val dataProvider: DataProvider
 ) : ItemsRepository {
 
-    override fun getData(): Flow<List<ItemDomain>> = flow {
+    override fun getData(): Flow<List<ItemDomain>> = flowOf(
         dataProvider
             .getData()
             .map { item ->
@@ -21,7 +21,7 @@ class ItemsRepositoryImpl(
                     priceSell = item.priceSell,
                 )
             }
-    }
+    )
 
     override fun getItemByName(name: String): ItemDomain? {
         return dataProvider
