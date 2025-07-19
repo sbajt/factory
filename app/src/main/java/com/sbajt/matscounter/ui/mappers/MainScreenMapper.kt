@@ -38,23 +38,6 @@ fun ItemDomain.toUiState() = ItemUiState(
     groupType = this.groupType.mapToGroupType(),
 )
 
-private fun Int?.mapToGroupType(): ItemGroupType? = when (this) {
-    0 -> ItemGroupType.NONE
-    1 -> ItemGroupType.BASIC_MATERIAL
-    2 -> ItemGroupType.TIER1
-    3 -> ItemGroupType.TIER2
-    4 -> ItemGroupType.TIER3
-    5 -> ItemGroupType.TIER4
-    6 -> ItemGroupType.BUILDER_TIER1
-    7 -> ItemGroupType.BUILDER_TIER2
-    8 -> ItemGroupType.BUILDER_TIER3
-    9 -> ItemGroupType.BUILDER_TIER4
-    10 -> ItemGroupType.BUILDER_TASKERS
-    11 -> ItemGroupType.BUILDER_BUILDERS
-    12 -> ItemGroupType.BUILDER_UNIVERSAL
-    13 -> ItemGroupType.TASKER_BUY
-    14 -> ItemGroupType.TASKER_SELL
-    15 -> ItemGroupType.TASKER_DELIVERY
-    else -> null
-}
+private fun Int?.mapToGroupType(): ItemGroupType? = ItemGroupType.entries
+    .firstOrNull { it.ordinal == this }
 

@@ -2,7 +2,7 @@
   {
     "name": "Cardboard",
     "imageRes": "ic_cardboard",
-    "groupType": 1,
+    "groupType": 0,
     "priceBuy": 0.24,
     "priceSell": 0.18,
     "buildMaterials": []
@@ -10,7 +10,7 @@
   {
     "name": "Concrete",
     "imageRes": "ic_concrete",
-    "groupType": 1,
+    "groupType": 0,
     "priceBuy": 4.19,
     "priceSell": 3.14,
     "buildMaterials": []
@@ -18,7 +18,7 @@
   {
     "name": "Magnet",
     "imageRes": "ic_magnet",
-    "groupType": 1,
+    "groupType": 0,
     "priceBuy": 5.68,
     "priceSell": 4.26,
     "buildMaterials": []
@@ -26,7 +26,7 @@
   {
     "name": "Metal",
     "imageRes": "ic_metal",
-    "groupType": 1,
+    "groupType": 0,
     "priceBuy": 3.4,
     "priceSell": 2.55,
     "buildMaterials": []
@@ -34,7 +34,7 @@
   {
     "name": "Paint",
     "imageRes": "ic_paint",
-    "groupType": 1,
+    "groupType": 0,
     "priceBuy": 2.26,
     "priceSell": 1.7,
     "buildMaterials": []
@@ -42,7 +42,7 @@
   {
     "name": "Plastic",
     "imageRes": "ic_plastic",
-    "groupType": 1,
+    "groupType": 0,
     "priceBuy": 0.6,
     "priceSell": 0.45,
     "buildMaterials": []
@@ -50,7 +50,7 @@
   {
     "name": "Rare metal",
     "imageRes": "ic_rare_metal",
-    "groupType": 1,
+    "groupType": 0,
     "priceBuy": 7.81,
     "priceSell": 5.86,
     "buildMaterials": []
@@ -58,7 +58,7 @@
   {
     "name": "Rubber",
     "imageRes": "ic_rubber",
-    "groupType": 1,
+    "groupType": 0,
     "priceBuy": 1.1,
     "priceSell": 0.83,
     "buildMaterials": []
@@ -66,7 +66,7 @@
   {
     "name": "Wire",
     "imageRes": "ic_wire",
-    "groupType": 1,
+    "groupType": 0,
     "priceBuy": 1.71,
     "priceSell": 1.28,
     "buildMaterials": []

@@ -2,7 +2,7 @@
   {
     "name": "Builder: Tier 1",
     "imageRes": "ic_builder_tier_1",
-    "groupType": 6,
+    "groupType": 8,
     "priceSell": 724.0,
     "priceBuy": 0,
     "buildMaterials": []
@@ -10,7 +10,7 @@
   {
     "name": "Builder: Tier 2",
     "imageRes": "ic_builder_tier_2",
-    "groupType": 7,
+    "groupType": 9,
     "priceSell": 460.8,
     "priceBuy": 0,
     "buildMaterials": []
@@ -18,7 +18,7 @@
   {
     "name": "Builder: Tier 3",
     "imageRes": "ic_builder_tier_3",
-    "groupType": 8,
+    "groupType": 10,
     "priceSell": 3108.48,
     "priceBuy": 0,
     "buildMaterials": []
@@ -26,7 +26,7 @@
   {
     "name": "Builder: Tier 4",
     "imageRes": "ic_builder_tier_4",
-    "groupType": 9,
+    "groupType": 11,
     "priceSell": 267.2,
     "priceBuy": 0,
     "buildMaterials": []
@@ -34,7 +34,7 @@
   {
     "name": "Builder: Builders",
     "imageRes": "ic_builder_builders",
-    "groupType": 11,
+    "groupType": 5,
     "priceSell": 267.2,
     "priceBuy": 0,
     "buildMaterials": []
@@ -42,7 +42,7 @@
   {
     "name": "Builder: Taskers",
     "imageRes": "ic_builder_taskers",
-    "groupType": 10,
+    "groupType": 6,
     "priceSell": 267.2,
     "priceBuy": 0,
     "buildMaterials": []
@@ -50,7 +50,7 @@
   {
     "name": "Builder: Universal",
     "imageRes": "ic_builder_universal",
-    "groupType": 12,
+    "groupType": 7,
     "priceSell": 267.2,
     "priceBuy": 0,
     "buildMaterials": []
