@@ -10,6 +10,7 @@ import kotlinx.collections.immutable.toImmutableList
 
 class MainScreenMapper {
 
+
     fun mapToUiState(inputData: InputData): MainScreenUiState = with(inputData) {
         MainScreenUiState.Content(
             descriptionUiState = DescriptionSectionUiState(
@@ -19,7 +20,10 @@ class MainScreenMapper {
                 selectedItem = selectedItem,
                 itemCount = selectedItemCount
             ),
-            itemUiStateList = itemDomainList.map { it.toUiState() }.toImmutableList()
+            itemUiStateList = itemDomainList
+                .map { it.toUiState() }
+                .sortedWith(compareBy({ it.groupType }, { it.name }))
+                .toImmutableList()
         )
     }
 
@@ -40,4 +44,14 @@ fun ItemDomain?.toUiState() = ItemUiState(
 
 private fun Int?.mapToGroupType(): ItemGroupType = ItemGroupType.entries
     .firstOrNull { it.ordinal == this } ?: ItemGroupType.NONE
+
+fun ItemGroupType?.mapToName() = this
+    ?.takeIf { it != ItemGroupType.NONE }
+    ?.name
+    ?.lowercase()
+    ?.replaceFirstChar { it.uppercase() }
+    ?.replace("_", " ")
+    ?: ""
+
+
 

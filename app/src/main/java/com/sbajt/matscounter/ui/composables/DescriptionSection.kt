@@ -8,6 +8,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.sbajt.matscounter.ui.mappers.mapToName
 import com.sbajt.matscounter.ui.models.DescriptionSectionUiState
 import com.sbajt.matscounter.ui.theme.MatsCounterTheme
 
@@ -24,7 +25,7 @@ fun DescriptionSection(
         )
         Text(
             text = remember(uiState.selectedItem?.name ?: "selectedItemKey") {
-                uiState.selectedItem?.groupType?.name?.lowercase()
+                uiState.selectedItem?.groupType.mapToName()
                     ?.replaceFirstChar { it.uppercase() }
                     ?.replace("_", " ")
                     ?: ""
