@@ -6,6 +6,7 @@ import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
@@ -22,23 +23,24 @@ fun InputSection(
     Box(
         modifier = modifier.padding(16.dp)
     ) {
-        val currentCount = uiState?.itemCount?.toString() ?: "0"
-        TextField(
-            modifier = modifier,
-            label = {
-                Text(text = "${uiState?.selectedItem?.name ?: "-"} count")
-            },
-            value = currentCount,
-            singleLine = true,
-            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
-            onValueChange = { newItemCount ->
-                val filteredInput = newItemCount.filter { it.isDigit() }
-                val newCount = filteredInput.toIntOrNull() ?: 0
-                if (newCount >= 0) {
-                    onCountChange.invoke(newCount)
+        if (uiState?.selectedItem != null) {
+            TextField(
+                modifier = modifier,
+                label = {
+                    Text(text = "${uiState.selectedItem.name} count")
+                },
+                value = remember { uiState.itemCount.toString() },
+                singleLine = true,
+                keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
+                onValueChange = { newItemCount ->
+                    val filteredInput = newItemCount.filter { it.isDigit() }
+                    val newCount = filteredInput.toIntOrNull() ?: 0
+                    if (newCount >= 0) {
+                        onCountChange.invoke(newCount)
+                    }
                 }
-            }
-        )
+            )
+        }
     }
 }
 

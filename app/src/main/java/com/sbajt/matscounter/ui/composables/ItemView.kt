@@ -49,12 +49,12 @@ fun ItemView(
             modifier = Modifier
                 .padding(4.dp)
                 .clip(shape = RoundedCornerShape(16.dp))
-                .size(width = 110.dp, height = 60.dp),
+                .size(80.dp),
             model = "file:///android_asset/images/${uiState?.imageName}.jpg",
             contentDescription = uiState?.name ?: "Item Icon",
             placeholder = painterResource(id = R.drawable.ic_menu_gallery),
             error = painterResource(id = R.drawable.ic_dialog_alert),
-            contentScale = ContentScale.FillWidth,
+            contentScale = ContentScale.FillHeight,
         )
         Text(
             textAlign = TextAlign.Center,

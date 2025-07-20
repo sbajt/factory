@@ -34,32 +34,19 @@ class MainScreenPreviewProvider : PreviewParameterProvider<MainScreenUiState> {
         val commonItem = MainScreenUiState.Content(
             descriptionUiState = DescriptionSectionUiState(),
             inputSectionUiState = InputSectionUiState(),
-            itemUiStateList = createItemUiStateList(),
+            itemUiStateList = mockItemUiStateList(),
         )
 
         val commonWithSelectedItem = MainScreenUiState.Content(
             descriptionUiState = DescriptionSectionUiState(
-                selectedItem = createItemUiState()
+                selectedItem = mockItemUiState()
             ),
             inputSectionUiState = InputSectionUiState(
-                selectedItem = createItemUiState(),
+                selectedItem = mockItemUiState(),
                 itemCount = 1
             ),
-            itemUiStateList = createItemUiStateList(),
+            itemUiStateList = mockItemUiStateList(),
         )
 
-        fun createItemUiState() = ItemUiState(
-            name = "Cardboard",
-            imageName = "ic_ic_cardboard",
-            groupType = ItemGroupType.BASIC_MATERIAL
-        )
-
-        fun createItemUiStateList() = List(10) { index ->
-            ItemUiState(
-                name = "Item $index",
-                imageName = "ic_cardboard",
-                groupType = ItemGroupType.BASIC_MATERIAL
-            )
-        } as ImmutableList<ItemUiState>
     }
 }

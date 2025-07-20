@@ -13,7 +13,6 @@ import com.sbajt.matscounter.ui.models.ItemGroupType
 import com.sbajt.matscounter.ui.models.ItemUiState
 import com.sbajt.matscounter.ui.models.MainScreenUiState
 import com.sbajt.matscounter.ui.theme.MatsCounterTheme
-import kotlinx.collections.immutable.persistentListOf
 import kotlinx.collections.immutable.toImmutableList
 
 typealias OnItemSelected = (String?, ItemGroupType?) -> Unit
@@ -75,15 +74,7 @@ fun ContentScreen(
 fun MainScreenPreview(@PreviewParameter(MainScreenPreviewProvider::class) uiState: MainScreenUiState) {
     MatsCounterTheme {
         MainScreen(
-            uiState = MainScreenUiState.Content(
-                descriptionUiState = DescriptionSectionUiState(
-                    selectedItem = null,
-                ),
-                inputSectionUiState = InputSectionUiState(
-                    itemCount = 0
-                ),
-                itemUiStateList = persistentListOf()
-            ),
+            uiState = uiState,
             onItemSelected = { _, _ -> },
             onCountChange = {}
         )

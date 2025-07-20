@@ -4,7 +4,8 @@ import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.persistentListOf
 
 data class DescriptionSectionUiState(
-    val selectedItem: ItemUiState? = null
+    val selectedItem: ItemUiState? = null,
+    val selectedItemCount: Int = 0
 )
 
 data class InputSectionUiState(
