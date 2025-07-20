@@ -61,14 +61,9 @@ class MainScreenViewModel : ViewModel(), KoinComponent {
                 val selectedItem =
                     list.firstOrNull { it.name == selectedItemName && it.groupType == selectedItemGroupType?.ordinal }
                         ?.toUiState()
-                val selectedItemCount: Int = when {
-                    selectedItem != uiState.selectedItem && uiState.selectedItem != null -> 1
-                    uiState.selectedItem == null -> 1
-                    else -> uiState.itemCount
-                }
                 uiState.copy(
                     selectedItem = selectedItem,
-                    itemCount = selectedItemCount,
+                    itemCount = uiState.itemCount,
                 )
             }
         }

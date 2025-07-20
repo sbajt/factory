@@ -3,10 +3,6 @@ package com.sbajt.matscounter.ui.composables
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableIntStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.TextStyle
@@ -25,19 +21,15 @@ fun InputSection(
     Box(
         modifier = modifier.padding(16.dp)
     ) {
-        if (uiState?.selectedItem != null) {
-            var pickerValue by remember { mutableIntStateOf(uiState.itemCount) }
-            NumberPicker(
-                value = pickerValue,
-                range = 1..20,
-                dividersColor = Color.Green,
-                textStyle = TextStyle(color = Color.Cyan),
-                onValueChange = {
-                    pickerValue = it
-                    onCountChange.invoke(it)
-                }
-            )
-        }
+        NumberPicker(
+            value = uiState?.itemCount ?: 1,
+            range = 1..20,
+            dividersColor = Color.Green,
+            textStyle = TextStyle(color = Color.Cyan),
+            onValueChange = {
+                onCountChange.invoke(it)
+            }
+        )
     }
 }
 
