@@ -53,16 +53,14 @@ fun ContentScreen(
 ) {
     Column(modifier = modifier.fillMaxSize()) {
         DescriptionSection(
-            modifier = Modifier.weight(0.2f),
             uiState = descriptionUiState,
         )
         InputSection(
-            modifier = Modifier.weight(0.2f),
             uiState = inputSectionUiState,
             onCountChange = onCountChange,
         )
         GridSection(
-            modifier = Modifier.weight(0.6f),
+            modifier = Modifier.weight(1f),
             uiState = itemUiStateList.toImmutableList(),
             onItemSelected = onItemSelected,
         )

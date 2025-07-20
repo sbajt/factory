@@ -9,8 +9,9 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.style.TextAlign
@@ -47,14 +48,15 @@ fun DescriptionSection(
                         Row(
                             modifier = Modifier.width(100.dp)
                         ) {
+                            val nameText by remember {
+                                mutableStateOf(uiState.selectedItem.buildingMaterials[index].name ?: "")
+                            }
                             Text(
                                 modifier = Modifier.weight(0.5f),
                                 fontFamily = FontFamily.SansSerif,
                                 color = MaterialTheme.colorScheme.onSurfaceVariant,
                                 fontSize = 8.sp,
-                                text = remember(key1 = "buildingMaterialKey_$index") {
-                                    "${uiState.selectedItem.buildingMaterials[index].name}"
-                                }
+                                text = nameText
                             )
                             Text(
                                 modifier = Modifier.weight(0.5f),
@@ -62,9 +64,8 @@ fun DescriptionSection(
                                 fontFamily = FontFamily.SansSerif,
                                 color = MaterialTheme.colorScheme.onSurfaceVariant,
                                 fontSize = 8.sp,
-                                text = remember(key1 = "countKey_$index") {
-                                    "x${uiState.selectedItem.buildingMaterials[index].count * uiState.selectedItemCount}"
-                                }
+                                text = "x${uiState.selectedItem.buildingMaterials[index].count * uiState.selectedItemCount}"
+
                             )
                         }
                     }

@@ -2,15 +2,17 @@ package com.sbajt.matscounter.ui.composables
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.text.KeyboardOptions
-import androidx.compose.material3.Text
-import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.text.input.KeyboardType
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.chargemap.compose.numberpicker.NumberPicker
 import com.sbajt.matscounter.ui.models.InputSectionUiState
 import com.sbajt.matscounter.ui.theme.MatsCounterTheme
 
@@ -24,20 +26,15 @@ fun InputSection(
         modifier = modifier.padding(16.dp)
     ) {
         if (uiState?.selectedItem != null) {
-            TextField(
-                modifier = modifier,
-                label = {
-                    Text(text = "${uiState.selectedItem.name} count")
-                },
-                value = remember { uiState.itemCount.toString() },
-                singleLine = true,
-                keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
-                onValueChange = { newItemCount ->
-                    val filteredInput = newItemCount.filter { it.isDigit() }
-                    val newCount = filteredInput.toIntOrNull() ?: 0
-                    if (newCount >= 0) {
-                        onCountChange.invoke(newCount)
-                    }
+            var pickerValue by remember { mutableIntStateOf(uiState.itemCount) }
+            NumberPicker(
+                value = pickerValue,
+                range = 1..20,
+                dividersColor = Color.Green,
+                textStyle = TextStyle(color = Color.Cyan),
+                onValueChange = {
+                    pickerValue = it
+                    onCountChange.invoke(it)
                 }
             )
         }

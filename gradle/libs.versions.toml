@@ -4,12 +4,13 @@ gson = "2.13.1"
 kotlin = "2.2.0"
 kotlinCollections = "0.4.0"
 coreKtx = "1.16.0"
-lifecycleRuntimeKtx = "2.9.1"
+lifecycleRuntimeKtx = "2.9.2"
 activityCompose = "1.10.1"
-composeBom = "2025.06.01"
+composeBom = "2025.07.00"
 uiTooling = "1.8.3"
 coil = "3.2.0"
-koin = "3.5.0"
+koin = "4.1.0"
+numberPicker = "1.0.3"
 
 
 [libraries]
@@ -28,6 +29,7 @@ coil-network = { group = "io.coil-kt.coil3", name = "coil-network-okhttp", versi
 kotlinx-collections = { group = "org.jetbrains.kotlinx", name = "kotlinx-collections-immutable", version.ref = "kotlinCollections" }
 koin-android = { group = "io.insert-koin", name = "koin-android", version.ref = "koin" }
 koin-androidx-compose = { group = "io.insert-koin", name = "koin-androidx-compose", version.ref = "koin" }
+numberPicker = {group = "com.chargemap.compose", name = "numberpicker", version.ref = "numberPicker"}
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }

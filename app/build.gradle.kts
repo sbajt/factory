@@ -56,4 +56,5 @@ dependencies {
     implementation(libs.kotlinx.collections)
     implementation(libs.koin.android)
     implementation(libs.koin.androidx.compose)
+    implementation(libs.numberPicker)
 }

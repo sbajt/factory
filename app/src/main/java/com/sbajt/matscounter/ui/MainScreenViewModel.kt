@@ -63,7 +63,7 @@ class MainScreenViewModel : ViewModel(), KoinComponent {
                         ?.toUiState()
                 val selectedItemCount: Int = when {
                     selectedItem != uiState.selectedItem && uiState.selectedItem != null -> 1
-                    uiState.selectedItem == null -> 0
+                    uiState.selectedItem == null -> 1
                     else -> uiState.itemCount
                 }
                 uiState.copy(
@@ -75,8 +75,10 @@ class MainScreenViewModel : ViewModel(), KoinComponent {
     }
 
     fun updateSelectedItemCount(newItemCount: Int) {
-        stateSubject.update { uiState ->
-            uiState.copy(itemCount = newItemCount)
+        if (newItemCount > 0) {
+            stateSubject.update { uiState ->
+                uiState.copy(itemCount = newItemCount)
+            }
         }
     }
 }

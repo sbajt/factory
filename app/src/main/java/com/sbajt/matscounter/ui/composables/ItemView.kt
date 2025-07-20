@@ -10,7 +10,10 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -45,13 +48,16 @@ fun ItemView(
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.SpaceBetween
     ) {
+        var descriptionName by remember {
+            mutableStateOf(uiState?.name ?: "Item unknown")
+        }
         AsyncImage(
             modifier = Modifier
                 .padding(4.dp)
                 .clip(shape = RoundedCornerShape(16.dp))
                 .size(80.dp),
             model = "file:///android_asset/images/${uiState?.imageName}.jpg",
-            contentDescription = uiState?.name ?: "Item Icon",
+            contentDescription = descriptionName,
             placeholder = painterResource(id = R.drawable.ic_menu_gallery),
             error = painterResource(id = R.drawable.ic_dialog_alert),
             contentScale = ContentScale.FillHeight,
@@ -61,7 +67,7 @@ fun ItemView(
             fontFamily = FontFamily.SansSerif,
             color = MaterialTheme.colorScheme.onSurface,
             fontSize = 12.sp,
-            text = remember(uiState?.name ?: "itemNameKey") {
+            text = remember(key1 = uiState?.name.toString()) {
                 uiState?.name ?: ""
             }
         )
@@ -70,8 +76,8 @@ fun ItemView(
             fontFamily = FontFamily.SansSerif,
             color = MaterialTheme.colorScheme.onSurfaceVariant,
             fontSize = 10.sp,
-            text = remember(uiState?.groupType?.name ?: "itemDescriptionKey") {
-                uiState?.groupType.mapToName()
+            text = remember(key1 = uiState?.groupType.mapToName()) {
+                uiState?.groupType?.mapToName() ?: ""
             }
         )
     }
