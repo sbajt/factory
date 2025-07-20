@@ -23,6 +23,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil3.compose.AsyncImage
 import com.sbajt.matscounter.ui.mappers.mapToName
+import com.sbajt.matscounter.ui.models.BuildingMaterialUiState
 import com.sbajt.matscounter.ui.models.ItemGroupType
 import com.sbajt.matscounter.ui.models.ItemUiState
 import com.sbajt.matscounter.ui.theme.MatsCounterTheme
@@ -40,23 +41,23 @@ fun ItemView(
             .clickable(
                 onClick = { onItemSelected(uiState?.name, uiState?.groupType) }
             )
-            .padding(bottom = 16.dp),
+            .padding(bottom = 4.dp),
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.SpaceBetween
     ) {
         AsyncImage(
             modifier = Modifier
-                .size(width = 120.dp, height = 80.dp)
-                .clip(shape = RoundedCornerShape(16.dp)),
+                .padding(4.dp)
+                .clip(shape = RoundedCornerShape(16.dp))
+                .size(width = 110.dp, height = 60.dp),
             model = "file:///android_asset/images/${uiState?.imageName}.jpg",
             contentDescription = uiState?.name ?: "Item Icon",
             placeholder = painterResource(id = R.drawable.ic_menu_gallery),
             error = painterResource(id = R.drawable.ic_dialog_alert),
-            contentScale = ContentScale.FillHeight,
+            contentScale = ContentScale.FillWidth,
         )
         Text(
             textAlign = TextAlign.Center,
-
             fontFamily = FontFamily.SansSerif,
             color = MaterialTheme.colorScheme.onSurface,
             fontSize = 12.sp,
@@ -93,16 +94,25 @@ fun mockItemUiState() = ItemUiState(
     name = "Basic Material",
     imageName = "ic_drone",
     groupType = ItemGroupType.entries[0],
+    buildingMaterials = mockBuildingMaterials(3)
 )
 
 fun mockItemUiStateList(
     count: Int = 10,
-): ImmutableList<ItemUiState> {
-    return List(count) { index ->
-        ItemUiState(
-            name = "Item $index",
-            imageName = "ic_item_$index",
-            groupType = ItemGroupType.entries[index % ItemGroupType.entries.size],
-        )
-    }.toPersistentList()
-}
+): ImmutableList<ItemUiState> = List(count) { index ->
+    ItemUiState(
+        name = "Item $index",
+        imageName = "ic_item_$index",
+        groupType = ItemGroupType.entries[index % ItemGroupType.entries.size],
+        buildingMaterials = mockBuildingMaterials(3)
+    )
+}.toPersistentList()
+
+fun mockBuildingMaterials(
+    count: Int,
+): ImmutableList<BuildingMaterialUiState> = List(count) {
+    BuildingMaterialUiState(
+        name = "Material $it",
+        count = 1,
+    )
+}.toPersistentList()

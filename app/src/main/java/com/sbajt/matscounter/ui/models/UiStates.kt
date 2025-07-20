@@ -1,5 +1,8 @@
 package com.sbajt.matscounter.ui.models
 
+import kotlinx.collections.immutable.ImmutableList
+import kotlinx.collections.immutable.persistentListOf
+
 data class DescriptionSectionUiState(
     val selectedItem: ItemUiState? = null
 )
@@ -13,7 +16,14 @@ data class ItemUiState(
     val name: String = "",
     val imageName: String = "",
     val groupType: ItemGroupType = ItemGroupType.NONE,
+    val buildingMaterials: ImmutableList<BuildingMaterialUiState> = persistentListOf(),
 )
+
+data class BuildingMaterialUiState(
+    val name: String? = null,
+    val count: Int = 0,
+)
+
 
 enum class ItemGroupType {
     BASIC_MATERIAL,
