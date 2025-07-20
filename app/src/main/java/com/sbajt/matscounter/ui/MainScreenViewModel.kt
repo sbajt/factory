@@ -38,11 +38,11 @@ class MainScreenViewModel : ViewModel(), KoinComponent {
     val uiState = combine(
         stateSubject,
         itemDomainListShare,
-    ) { mainScreenState, itemDomainList ->
+    ) { state, itemDomainList ->
         mapper.mapToUiState(
             InputData(
-                selectedItem = mainScreenState.selectedItem,
-                selectedItemCount = mainScreenState.itemCount,
+                selectedItem = state.selectedItem,
+                selectedItemCount = state.itemCount,
                 itemDomainList = itemDomainList
             )
         )

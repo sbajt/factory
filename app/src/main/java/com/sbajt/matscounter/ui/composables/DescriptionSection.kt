@@ -43,12 +43,12 @@ fun DescriptionSection(
                 LazyColumn {
                     items(
                         count = uiState.selectedItem.buildingMaterials.size,
-                        key = { index -> index }
+                        key = { index -> uiState.selectedItem.buildingMaterials[index].name.toString() }
                     ) { index ->
                         Row(
                             modifier = Modifier.width(100.dp)
                         ) {
-                            val nameText by remember {
+                            val nameText by remember(key1 = uiState.selectedItem.buildingMaterials[index].name.toString()) {
                                 mutableStateOf(uiState.selectedItem.buildingMaterials[index].name ?: "")
                             }
                             Text(
