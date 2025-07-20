@@ -14,5 +14,12 @@ data class Item(
     @SerializedName("priceSell")
     val priceSell: Float?,
     @SerializedName("buildMaterials")
-    val buildMaterials: List<Int> = emptyList(),
+    val buildMaterials: List<BuildingMaterial>,
+)
+
+data class BuildingMaterial(
+    @SerializedName("name")
+    val name: String?,
+    @SerializedName("count")
+    val count: Int,
 )

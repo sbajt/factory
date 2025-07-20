@@ -5,7 +5,16 @@
     "groupType": 1,
     "priceSell": 14.47,
     "priceBuy": 0,
-    "buildMaterials": []
+    "buildMaterials": [
+      {
+        "name": "Concrete",
+        "count": 2
+      },
+      {
+        "name": "Metal",
+        "count": 2
+      }
+    ]
   },
   {
     "name": "Belt",
@@ -13,7 +22,12 @@
     "groupType": 1,
     "priceSell": 2.6,
     "priceBuy": 0,
-    "buildMaterials": []
+    "buildMaterials": [
+      {
+        "name": "Rubber",
+        "count": 2
+      }
+    ]
   },
   {
     "name": "Box",
@@ -21,7 +35,12 @@
     "groupType": 1,
     "priceSell": 1.1,
     "priceBuy": 0,
-    "buildMaterials": []
+    "buildMaterials": [
+      {
+        "name": "Cardboard",
+        "count": 2
+      }
+    ]
   },
   {
     "name": "Cable",
@@ -29,7 +48,12 @@
     "groupType": 1,
     "priceSell": 3.28,
     "priceBuy": 0,
-    "buildMaterials": []
+    "buildMaterials": [
+      {
+        "name": "Metal",
+        "count": 1
+      }
+    ]
   },
   {
     "name": "Circuit",
@@ -37,7 +61,16 @@
     "groupType": 1,
     "priceSell": 3.54,
     "priceBuy": 0,
-    "buildMaterials": []
+    "buildMaterials": [
+      {
+        "name": "Plastic",
+        "count": 2
+      },
+      {
+        "name": "Wire",
+        "count": 1
+      }
+    ]
   },
   {
     "name": "Gear",
@@ -45,7 +78,12 @@
     "groupType": 1,
     "priceSell": 6.56,
     "priceBuy": 0,
-    "buildMaterials": []
+    "buildMaterials": [
+      {
+        "name": "Metal",
+        "count": 2
+      }
+    ]
   },
   {
     "name": "Hose",
@@ -53,7 +91,12 @@
     "groupType": 1,
     "priceSell": 2.6,
     "priceBuy": 0,
-    "buildMaterials": []
+    "buildMaterials": [
+      {
+        "name": "Rubber",
+        "count": 2
+      }
+    ]
   },
   {
     "name": "Metal wheel",
@@ -61,7 +104,12 @@
     "groupType": 1,
     "priceSell": 6.56,
     "priceBuy": 0,
-    "buildMaterials": []
+    "buildMaterials": [
+      {
+        "name": "Metal",
+        "count": 2
+      }
+    ]
   },
   {
     "name": "Motor",
@@ -69,7 +117,19 @@
     "groupType": 1,
     "priceSell": 17.4,
     "priceBuy": 0,
-    "buildMaterials": []
+    "buildMaterials": [
+      {
+        "name": "Metal",
+        "count": 1
+      }, {
+        "name": "Wire",
+        "count": 2
+      },
+      {
+        "name": "Magnet",
+        "count": 2
+      }
+    ]
   },
   {
     "name": "Plastic wheel",
@@ -77,7 +137,12 @@
     "groupType": 1,
     "priceSell": 1.72,
     "priceBuy": 0,
-    "buildMaterials": []
+    "buildMaterials": [
+      {
+        "name": "Plastic",
+        "count": 2
+      }
+    ]
   },
   {
     "name": "Pump",
@@ -85,7 +150,20 @@
     "groupType": 1,
     "priceSell": 8.72,
     "priceBuy": 0,
-    "buildMaterials": []
+    "buildMaterials": [
+      {
+        "name": "Metal",
+        "count": 2
+      },
+      {
+        "name": "Plastic",
+        "count": 1
+      },
+      {
+        "name": "Rubber",
+        "count": 1
+      }
+    ]
   },
   {
     "name": "Rubber wheel",
@@ -93,7 +171,16 @@
     "groupType": 1,
     "priceSell": 9.15,
     "priceBuy": 0,
-    "buildMaterials": []
+    "buildMaterials": [
+      {
+        "name": "Rubber",
+        "count": 2
+      },
+      {
+        "name": "Metal",
+        "count": 2
+      }
+    ]
   },
   {
     "name": "Garden gnome",
@@ -101,7 +188,20 @@
     "groupType": 1,
     "priceSell": 13.68,
     "priceBuy": 0,
-    "buildMaterials": []
+    "buildMaterials": [
+      {
+        "name": "Concrete",
+        "count": 1
+      },
+      {
+        "name": "Paint",
+        "count": 2
+      },
+      {
+        "name": "Box",
+        "count": 1
+      }
+    ]
   },
   {
     "name": "Speakers",
@@ -109,7 +209,24 @@
     "groupType": 1,
     "priceSell": 27.2,
     "priceBuy": 0,
-    "buildMaterials": []
+    "buildMaterials": [
+      {
+        "name": "Magnet",
+        "count": 2
+      },
+      {
+        "name": "Plastic",
+        "count": 2
+      },
+      {
+        "name": "Wire",
+        "count": 1
+      },
+      {
+        "name": "Box",
+        "count": 1
+      }
+    ]
   },
   {
     "name": "Sporks",
@@ -117,7 +234,16 @@
     "groupType": 1,
     "priceSell": 8.8,
     "priceBuy": 0,
-    "buildMaterials": []
+    "buildMaterials": [
+      {
+        "name": "Plastic",
+        "count": 4
+      },
+      {
+        "name": "Box",
+        "count": 1
+      }
+    ]
   },
   {
     "name": "Toaster",
@@ -125,6 +251,19 @@
     "groupType": 1,
     "priceSell": 20.52,
     "priceBuy": 0,
-    "buildMaterials": []
+    "buildMaterials": [
+      {
+        "name": "Metal",
+        "count": 2
+      },
+      {
+        "name": "Wire",
+        "count": 2
+      },
+      {
+        "name": "Box",
+        "count": 1
+      }
+    ]
   }
 ]
