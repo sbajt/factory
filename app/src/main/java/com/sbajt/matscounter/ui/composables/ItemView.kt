@@ -3,6 +3,7 @@ package com.sbajt.matscounter.ui.composables
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Text
@@ -16,6 +17,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
 import coil3.compose.AsyncImage
 import com.sbajt.matscounter.ui.models.ItemGroupType
@@ -34,7 +36,7 @@ fun ItemView(
         modifier = modifier
             .clickable(
                 onClick = { onItemSelected(uiState?.name, uiState?.groupType) }
-            ),
+            ).padding(bottom = 16.dp),
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.spacedBy(4.dp, Alignment.CenterVertically),
     ) {
@@ -42,7 +44,7 @@ fun ItemView(
             modifier = Modifier
                 .size(70.dp)
                 .clip(
-                    shape = RoundedCornerShape(4.dp)
+                    shape = RoundedCornerShape(6.dp)
                 ),
             model = "file:///android_asset/images/${uiState?.imageName}.jpg",
             contentScale = ContentScale.FillHeight,
@@ -52,7 +54,7 @@ fun ItemView(
         )
         Text(
             textAlign = TextAlign.Center,
-            fontFamily = FontFamily.Serif,
+            fontFamily = FontFamily.SansSerif,
             text = remember(uiState?.name ?: "selectedItemKey") {
                 uiState?.name ?: ""
             }

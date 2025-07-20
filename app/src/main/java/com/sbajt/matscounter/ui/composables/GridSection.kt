@@ -1,5 +1,6 @@
 package com.sbajt.matscounter.ui.composables
 
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.runtime.Composable
@@ -19,8 +20,9 @@ fun GridSection(
     LazyVerticalGrid(
         modifier = modifier,
         columns = GridCells.Adaptive(minSize = 100.dp),
+        contentPadding = PaddingValues(vertical = 18.dp)
     ) {
-        items(count = uiState.size) { index ->
+        items(count = uiState.size, key = { index -> uiState[index].name }) { index ->
             ItemView(
                 uiState = uiState[index],
                 onItemSelected = onItemSelected,
