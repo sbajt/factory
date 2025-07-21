@@ -55,10 +55,12 @@ fun ContentScreen(
         DescriptionSection(
             uiState = descriptionUiState,
         )
-        InputSection(
-            uiState = inputSectionUiState,
-            onCountChange = onCountChange,
-        )
+        descriptionUiState.selectedItem?.run{
+            InputSection(
+                uiState = inputSectionUiState,
+                onCountChange = onCountChange,
+            )
+        }
         GridSection(
             modifier = Modifier.weight(1f),
             uiState = itemUiStateList.toImmutableList(),

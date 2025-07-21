@@ -13,7 +13,6 @@ import kotlinx.collections.immutable.toPersistentList
 
 class MainScreenMapper {
 
-
     fun mapToUiState(inputData: InputData): MainScreenUiState = with(inputData) {
         MainScreenUiState.Content(
             descriptionUiState = DescriptionSectionUiState(

@@ -10,7 +10,7 @@ data class DescriptionSectionUiState(
 
 data class InputSectionUiState(
     val selectedItem: ItemUiState? = null,
-    val itemCount: Int = 0,
+    val itemCount: Int = 1,
 )
 
 data class ItemUiState(

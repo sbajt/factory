@@ -1,8 +1,11 @@
 package com.sbajt.matscounter.ui.composables
 
-import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.TextStyle
@@ -18,17 +21,23 @@ fun InputSection(
     onCountChange: (Int) -> Unit = {},
     modifier: Modifier = Modifier
 ) {
-    Box(
-        modifier = modifier.padding(16.dp)
+    Row(
+        modifier = modifier.padding(16.dp),
+        verticalAlignment = Alignment.CenterVertically
     ) {
         NumberPicker(
             value = uiState?.itemCount ?: 1,
             range = 1..20,
             dividersColor = Color.Green,
-            textStyle = TextStyle(color = Color.Cyan),
+            textStyle = TextStyle(color = MaterialTheme.colorScheme.onSurface),
             onValueChange = {
                 onCountChange.invoke(it)
             }
+        )
+        Text(
+            modifier = Modifier.padding(start = 16.dp),
+            color = MaterialTheme.colorScheme.onSurface,
+            text = "selected item count"
         )
     }
 }

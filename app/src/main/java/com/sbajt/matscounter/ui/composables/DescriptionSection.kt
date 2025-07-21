@@ -65,7 +65,6 @@ fun DescriptionSection(
                                 color = MaterialTheme.colorScheme.onSurfaceVariant,
                                 fontSize = 8.sp,
                                 text = "x${uiState.selectedItem.buildingMaterials[index].count * uiState.selectedItemCount}"
-
                             )
                         }
                     }
