@@ -6,6 +6,8 @@ import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.tooling.preview.PreviewLightDark
+import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.dp
 import com.sbajt.matscounter.ui.models.ItemUiState
 import com.sbajt.matscounter.ui.theme.MatsCounterTheme
@@ -22,7 +24,7 @@ fun GridSection(
         columns = GridCells.Adaptive(minSize = 100.dp),
         contentPadding = PaddingValues(vertical = 18.dp)
     ) {
-        items(count = uiState.size, key = { index -> uiState[index].name }) { index ->
+        items(count = uiState.size, key = { index -> index }) { index ->
             ItemView(
                 uiState = uiState[index],
                 onItemSelected = onItemSelected,
@@ -31,12 +33,12 @@ fun GridSection(
     }
 }
 
-@Preview(showBackground = true)
+@PreviewLightDark
 @Composable
-fun GridSectionPreview() {
+fun GridSectionPreview(@PreviewParameter(GridSectionUiStateProvider::class) uiState: ImmutableList<ItemUiState>) {
     MatsCounterTheme {
         GridSection(
-            uiState = mockItemUiStateList(),
+            uiState = uiState,
             onItemSelected = { _, _ -> },
         )
     }

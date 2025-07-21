@@ -20,8 +20,10 @@ import androidx.compose.ui.unit.dp
 
 @Composable
 fun EmptyScreen(modifier: Modifier = Modifier) {
-    Box(modifier = modifier.fillMaxSize(),
-        contentAlignment = Alignment.Center) {
+    Box(
+        modifier = modifier.fillMaxSize(),
+        contentAlignment = Alignment.Center
+    ) {
         Column(
             modifier = modifier.wrapContentWidth(align = Alignment.CenterHorizontally)
         ) {

@@ -3,10 +3,7 @@ package com.sbajt.matscounter.ui.composables
 import androidx.compose.ui.tooling.preview.PreviewParameterProvider
 import com.sbajt.matscounter.ui.models.DescriptionSectionUiState
 import com.sbajt.matscounter.ui.models.InputSectionUiState
-import com.sbajt.matscounter.ui.models.ItemGroupType
-import com.sbajt.matscounter.ui.models.ItemUiState
 import com.sbajt.matscounter.ui.models.MainScreenUiState
-import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.persistentListOf
 
 class MainScreenPreviewProvider : PreviewParameterProvider<MainScreenUiState> {
@@ -17,7 +14,7 @@ class MainScreenPreviewProvider : PreviewParameterProvider<MainScreenUiState> {
         emptyContent,
         commonItem,
         commonWithSelectedItem,
-        )
+    )
 
     companion object {
 
@@ -34,19 +31,18 @@ class MainScreenPreviewProvider : PreviewParameterProvider<MainScreenUiState> {
         val commonItem = MainScreenUiState.Content(
             descriptionUiState = DescriptionSectionUiState(),
             inputSectionUiState = InputSectionUiState(),
-            itemUiStateList = mockItemUiStateList(),
+            itemUiStateList = ItemUiStateProvider.mockItemUiStateList(),
         )
 
         val commonWithSelectedItem = MainScreenUiState.Content(
             descriptionUiState = DescriptionSectionUiState(
-                selectedItem = mockItemUiState()
+                selectedItem = ItemUiStateProvider.defaultItemUiState
             ),
             inputSectionUiState = InputSectionUiState(
-                selectedItem = mockItemUiState(),
+                selectedItem = ItemUiStateProvider.defaultItemUiState,
                 itemCount = 1
             ),
-            itemUiStateList = mockItemUiStateList(),
+            itemUiStateList = ItemUiStateProvider.mockItemUiStateList(),
         )
-
     }
 }

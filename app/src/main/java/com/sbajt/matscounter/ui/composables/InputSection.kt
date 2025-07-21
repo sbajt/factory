@@ -9,7 +9,8 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.TextStyle
-import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.tooling.preview.PreviewLightDark
+import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.dp
 import com.chargemap.compose.numberpicker.NumberPicker
 import com.sbajt.matscounter.ui.models.InputSectionUiState
@@ -42,18 +43,13 @@ fun InputSection(
     }
 }
 
-@Preview(showBackground = true)
+@PreviewLightDark
 @Composable
-private fun InputSectionPreview() {
+private fun InputSectionPreview(@PreviewParameter(InputSectionUiStateProvider::class) uiState: InputSectionUiState) {
     MatsCounterTheme {
         InputSection(
-            uiState = mockInputSectionUiState(),
+            uiState = uiState,
         )
     }
 }
-
-private fun mockInputSectionUiState() = InputSectionUiState(
-    itemCount = 1,
-    selectedItem = mockItemUiState()
-)
 

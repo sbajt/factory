@@ -22,16 +22,15 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.tooling.preview.PreviewLightDark
+import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil3.compose.AsyncImage
 import com.sbajt.matscounter.ui.mappers.mapToName
-import com.sbajt.matscounter.ui.models.BuildingMaterialUiState
 import com.sbajt.matscounter.ui.models.ItemGroupType
 import com.sbajt.matscounter.ui.models.ItemUiState
 import com.sbajt.matscounter.ui.theme.MatsCounterTheme
-import kotlinx.collections.immutable.ImmutableList
-import kotlinx.collections.immutable.toPersistentList
 
 @Composable
 fun ItemView(
@@ -83,42 +82,13 @@ fun ItemView(
     }
 }
 
-@Preview(showBackground = true)
+@PreviewLightDark
 @Composable
-fun ItemViewPreview() {
+fun ItemViewPreview(@PreviewParameter(ItemUiStateProvider::class) uiState: ItemUiState) {
     MatsCounterTheme {
         ItemView(
-            uiState = mockItemUiState(),
+            uiState = uiState,
             onItemSelected = { _, _ -> },
         )
     }
 }
-
-fun mockEmptyItemUiState() = ItemUiState()
-
-fun mockItemUiState() = ItemUiState(
-    name = "Basic Material",
-    imageName = "ic_drone",
-    groupType = ItemGroupType.entries[0],
-    buildingMaterials = mockBuildingMaterials(3)
-)
-
-fun mockItemUiStateList(
-    count: Int = 10,
-): ImmutableList<ItemUiState> = List(count) { index ->
-    ItemUiState(
-        name = "Item $index",
-        imageName = "ic_item_$index",
-        groupType = ItemGroupType.entries[index % ItemGroupType.entries.size],
-        buildingMaterials = mockBuildingMaterials(3)
-    )
-}.toPersistentList()
-
-fun mockBuildingMaterials(
-    count: Int,
-): ImmutableList<BuildingMaterialUiState> = List(count) {
-    BuildingMaterialUiState(
-        name = "Material $it",
-        count = 1,
-    )
-}.toPersistentList()

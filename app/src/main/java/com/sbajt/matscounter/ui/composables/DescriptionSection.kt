@@ -16,6 +16,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.sbajt.matscounter.ui.models.DescriptionSectionUiState
@@ -83,14 +84,10 @@ fun DescriptionSection(
 
 @Preview(showBackground = true)
 @Composable
-fun DescriptionSectionPreview() {
+fun DescriptionSectionPreview(@PreviewParameter(DescriptionSectionUiStateProvider::class) uiState: DescriptionSectionUiState) {
     MatsCounterTheme {
         DescriptionSection(
-            uiState = mockDescriptionSectionUiState(),
+            uiState = uiState
         )
     }
 }
-
-fun mockDescriptionSectionUiState() = DescriptionSectionUiState(
-    selectedItem = mockEmptyItemUiState()
-)
