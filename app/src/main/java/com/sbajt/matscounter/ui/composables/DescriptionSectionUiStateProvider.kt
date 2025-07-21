@@ -14,7 +14,7 @@ class DescriptionSectionUiStateProvider : PreviewParameterProvider<DescriptionSe
         val emptyDescriptionSectionUiState = DescriptionSectionUiState()
 
         val defaultDescriptionSectionUiState = DescriptionSectionUiState(
-            selectedItem = ItemUiStateProvider.defaultItemUiState,
+            selectedItem = ItemUiStateProvider.tier1ItemUiState,
         )
     }
 }
