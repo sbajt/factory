@@ -37,7 +37,7 @@ fun DescriptionSection(
             Text(
                 fontFamily = FontFamily.SansSerif,
                 color = MaterialTheme.colorScheme.onSurfaceVariant,
-                fontSize = 11.sp,
+                fontSize = 14.sp,
                 text = remember { "Materials:" },
             )
             if (uiState.selectedItem?.buildingMaterials?.isNotEmpty() == true) {
@@ -47,7 +47,7 @@ fun DescriptionSection(
                         key = { index -> uiState.selectedItem.buildingMaterials[index].name.toString() }
                     ) { index ->
                         Row(
-                            modifier = Modifier.width(100.dp)
+                            modifier = Modifier.width(110.dp)
                         ) {
                             val nameText by remember(key1 = uiState.selectedItem.buildingMaterials[index].name.toString()) {
                                 mutableStateOf(uiState.selectedItem.buildingMaterials[index].name ?: "")
@@ -55,16 +55,16 @@ fun DescriptionSection(
                             Text(
                                 modifier = Modifier.weight(0.5f),
                                 fontFamily = FontFamily.SansSerif,
+                                fontSize = 12.sp,
                                 color = MaterialTheme.colorScheme.onSurfaceVariant,
-                                fontSize = 8.sp,
                                 text = nameText
                             )
                             Text(
                                 modifier = Modifier.weight(0.5f),
                                 textAlign = TextAlign.End,
                                 fontFamily = FontFamily.SansSerif,
+                                fontSize = 12.sp,
                                 color = MaterialTheme.colorScheme.onSurfaceVariant,
-                                fontSize = 8.sp,
                                 text = "x${uiState.selectedItem.buildingMaterials[index].count * uiState.selectedItemCount}"
                             )
                         }
@@ -74,7 +74,7 @@ fun DescriptionSection(
                 Text(
                     fontFamily = FontFamily.SansSerif,
                     color = MaterialTheme.colorScheme.onSurfaceVariant,
-                    fontSize = 8.sp,
+                    fontSize = 12.sp,
                     text = remember { "No materials" },
                 )
             }
