@@ -9,17 +9,14 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontFamily
-import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.sbajt.matscounter.ui.models.BuildingMaterialUiState
 import com.sbajt.matscounter.ui.models.DescriptionSectionUiState
 import com.sbajt.matscounter.ui.theme.MatsCounterTheme
 
@@ -34,35 +31,53 @@ fun DescriptionSection(
             uiState = uiState.selectedItem,
             onItemSelected = { _, _ -> },
         )
-        Column(modifier = Modifier.padding(8.dp)) {
-            Text(
-                fontFamily = FontFamily.SansSerif,
-                color = MaterialTheme.colorScheme.onSurfaceVariant,
-                fontSize = 14.sp,
-                text = remember { "Materials:" },
-            )
-            if (uiState.selectedItem?.buildingMaterials?.isNotEmpty() == true) {
-                LazyColumn {
-                    items(
-                        count = uiState.selectedItem.buildingMaterials.size,
-                        key = { index -> uiState.selectedItem.buildingMaterials[index].name.toString() }
-                    ) { index ->
-                        BuildingMaterialView(
-                            uiState = uiState.selectedItem.buildingMaterials[index],
-                            selectedItemCount = uiState.selectedItemCount,
-                            modifier = Modifier.width(120.dp)
-                        )
-                    }
+        MaterialsListView(
+            buildingMaterialsList = uiState.selectedItem?.buildingMaterials ?: emptyList(),
+            selectedItemCount = uiState.selectedItemCount,
+            titleText = "Materials:"
+        )
+        MaterialsListView(
+            buildingMaterialsList = uiState.selectedItem?.buildingMaterials?.filter { it. } ?: emptyList(),
+            selectedItemCount = uiState.selectedItemCount,
+            titleText = "Basic materials:"
+        )
+    }
+}
+
+@Composable
+private fun MaterialsListView(
+    buildingMaterialsList: List<BuildingMaterialUiState>,
+    selectedItemCount: Int,
+    titleText: String,
+) {
+    Column(modifier = Modifier.padding(8.dp)) {
+        Text(
+            fontFamily = FontFamily.SansSerif,
+            color = MaterialTheme.colorScheme.onSurfaceVariant,
+            fontSize = 14.sp,
+            text = remember { titleText },
+        )
+        if (buildingMaterialsList.isNotEmpty()) {
+            LazyColumn {
+                items(
+                    count = buildingMaterialsList.size,
+                    key = { index -> buildingMaterialsList[index].name.toString() }
+                ) { index ->
+                    BuildingMaterialView(
+                        uiState = buildingMaterialsList[index],
+                        selectedItemCount = selectedItemCount,
+                        modifier = Modifier.width(120.dp)
+                    )
                 }
-            } else {
-                noMaterialsView()
             }
+        } else {
+            NoMaterialsView()
         }
     }
 }
 
 @Composable
-private fun noMaterialsView() {
+private fun NoMaterialsView() {
     Text(
         fontFamily = FontFamily.SansSerif,
         color = MaterialTheme.colorScheme.onSurfaceVariant,
