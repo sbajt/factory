@@ -18,11 +18,16 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.sbajt.matscounter.ui.models.BuildingMaterialUiState
 import com.sbajt.matscounter.ui.models.DescriptionSectionUiState
+import com.sbajt.matscounter.ui.models.ItemGroupType
+import com.sbajt.matscounter.ui.models.ItemUiState
 import com.sbajt.matscounter.ui.theme.MatsCounterTheme
+import kotlinx.collections.immutable.ImmutableList
+import kotlinx.collections.immutable.persistentListOf
 
 @Composable
 fun DescriptionSection(
     uiState: DescriptionSectionUiState,
+    itemUiStatList: ImmutableList<ItemUiState>,
     modifier: Modifier = Modifier
 ) {
     Row(modifier = modifier, horizontalArrangement = Arrangement.Start) {
@@ -37,7 +42,13 @@ fun DescriptionSection(
             titleText = "Materials:"
         )
         MaterialsListView(
-            buildingMaterialsList = uiState.selectedItem?.buildingMaterials?.filter { it. } ?: emptyList(),
+            buildingMaterialsList = uiState.selectedItem?.buildingMaterials?.filter { bm ->
+                itemUiStatList.find {
+                    it.name == bm.name
+                            && it.groupType == ItemGroupType.BASIC_MATERIAL
+                } != null
+            }
+                ?: emptyList(),
             selectedItemCount = uiState.selectedItemCount,
             titleText = "Basic materials:"
         )
@@ -91,7 +102,8 @@ private fun NoMaterialsView() {
 fun DescriptionSectionPreview(@PreviewParameter(DescriptionSectionUiStateProvider::class) uiState: DescriptionSectionUiState) {
     MatsCounterTheme {
         DescriptionSection(
-            uiState = uiState
+            uiState = uiState,
+            itemUiStatList = persistentListOf(),
         )
     }
 }

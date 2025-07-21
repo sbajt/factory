@@ -54,7 +54,11 @@ class MainScreenViewModel : ViewModel(), KoinComponent {
             initialValue = MainScreenUiState.Loading,
         )
 
-    fun updateSelectedItem(selectedItemName: String?, selectedItemGroupType: ItemGroupType?, selectedItemCount: Int) {
+    fun updateSelectedItem(
+        selectedItemName: String?,
+        selectedItemGroupType: ItemGroupType?,
+        selectedItemCount: Int
+    ) {
         viewModelScope.launch {
             stateSubject.update { uiState ->
                 val list = useCase().firstOrNull() ?: emptyList()
@@ -70,10 +74,8 @@ class MainScreenViewModel : ViewModel(), KoinComponent {
     }
 
     fun updateSelectedItemCount(newItemCount: Int) {
-        if (newItemCount > 0) {
-            stateSubject.update { uiState ->
-                uiState.copy(itemCount = newItemCount)
-            }
+        stateSubject.update { uiState ->
+            uiState.copy(itemCount = newItemCount)
         }
     }
 }

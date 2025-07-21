@@ -55,6 +55,7 @@ fun ContentScreen(
     Column(modifier = modifier.fillMaxSize()) {
         DescriptionSection(
             uiState = descriptionUiState,
+            itemUiStatList = itemUiStateList.toImmutableList(),
         )
         descriptionUiState.selectedItem?.run{
             InputSection(
