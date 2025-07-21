@@ -38,7 +38,7 @@ fun InputSection(
         Text(
             modifier = Modifier.padding(start = 16.dp),
             color = MaterialTheme.colorScheme.onSurface,
-            text = "selected item count"
+            text = "Number of selected item"
         )
     }
 }

@@ -23,11 +23,12 @@ import com.sbajt.matscounter.ui.models.ItemUiState
 import com.sbajt.matscounter.ui.theme.MatsCounterTheme
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.persistentListOf
+import kotlinx.collections.immutable.toImmutableList
 
 @Composable
 fun DescriptionSection(
     uiState: DescriptionSectionUiState,
-    itemUiStatList: ImmutableList<ItemUiState>,
+    itemUiStatList: List<ItemUiState>,
     modifier: Modifier = Modifier
 ) {
     Row(modifier = modifier, horizontalArrangement = Arrangement.Start) {
@@ -36,28 +37,24 @@ fun DescriptionSection(
             uiState = uiState.selectedItem,
             onItemSelected = { _, _ -> },
         )
-        MaterialsListView(
-            buildingMaterialsList = uiState.selectedItem?.buildingMaterials ?: emptyList(),
-            selectedItemCount = uiState.selectedItemCount,
-            titleText = "Materials:"
-        )
-        MaterialsListView(
-            buildingMaterialsList = uiState.selectedItem?.buildingMaterials?.filter { bm ->
-                itemUiStatList.find {
-                    it.name == bm.name
-                            && it.groupType == ItemGroupType.BASIC_MATERIAL
-                } != null
-            }
-                ?: emptyList(),
-            selectedItemCount = uiState.selectedItemCount,
-            titleText = "Basic materials:"
-        )
+        if (uiState.selectedItem != null) {
+            MaterialsListView(
+                buildingMaterialsList = uiState.selectedItem.buildingMaterials,
+                selectedItemCount = uiState.selectedItemCount,
+                titleText = "Materials:"
+            )
+            MaterialsListView(
+                buildingMaterialsList = uiState.selectedItem.mapToBasicMaterialList(itemUiStatList),
+                selectedItemCount = uiState.selectedItemCount,
+                titleText = "Basic materials:"
+            )
+        }
     }
 }
 
 @Composable
 private fun MaterialsListView(
-    buildingMaterialsList: List<BuildingMaterialUiState>,
+    buildingMaterialsList: ImmutableList<BuildingMaterialUiState>,
     selectedItemCount: Int,
     titleText: String,
 ) {
@@ -96,6 +93,39 @@ private fun NoMaterialsView() {
         text = remember { "No materials" },
     )
 }
+
+private fun ItemUiState.mapToBasicMaterialList(itemUiStatList: List<ItemUiState>): ImmutableList<BuildingMaterialUiState> {
+    val basicMaterialsMap = mutableMapOf<String, Int>()
+    var sum = 0
+    buildingMaterials.forEach {
+        sum += processBuildingMaterial(
+            uiState = it,
+            itemUiStatList = itemUiStatList,
+        )
+        if (it.name != null) {
+            basicMaterialsMap[it.name] = sum
+            sum = 0
+        }
+    }
+    return basicMaterialsMap.map {
+        BuildingMaterialUiState(
+            name = it.key,
+            count = it.value,
+        )
+    }.toImmutableList()
+}
+
+fun processBuildingMaterial(
+    uiState: BuildingMaterialUiState,
+    itemUiStatList: List<ItemUiState>,
+): Int {
+    val itemUiState = itemUiStatList.find { it.name == uiState.name }
+    return when {
+        itemUiState?.groupType == ItemGroupType.BASIC_MATERIAL -> uiState.count
+        else -> 0
+    }
+}
+
 
 @PreviewLightDark
 @Composable
