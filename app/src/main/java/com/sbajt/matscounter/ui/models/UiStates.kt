@@ -25,7 +25,6 @@ data class BuildingMaterialUiState(
     val count: Int = 0,
 )
 
-
 enum class ItemGroupType {
     BASIC_MATERIAL,
     TIER1,

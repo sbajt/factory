@@ -24,7 +24,7 @@ class MainScreenMapper {
                 itemCount = selectedItemCount
             ),
             itemUiStateList = itemDomainList
-                .map { it.toUiState() }
+                .map { it.toItemUiState() }
                 .sortedWith(compareBy({ it.groupType }, { it.name }))
                 .toImmutableList()
         )
@@ -39,7 +39,7 @@ class MainScreenMapper {
     }
 }
 
-fun ItemDomain?.toUiState() = ItemUiState(
+fun ItemDomain?.toItemUiState() = ItemUiState(
     name = this?.name ?: "",
     imageName = this?.imageName ?: "",
     groupType = this?.groupType.mapToGroupType(),

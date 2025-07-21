@@ -16,6 +16,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -46,43 +47,31 @@ fun DescriptionSection(
                         count = uiState.selectedItem.buildingMaterials.size,
                         key = { index -> uiState.selectedItem.buildingMaterials[index].name.toString() }
                     ) { index ->
-                        Row(
+                        BuildingMaterialView(
+                            uiState = uiState.selectedItem.buildingMaterials[index],
+                            selectedItemCount = uiState.selectedItemCount,
                             modifier = Modifier.width(120.dp)
-                        ) {
-                            val nameText by remember(key1 = uiState.selectedItem.buildingMaterials[index].name.toString()) {
-                                mutableStateOf(uiState.selectedItem.buildingMaterials[index].name ?: "")
-                            }
-                            Text(
-                                modifier = Modifier.weight(0.5f),
-                                fontFamily = FontFamily.SansSerif,
-                                fontSize = 12.sp,
-                                color = MaterialTheme.colorScheme.onSurfaceVariant,
-                                text = nameText
-                            )
-                            Text(
-                                modifier = Modifier.weight(0.5f),
-                                textAlign = TextAlign.End,
-                                fontFamily = FontFamily.SansSerif,
-                                fontSize = 12.sp,
-                                color = MaterialTheme.colorScheme.onSurfaceVariant,
-                                text = "x${uiState.selectedItem.buildingMaterials[index].count * uiState.selectedItemCount}"
-                            )
-                        }
+                        )
                     }
                 }
             } else {
-                Text(
-                    fontFamily = FontFamily.SansSerif,
-                    color = MaterialTheme.colorScheme.onSurfaceVariant,
-                    fontSize = 12.sp,
-                    text = remember { "No materials" },
-                )
+                noMaterialsView()
             }
         }
     }
 }
 
-@Preview(showBackground = true)
+@Composable
+private fun noMaterialsView() {
+    Text(
+        fontFamily = FontFamily.SansSerif,
+        color = MaterialTheme.colorScheme.onSurfaceVariant,
+        fontSize = 12.sp,
+        text = remember { "No materials" },
+    )
+}
+
+@PreviewLightDark
 @Composable
 fun DescriptionSectionPreview(@PreviewParameter(DescriptionSectionUiStateProvider::class) uiState: DescriptionSectionUiState) {
     MatsCounterTheme {
