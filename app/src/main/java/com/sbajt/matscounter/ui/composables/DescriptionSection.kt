@@ -96,17 +96,7 @@ private fun NoMaterialsView() {
 
 private fun ItemUiState.mapToBasicMaterialList(itemUiStatList: List<ItemUiState>): ImmutableList<BuildingMaterialUiState> {
     val basicMaterialsMap = mutableMapOf<String, Int>()
-    var sum = 0
-    buildingMaterials.forEach {
-        sum += processBuildingMaterial(
-            uiState = it,
-            itemUiStatList = itemUiStatList,
-        )
-        if (it.name != null) {
-            basicMaterialsMap[it.name] = sum
-            sum = 0
-        }
-    }
+    processItem(this, itemUiStatList, basicMaterialsMap)
     return basicMaterialsMap.map {
         BuildingMaterialUiState(
             name = it.key,
@@ -115,17 +105,31 @@ private fun ItemUiState.mapToBasicMaterialList(itemUiStatList: List<ItemUiState>
     }.toImmutableList()
 }
 
-fun processBuildingMaterial(
-    uiState: BuildingMaterialUiState,
-    itemUiStatList: List<ItemUiState>,
-): Int {
-    val itemUiState = itemUiStatList.find { it.name == uiState.name }
-    return when {
-        itemUiState?.groupType == ItemGroupType.BASIC_MATERIAL -> uiState.count
-        else -> 0
+private fun processItem(item: ItemUiState, itemUiStatList: List<ItemUiState>, basicMaterialsMap: MutableMap<String, Int>) {
+    item.buildingMaterials.forEach { buildingMaterial ->
+        processBuildingMaterial(
+            uiState = buildingMaterial,
+            itemUiStatList = itemUiStatList,
+            basicMaterialsMap = basicMaterialsMap
+        )
     }
 }
 
+private fun processBuildingMaterial(
+    uiState: BuildingMaterialUiState,
+    itemUiStatList: List<ItemUiState>,
+    basicMaterialsMap: MutableMap<String, Int>
+) {
+    val itemUiState = itemUiStatList.find { it.name == uiState.name }
+    when {
+        itemUiState?.groupType == ItemGroupType.BASIC_MATERIAL -> {
+            basicMaterialsMap[uiState.name!!] = (basicMaterialsMap[uiState.name] ?: 0) + uiState.count
+        }
+        itemUiState != null -> {
+            processItem(itemUiState, itemUiStatList, basicMaterialsMap)
+        }
+    }
+}
 
 @PreviewLightDark
 @Composable
