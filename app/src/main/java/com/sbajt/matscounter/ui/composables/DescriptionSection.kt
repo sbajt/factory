@@ -28,7 +28,6 @@ import kotlinx.collections.immutable.toImmutableList
 @Composable
 fun DescriptionSection(
     uiState: DescriptionSectionUiState,
-    itemUiStatList: List<ItemUiState>,
     modifier: Modifier = Modifier
 ) {
     Row(modifier = modifier, horizontalArrangement = Arrangement.Start) {
@@ -44,7 +43,7 @@ fun DescriptionSection(
                 titleText = "Materials:"
             )
             MaterialsListView(
-                buildingMaterialsList = uiState.selectedItem.mapToBasicMaterialList(itemUiStatList),
+                buildingMaterialsList = uiState.buildingMaterialList.toImmutableList(),
                 selectedItemCount = uiState.selectedItemCount,
                 titleText = "Basic materials:"
             )
@@ -74,7 +73,6 @@ private fun MaterialsListView(
                     BuildingMaterialView(
                         uiState = buildingMaterialsList[index],
                         selectedItemCount = selectedItemCount,
-                        modifier = Modifier.width(120.dp)
                     )
                 }
             }
@@ -94,50 +92,12 @@ private fun NoMaterialsView() {
     )
 }
 
-private fun ItemUiState.mapToBasicMaterialList(itemUiStatList: List<ItemUiState>): ImmutableList<BuildingMaterialUiState> {
-    val basicMaterialsMap = mutableMapOf<String, Int>()
-    processItem(this, itemUiStatList, basicMaterialsMap)
-    return basicMaterialsMap.map {
-        BuildingMaterialUiState(
-            name = it.key,
-            count = it.value,
-        )
-    }.toImmutableList()
-}
-
-private fun processItem(item: ItemUiState, itemUiStatList: List<ItemUiState>, basicMaterialsMap: MutableMap<String, Int>) {
-    item.buildingMaterials.forEach { buildingMaterial ->
-        processBuildingMaterial(
-            uiState = buildingMaterial,
-            itemUiStatList = itemUiStatList,
-            basicMaterialsMap = basicMaterialsMap
-        )
-    }
-}
-
-private fun processBuildingMaterial(
-    uiState: BuildingMaterialUiState,
-    itemUiStatList: List<ItemUiState>,
-    basicMaterialsMap: MutableMap<String, Int>
-) {
-    val itemUiState = itemUiStatList.find { it.name == uiState.name }
-    when {
-        itemUiState?.groupType == ItemGroupType.BASIC_MATERIAL -> {
-            basicMaterialsMap[uiState.name!!] = (basicMaterialsMap[uiState.name] ?: 0) + uiState.count
-        }
-        itemUiState != null -> {
-            processItem(itemUiState, itemUiStatList, basicMaterialsMap)
-        }
-    }
-}
-
 @PreviewLightDark
 @Composable
 fun DescriptionSectionPreview(@PreviewParameter(DescriptionSectionUiStateProvider::class) uiState: DescriptionSectionUiState) {
     MatsCounterTheme {
         DescriptionSection(
             uiState = uiState,
-            itemUiStatList = persistentListOf(),
         )
     }
 }

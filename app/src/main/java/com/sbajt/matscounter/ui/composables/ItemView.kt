@@ -21,13 +21,12 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil3.compose.AsyncImage
-import com.sbajt.matscounter.ui.mappers.mapToName
+import com.sbajt.matscounter.ui.mappers.getName
 import com.sbajt.matscounter.ui.models.ItemGroupType
 import com.sbajt.matscounter.ui.models.ItemUiState
 import com.sbajt.matscounter.ui.theme.MatsCounterTheme
@@ -75,8 +74,8 @@ fun ItemView(
             fontFamily = FontFamily.SansSerif,
             color = MaterialTheme.colorScheme.onSurfaceVariant,
             fontSize = 10.sp,
-            text = remember(key1 = uiState?.groupType.mapToName()) {
-                uiState?.groupType?.mapToName() ?: ""
+            text = remember(key1 = uiState?.groupType.getName()) {
+                uiState?.groupType?.getName() ?: ""
             }
         )
     }

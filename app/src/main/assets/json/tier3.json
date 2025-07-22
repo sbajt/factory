@@ -5,7 +5,20 @@
     "groupType": 3,
     "priceSell": 66.84,
     "priceBuy": 0,
-    "buildMaterials": []
+    "buildMaterials": [
+      {
+        "name": "Wire",
+        "count": 4
+      },
+      {
+        "name": "Circuit",
+        "count": 4
+      },
+      {
+        "name": "Logic unit",
+        "count": 2
+      }
+    ]
   },
   {
     "name": "Assembly line",
@@ -13,7 +26,28 @@
     "groupType": 3,
     "priceSell": 715.84,
     "priceBuy": 0,
-    "buildMaterials": []
+    "buildMaterials": [
+      {
+        "name": "Air gun",
+        "count": 2
+      },
+      {
+        "name": "Arm",
+        "count": 2
+      },
+      {
+        "name": "Conveyor",
+        "count": 3
+      },
+      {
+        "name": "Lifter",
+        "count": 1
+      },
+      {
+        "name": "Mover",
+        "count": 1
+      }
+    ]
   },
   {
     "name": "Jet engine",
@@ -21,7 +55,28 @@
     "groupType": 3,
     "priceSell": 180.04,
     "priceBuy": 0,
-    "buildMaterials": []
+    "buildMaterials": [
+      {
+        "name": "Metal",
+        "count": 8
+      },
+      {
+        "name": "Wire",
+        "count": 12
+      },
+      {
+        "name": "Hose",
+        "count": 6
+      },
+      {
+        "name": "Pump",
+        "count": 4
+      },
+      {
+        "name": "Thing-a-ma-jig",
+        "count": 1
+      }
+    ]
   },
   {
     "name": "Sensor",
@@ -29,7 +84,24 @@
     "groupType": 3,
     "priceSell": 41.35,
     "priceBuy": 0,
-    "buildMaterials": []
+    "buildMaterials": [
+      {
+        "name": "Rare metal",
+        "count": 2
+      },
+      {
+        "name": "Wire",
+        "count": 1
+      },
+      {
+        "name": "Circuit",
+        "count": 1
+      },
+      {
+        "name": "Logic unit",
+        "count": 1
+      }
+    ]
   },
   {
     "name": "Bridge",
@@ -37,7 +109,16 @@
     "groupType": 3,
     "priceSell": 1091.16,
     "priceBuy": 0,
-    "buildMaterials": []
+    "buildMaterials": [
+      {
+        "name": "Road",
+        "count": 6
+      },
+      {
+        "name": "Support",
+        "count": 6
+      }
+    ]
   },
   {
     "name": "Forklift",
@@ -45,7 +126,24 @@
     "groupType": 3,
     "priceSell": 191.8,
     "priceBuy": 0,
-    "buildMaterials": []
+    "buildMaterials": [
+      {
+        "name": "Metal",
+        "count": 6
+      },
+      {
+        "name": "Motor",
+        "count": 2
+      },
+      {
+        "name": "Rubber wheel",
+        "count": 4
+      },
+      {
+        "name": "Box",
+        "count": 4
+      }
+    ]
   },
   {
     "name": "Radio tower",
@@ -53,7 +151,20 @@
     "groupType": 3,
     "priceSell": 414.0,
     "priceBuy": 0,
-    "buildMaterials": []
+    "buildMaterials": [
+      {
+        "name": "Metal",
+        "count": 12
+      },
+      {
+        "name": "Wire",
+        "count": 6
+      },
+      {
+        "name": "Support",
+        "count": 4
+      }
+    ]
   },
   {
     "name": "Tablet computer",
@@ -61,6 +172,27 @@
     "groupType": 3,
     "priceSell": 73.26,
     "priceBuy": 0,
-    "buildMaterials": []
+    "buildMaterials": [
+        {
+            "name": "Plastic",
+            "count": 1
+        },
+        {
+            "name": "Wire",
+            "count": 3
+        },
+        {
+            "name": "Circuit",
+            "count": 3
+        },
+        {
+            "name": "Logic unit",
+            "count": 1
+        },
+        {
+            "name": "Box",
+            "count": 1
+        }
+    ]
   }
 ]

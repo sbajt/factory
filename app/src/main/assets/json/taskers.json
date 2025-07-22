@@ -5,7 +5,28 @@
     "groupType": 13,
     "priceSell": 69.16,
     "priceBuy": 0,
-    "buildMaterials": []
+    "buildMaterials": [
+      {
+        "name": "Paint",
+        "count": 1
+      },
+      {
+        "name": "Wire",
+        "count": 6
+      },
+      {
+        "name": "Circuit",
+        "count": 4
+      },
+      {
+        "name": "Logic unit",
+        "count": 1
+      },
+      {
+        "name": "Widget",
+        "count": 1
+      }
+    ]
   },
   {
     "name": "Tasker: Sales",
@@ -13,7 +34,28 @@
     "groupType": 16,
     "priceSell": 153.3,
     "priceBuy": 0,
-    "buildMaterials": []
+    "buildMaterials": [
+      {
+        "name": "Paint",
+        "count": 1
+      },
+      {
+        "name": "Wire",
+        "count": 8
+      },
+      {
+        "name": "Logic unit",
+        "count": 2
+      },
+      {
+        "name": "Widget",
+        "count": 1
+      },
+      {
+        "name": "Avd logic unit",
+        "count": 1
+      }
+    ]
   },
   {
     "name": "Tasker: Delivery",
@@ -21,7 +63,28 @@
     "groupType": 15,
     "priceSell": 380.28,
     "priceBuy": 0,
-    "buildMaterials": []
+    "buildMaterials": [
+      {
+        "name": "Metal",
+        "count": 14
+      },
+      {
+        "name": "Motor",
+        "count": 2
+      },
+      {
+        "name": "Rubber wheel",
+        "count": 4
+      },
+      {
+        "name": "Avd logic unit",
+        "count": 2
+      },
+      {
+        "name": "Sensor",
+        "count": 2
+      }
+    ]
   }
 ]
 

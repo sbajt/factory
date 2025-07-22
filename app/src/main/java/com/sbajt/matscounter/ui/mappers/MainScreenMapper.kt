@@ -7,6 +7,7 @@ import com.sbajt.matscounter.ui.models.InputSectionUiState
 import com.sbajt.matscounter.ui.models.ItemGroupType
 import com.sbajt.matscounter.ui.models.ItemUiState
 import com.sbajt.matscounter.ui.models.MainScreenUiState
+import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.persistentListOf
 import kotlinx.collections.immutable.toImmutableList
 import kotlinx.collections.immutable.toPersistentList
@@ -18,6 +19,11 @@ class MainScreenMapper {
             descriptionUiState = DescriptionSectionUiState(
                 selectedItem = selectedItem,
                 selectedItemCount = selectedItemCount,
+                itemUiStatList = itemDomainList.toItemUiStateList(),
+                buildingMaterialList = itemDomainList.toItemBuildingMaterialList(
+                    selectedItem = selectedItem,
+                    selectedItemCount = selectedItemCount,
+                )
             ),
             inputSectionUiState = InputSectionUiState(
                 selectedItem = selectedItem,
@@ -28,6 +34,38 @@ class MainScreenMapper {
                 .sortedWith(compareBy({ it.groupType }, { it.name }))
                 .toImmutableList()
         )
+    }
+
+    private fun Collection<ItemDomain>.toItemUiStateList(): ImmutableList<ItemUiState> = map { it.toItemUiState() }.toImmutableList()
+
+    private fun List<ItemDomain>.toItemBuildingMaterialList(
+        selectedItem: ItemUiState?,
+        selectedItemCount: Int,
+    ): ImmutableList<BuildingMaterialUiState> {
+        if (selectedItem == null) return persistentListOf()
+        val buildingMaterialMap = mutableMapOf<String, Int>()
+        selectedItem
+            .buildingMaterials
+            .map { buildingMaterial ->
+                val selectedItemDomain = this.find { it.name == selectedItem.name }
+                when {
+                    selectedItemDomain == null -> return persistentListOf()
+                    selectedItemDomain.groupType == ItemGroupType.BASIC_MATERIAL.ordinal -> {
+                        if (buildingMaterialMap.contains(selectedItemDomain.name)) {
+                            buildingMaterialMap[selectedItemDomain.name.toString()] = selectedItemCount + (buildingMaterialMap[selectedItemDomain.name.toString()] ?: 0)
+                        } else {
+                            buildingMaterialMap[selectedItemDomain.name.toString()] = selectedItemCount
+                        }
+                    }
+                }
+
+            }
+        return buildingMaterialMap.map {
+            BuildingMaterialUiState(
+                name = it.key,
+                count = it.value
+            )
+        }.toPersistentList()
     }
 
     companion object {
@@ -54,7 +92,7 @@ fun ItemDomain?.toItemUiState() = ItemUiState(
 private fun Int?.mapToGroupType(): ItemGroupType = ItemGroupType.entries
     .firstOrNull { it.ordinal == this } ?: ItemGroupType.NONE
 
-fun ItemGroupType?.mapToName() = this
+fun ItemGroupType?.getName() = this
     ?.takeIf { it != ItemGroupType.NONE }
     ?.name
     ?.lowercase()

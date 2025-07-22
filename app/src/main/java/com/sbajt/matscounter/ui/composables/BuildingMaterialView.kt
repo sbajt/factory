@@ -20,17 +20,16 @@ import com.sbajt.matscounter.ui.models.BuildingMaterialUiState
 @Composable
 fun BuildingMaterialView(
     uiState: BuildingMaterialUiState,
-    selectedItemCount: Int = 1,
+    selectedItemCount: Int,
     modifier: Modifier = Modifier
 ) {
     Row(
-        modifier = modifier.width(120.dp)
+        modifier = modifier.width(135.dp)
     ) {
         val nameText by remember(key1 = uiState.name ?: "") {
             mutableStateOf(uiState.name ?: "")
         }
         Text(
-            modifier = Modifier.weight(0.5f),
             fontFamily = FontFamily.SansSerif,
             fontSize = 12.sp,
             color = MaterialTheme.colorScheme.onSurfaceVariant,
@@ -38,7 +37,7 @@ fun BuildingMaterialView(
         )
         if (uiState.count > 0) {
             Text(
-                modifier = Modifier.weight(0.5f),
+                modifier = Modifier.weight(1f),
                 textAlign = TextAlign.End,
                 fontFamily = FontFamily.SansSerif,
                 fontSize = 12.sp,
@@ -58,5 +57,6 @@ fun BuildingMaterialView(
 fun previewBuildingMaterialView(@PreviewParameter(BuildingMaterialUiStateProvider::class) uiState: BuildingMaterialUiState) {
     BuildingMaterialView(
         uiState = uiState,
+        selectedItemCount = 0,
     )
 }

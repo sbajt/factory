@@ -5,7 +5,24 @@
     "groupType": 8,
     "priceSell": 724.0,
     "priceBuy": 0,
-    "buildMaterials": []
+    "buildMaterials": [
+      {
+        "name": "Motor",
+        "count": 1
+      },
+      {
+        "name": "Arm",
+        "count": 2
+      },
+      {
+        "name": "Conveyor",
+        "count": 1
+      },
+      {
+        "name": "Thing-a-ma-jig",
+        "count": 1
+      }
+    ]
   },
   {
     "name": "Builder: Tier 2",
@@ -13,7 +30,28 @@
     "groupType": 9,
     "priceSell": 460.8,
     "priceBuy": 0,
-    "buildMaterials": []
+    "buildMaterials": [
+      {
+        "name": "Motor",
+        "count": 1
+      },
+      {
+        "name": "Arm",
+        "count": 3
+      },
+      {
+        "name": "Conveyor",
+        "count": 1
+      },
+      {
+        "name": "Thing-a-ma-jig",
+        "count": 1
+      },
+      {
+        "name": "Widget",
+        "count": 2
+      }
+    ]
   },
   {
     "name": "Builder: Tier 3",
@@ -21,7 +59,24 @@
     "groupType": 10,
     "priceSell": 3108.48,
     "priceBuy": 0,
-    "buildMaterials": []
+    "buildMaterials": [
+      {
+        "name": "Logic unit",
+        "count": 1
+      },
+      {
+        "name": "Thing-a-ma-jig",
+        "count": 1
+      },
+      {
+        "name": "Widget",
+        "count": 4
+      },
+      {
+        "name": "Assembly line",
+        "count": 1
+      }
+    ]
   },
   {
     "name": "Builder: Tier 4",
@@ -29,7 +84,24 @@
     "groupType": 11,
     "priceSell": 267.2,
     "priceBuy": 0,
-    "buildMaterials": []
+    "buildMaterials": [
+      {
+        "name": "Widget",
+        "count": 2
+      },
+      {
+        "name": "Avd Logic unit",
+        "count": 2
+      },
+      {
+        "name": "Assembly line",
+        "count": 1
+      },
+      {
+        "name": "Sensor",
+        "count": 6
+      }
+    ]
   },
   {
     "name": "Builder: Builders",
@@ -37,7 +109,28 @@
     "groupType": 5,
     "priceSell": 267.2,
     "priceBuy": 0,
-    "buildMaterials": []
+    "buildMaterials": [
+        {
+            "name": "Arm",
+            "count": 2
+        },
+        {
+            "name": "Logic unit",
+            "count": 1
+        },
+        {
+            "name": "Thing-a-ma-jig",
+            "count": 4
+        },
+        {
+            "name": "Widget",
+            "count": 1
+        },
+        {
+            "name": "Assembly line",
+            "count": 1
+        }
+    ]
   },
   {
     "name": "Builder: Taskers",
@@ -45,7 +138,24 @@
     "groupType": 6,
     "priceSell": 267.2,
     "priceBuy": 0,
-    "buildMaterials": []
+    "buildMaterials": [
+      {
+        "name": "Thing-a-ma-jig",
+        "count": 2
+      },
+      {
+        "name": "Widget",
+        "count": 2
+      },
+      {
+        "name": "Avd logic unit",
+        "count": 1
+      },
+      {
+        "name": "Assembly line",
+        "count": 1
+      }
+    ]
   },
   {
     "name": "Builder: Universal",
@@ -53,6 +163,27 @@
     "groupType": 7,
     "priceSell": 267.2,
     "priceBuy": 0,
-    "buildMaterials": []
+    "buildMaterials": [
+      {
+        "name": "Arm",
+        "count": 4
+      },
+      {
+        "name": "Thing-a-ma-jig",
+        "count": 2
+      },
+      {
+        "name": "Widget",
+        "count": 4
+      },
+      {
+        "name": "Avd logic unit",
+        "count": 2
+      },
+      {
+        "name": "Assembly line",
+        "count": 2
+      }
+    ]
   }
 ]

@@ -5,12 +5,14 @@ import kotlinx.collections.immutable.persistentListOf
 
 data class DescriptionSectionUiState(
     val selectedItem: ItemUiState? = null,
-    val selectedItemCount: Int = 1
+    val selectedItemCount: Int = 0,
+    val itemUiStatList: List<ItemUiState> = persistentListOf(),
+    val buildingMaterialList: List<BuildingMaterialUiState> = persistentListOf()
 )
 
 data class InputSectionUiState(
     val selectedItem: ItemUiState? = null,
-    val itemCount: Int = 1,
+    val itemCount: Int = 0,
 )
 
 data class ItemUiState(

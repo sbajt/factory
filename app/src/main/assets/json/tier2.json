@@ -5,7 +5,16 @@
     "groupType": 2,
     "priceSell": 19.78,
     "priceBuy": 0,
-    "buildMaterials": []
+    "buildMaterials": [
+      {
+        "name": "Metal",
+        "count": 4
+      },
+      {
+        "name": "Hose",
+        "count": 2
+      }
+    ]
   },
   {
     "name": "Arm",
@@ -13,7 +22,20 @@
     "groupType": 2,
     "priceSell": 51.68,
     "priceBuy": 0,
-    "buildMaterials": []
+    "buildMaterials": [
+      {
+        "name": "Metal",
+        "count": 4
+      },
+      {
+        "name": "Circuit",
+        "count": 1
+      },
+      {
+        "name": "Motor",
+        "count": 2
+      }
+    ]
   },
   {
     "name": "Conveyor",
@@ -21,7 +43,24 @@
     "groupType": 2,
     "priceSell": 102.58,
     "priceBuy": 0,
-    "buildMaterials": []
+    "buildMaterials": [
+      {
+        "name": "Belt",
+        "count": 1
+      },
+      {
+        "name": "Gear",
+        "count": 2
+      },
+      {
+        "name": "Metal wheel",
+        "count": 8
+      },
+      {
+        "name": "Motor",
+        "count": 1
+      }
+    ]
   },
   {
     "name": "Lifter",
@@ -29,7 +68,28 @@
     "groupType": 2,
     "priceSell": 55.46,
     "priceBuy": 0,
-    "buildMaterials": []
+    "buildMaterials": [
+      {
+        "name": "Metal",
+        "count": 3
+      },
+      {
+        "name": "Cable",
+        "count": 2
+      },
+      {
+        "name": "Hose",
+        "count": 2
+      },
+      {
+        "name": "Motor",
+        "count": 1
+      },
+      {
+        "name": "Pump",
+        "count": 1
+      }
+    ]
   },
   {
     "name": "Logic unit",
@@ -37,7 +97,16 @@
     "groupType": 2,
     "priceSell": 17.92,
     "priceBuy": 0,
-    "buildMaterials": []
+    "buildMaterials": [
+      {
+        "name": "wire",
+        "count": 5
+      },
+      {
+        "name": "Circuit",
+        "count": 2
+      }
+    ]
   },
   {
     "name": "Mover",
@@ -45,7 +114,24 @@
     "groupType": 2,
     "priceSell": 113.65,
     "priceBuy": 0,
-    "buildMaterials": []
+    "buildMaterials": [
+      {
+        "name": "Metal",
+        "count": 3
+      },
+      {
+        "name": "Gear",
+        "count": 4
+      },
+      {
+        "name": "Metal wheel",
+        "count": 4
+      },
+      {
+        "name": "Motor",
+        "count": 2
+      }
+    ]
   },
   {
     "name": "Road",
@@ -53,7 +139,16 @@
     "groupType": 2,
     "priceSell": 49.8,
     "priceBuy": 0,
-    "buildMaterials": []
+    "buildMaterials": [
+      {
+        "name": "Concrete",
+        "count": 4
+      },
+      {
+        "name": "Avd concrete",
+        "count": 2
+      }
+    ]
   },
   {
     "name": "Support",
@@ -61,7 +156,16 @@
     "groupType": 2,
     "priceSell": 40.53,
     "priceBuy": 0,
-    "buildMaterials": []
+    "buildMaterials": [
+      {
+        "name": "Metal",
+        "count": 2
+      },
+      {
+        "name": "Avd concrete",
+        "count": 2
+      }
+    ]
   },
   {
     "name": "Thing-a-ma-jig",
@@ -69,7 +173,24 @@
     "groupType": 2,
     "priceSell": 61.02,
     "priceBuy": 0,
-    "buildMaterials": []
+    "buildMaterials": [
+      {
+        "name": "Circuit",
+        "count": 3
+      },
+      {
+        "name": "Hose",
+        "count": 2
+      },
+      {
+        "name": "Motor",
+        "count": 1
+      },
+      {
+        "name": "Pump",
+        "count": 2
+      }
+    ]
   },
   {
     "name": "Widget",
@@ -77,7 +198,24 @@
     "groupType": 2,
     "priceSell": 14.78,
     "priceBuy": 0,
-    "buildMaterials": []
+    "buildMaterials": [
+      {
+        "name": "Metal",
+        "count": 1
+      },
+      {
+        "name": "Plastic",
+        "count": 4
+      },
+      {
+        "name": "Wire",
+        "count": 2
+      },
+      {
+        "name": "Circuit",
+        "count": 1
+      }
+    ]
   },
   {
     "name": "Toy car",
@@ -85,7 +223,28 @@
     "groupType": 2,
     "priceSell": 33.16,
     "priceBuy": 0,
-    "buildMaterials": []
+    "buildMaterials": [
+      {
+        "name": "Metal",
+        "count": 1
+      },
+      {
+        "name": "Paint",
+        "count": 1
+      },
+      {
+        "name": "Plastic",
+        "count": 3
+      },
+      {
+        "name": "Plastic wheel",
+        "count": 4
+      },
+      {
+        "name": "Box",
+        "count": 1
+      }
+    ]
   },
   {
     "name": "Water gun",
@@ -93,6 +252,23 @@
     "groupType": 2,
     "priceSell": 27.4,
     "priceBuy": 0,
-    "buildMaterials": []
+    "buildMaterials": [
+      {
+        "name": "Paint",
+        "count": 1
+      },
+      {
+        "name": "Plastic",
+        "count": 6
+      },
+      {
+        "name": "Hose",
+        "count": 2
+      },
+      {
+        "name": "Box",
+        "count": 1
+      }
+    ]
   }
 ]

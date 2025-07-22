@@ -5,7 +5,6 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import com.sbajt.matscounter.ui.models.DescriptionSectionUiState
@@ -53,11 +52,8 @@ fun ContentScreen(
     modifier: Modifier = Modifier
 ) {
     Column(modifier = modifier.fillMaxSize()) {
-        DescriptionSection(
-            uiState = descriptionUiState,
-            itemUiStatList = itemUiStateList.toImmutableList(),
-        )
-        descriptionUiState.selectedItem?.run{
+        DescriptionSection(uiState = descriptionUiState)
+        descriptionUiState.selectedItem?.run {
             InputSection(
                 uiState = inputSectionUiState,
                 onCountChange = onCountChange,

@@ -5,7 +5,28 @@
     "groupType": 4,
     "priceSell": 724.0,
     "priceBuy": 0,
-    "buildMaterials": []
+    "buildMaterials": [
+      {
+        "name": "Rare metal",
+        "count": 4
+      },
+      {
+        "name": "Wire",
+        "count": 8
+      },
+      {
+        "name": "Circuit",
+        "count": 2
+      },
+      {
+        "name": "Avd logic unit",
+        "count": 1
+      },
+      {
+        "name": "Sensor",
+        "count": 6
+      }
+    ]
   },
   {
     "name": "Drone",
@@ -13,7 +34,28 @@
     "groupType": 4,
     "priceSell": 460.8,
     "priceBuy": 0,
-    "buildMaterials": []
+    "buildMaterials": [
+      {
+        "name": "Plastic",
+        "count": 4
+      },
+      {
+        "name": "Rare metal",
+        "count": 1
+      },
+      {
+        "name": "Motor",
+        "count": 4
+      },
+      {
+        "name": "Avd logic unit",
+        "count": 1
+      },
+      {
+        "name": "Sensor",
+        "count": 2
+      }
+    ]
   },
   {
     "name": "Jet",
@@ -21,7 +63,28 @@
     "groupType": 4,
     "priceSell": 3108.48,
     "priceBuy": 0,
-    "buildMaterials": []
+    "buildMaterials": [
+      {
+        "name": "Metal",
+        "count": 24
+      },
+      {
+        "name": "Wire",
+        "count": 18
+      },
+      {
+        "name": "Avd logic unit",
+        "count": 6
+      },
+      {
+        "name": "Jet engine",
+        "count": 4
+      },
+      {
+        "name": "Sensor",
+        "count": 8
+      }
+    ]
   },
   {
     "name": "Oculus rift",
@@ -29,6 +92,27 @@
     "groupType": 4,
     "priceSell": 267.2,
     "priceBuy": 0,
-    "buildMaterials": []
+    "buildMaterials": [
+      {
+        "name": "Plastic",
+        "count": 2
+      },
+      {
+        "name": "Rare metal",
+        "count": 2
+      },
+      {
+        "name": "Wire",
+        "count": 4
+      },
+      {
+        "name": "Widget",
+        "count": 2
+      },
+      {
+        "name": "Sensor",
+        "count": 2
+      }
+    ]
   }
 ]
