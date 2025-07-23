@@ -20,9 +20,8 @@ class MainScreenMapper {
                 selectedItem = selectedItem,
                 selectedItemCount = selectedItemCount,
                 itemUiStatList = itemDomainList.toItemUiStateList(),
-                buildingMaterialList = itemDomainList.toItemBuildingMaterialList(
-                    selectedItem = selectedItem,
-                    selectedItemCount = selectedItemCount,
+                buildingMaterialList = selectedItem.toItemBuildingMaterialList(
+                    itemDomainList = itemDomainList,
                 )
             ),
             inputSectionUiState = InputSectionUiState(
@@ -38,34 +37,54 @@ class MainScreenMapper {
 
     private fun Collection<ItemDomain>.toItemUiStateList(): ImmutableList<ItemUiState> = map { it.toItemUiState() }.toImmutableList()
 
-    private fun List<ItemDomain>.toItemBuildingMaterialList(
-        selectedItem: ItemUiState?,
-        selectedItemCount: Int,
+    private fun ItemUiState?.toItemBuildingMaterialList(
+        itemDomainList: List<ItemDomain>,
     ): ImmutableList<BuildingMaterialUiState> {
-        if (selectedItem == null) return persistentListOf()
-        val buildingMaterialMap = mutableMapOf<String, Int>()
-        selectedItem
-            .buildingMaterials
-            .map { buildingMaterial ->
-                val selectedItemDomain = this.find { it.name == selectedItem.name }
-                when {
-                    selectedItemDomain == null -> return persistentListOf()
-                    selectedItemDomain.groupType == ItemGroupType.BASIC_MATERIAL.ordinal -> {
-                        if (buildingMaterialMap.contains(selectedItemDomain.name)) {
-                            buildingMaterialMap[selectedItemDomain.name.toString()] = selectedItemCount + (buildingMaterialMap[selectedItemDomain.name.toString()] ?: 0)
-                        } else {
-                            buildingMaterialMap[selectedItemDomain.name.toString()] = selectedItemCount
-                        }
-                    }
-                }
+        val basicBuildingMaterialsMap: MutableMap<String, Int> = mutableMapOf()
+        processBuildingMaterials(
+            buildingMaterials = this?.buildingMaterials ?: persistentListOf(),
+            itemDomainList = itemDomainList,
+            basicBuildingMaterialsMap = basicBuildingMaterialsMap
 
-            }
-        return buildingMaterialMap.map {
+        )
+        return basicBuildingMaterialsMap.map {
             BuildingMaterialUiState(
                 name = it.key,
                 count = it.value
             )
         }.toPersistentList()
+    }
+
+    fun processBuildingMaterials(
+        buildingMaterials: List<BuildingMaterialUiState>,
+        itemDomainList: List<ItemDomain>,
+        basicBuildingMaterialsMap: MutableMap<String, Int>,
+    ): Int {
+        buildingMaterials.map {
+            val itemUiState = itemDomainList.find { item -> item.name == it.name }?.toItemUiState()
+            when {
+                itemUiState?.groupType == ItemGroupType.BASIC_MATERIAL
+                    && it.name != null -> {
+                    basicBuildingMaterialsMap.put(
+                        key = it.name,
+                        value = (basicBuildingMaterialsMap[it.name] ?: 1) * it.count
+                    )
+                }
+
+                itemUiState?.groupType != null -> {
+                    processBuildingMaterials(
+                        buildingMaterials = itemUiState.buildingMaterials,
+                        itemDomainList = itemDomainList,
+                        basicBuildingMaterialsMap = basicBuildingMaterialsMap
+                    )
+                }
+
+                else -> {
+                    return 0
+                }
+            }
+        }
+        return 0
     }
 
     companion object {
@@ -80,7 +99,7 @@ class MainScreenMapper {
 fun ItemDomain?.toItemUiState() = ItemUiState(
     name = this?.name ?: "",
     imageName = this?.imageName ?: "",
-    groupType = this?.groupType.mapToGroupType(),
+    groupType = this?.groupType.toGroupType(),
     buildingMaterials = this?.buildMaterials?.map {
         BuildingMaterialUiState(
             name = it.name,
@@ -89,7 +108,7 @@ fun ItemDomain?.toItemUiState() = ItemUiState(
     }?.toPersistentList() ?: persistentListOf()
 )
 
-private fun Int?.mapToGroupType(): ItemGroupType = ItemGroupType.entries
+private fun Int?.toGroupType(): ItemGroupType = ItemGroupType.entries
     .firstOrNull { it.ordinal == this } ?: ItemGroupType.NONE
 
 fun ItemGroupType?.getName() = this
