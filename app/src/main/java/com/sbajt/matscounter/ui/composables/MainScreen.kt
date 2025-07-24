@@ -44,16 +44,18 @@ fun MainScreen(
 
 @Composable
 fun ContentScreen(
-    descriptionUiState: DescriptionSectionUiState,
-    inputSectionUiState: InputSectionUiState,
+    descriptionUiState: DescriptionSectionUiState?,
+    inputSectionUiState: InputSectionUiState?,
     itemUiStateList: List<ItemUiState>,
     onItemSelected: OnItemSelected,
     onCountChange: OnCountChange,
     modifier: Modifier = Modifier
 ) {
     Column(modifier = modifier.fillMaxSize()) {
-        DescriptionSection(uiState = descriptionUiState)
-        descriptionUiState.selectedItem?.run {
+        descriptionUiState?.run {
+            DescriptionSection(uiState = descriptionUiState)
+        }
+        inputSectionUiState?.selectedItem?.run {
             InputSection(
                 uiState = inputSectionUiState,
                 onCountChange = onCountChange,

@@ -4,7 +4,6 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -18,8 +17,6 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.sbajt.matscounter.ui.models.BuildingMaterialUiState
 import com.sbajt.matscounter.ui.models.DescriptionSectionUiState
-import com.sbajt.matscounter.ui.models.ItemGroupType
-import com.sbajt.matscounter.ui.models.ItemUiState
 import com.sbajt.matscounter.ui.theme.MatsCounterTheme
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.persistentListOf
@@ -36,18 +33,16 @@ fun DescriptionSection(
             uiState = uiState.selectedItem,
             onItemSelected = { _, _ -> },
         )
-        if (uiState.selectedItem != null) {
-            MaterialsListView(
-                buildingMaterialsList = uiState.selectedItem.buildingMaterials,
-                selectedItemCount = uiState.selectedItemCount,
-                titleText = "Materials:"
-            )
-            MaterialsListView(
-                buildingMaterialsList = uiState.buildingMaterialList.toImmutableList(),
-                selectedItemCount = uiState.selectedItemCount,
-                titleText = "Basic materials:"
-            )
-        }
+        MaterialsListView(
+            buildingMaterialsList = uiState.selectedItem?.buildingMaterials ?: persistentListOf(),
+            selectedItemCount = uiState.selectedItemCount,
+            titleText = "Materials:"
+        )
+        MaterialsListView(
+            buildingMaterialsList = uiState.buildingMaterialList.toImmutableList(),
+            selectedItemCount = uiState.selectedItemCount,
+            titleText = "Basic materials:"
+        )
     }
 }
 

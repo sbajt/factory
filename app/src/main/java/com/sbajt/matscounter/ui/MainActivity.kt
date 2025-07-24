@@ -1,7 +1,6 @@
 package com.sbajt.matscounter.ui
 
 import android.os.Bundle
-import android.os.MessageQueue
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.viewModels
@@ -14,8 +13,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.lifecycle.Lifecycle
-import androidx.lifecycle.LifecycleOwner
-import androidx.lifecycle.compose.LocalLifecycleOwner
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
@@ -24,7 +21,7 @@ import com.sbajt.matscounter.ui.models.MainScreenUiState
 import com.sbajt.matscounter.ui.theme.MatsCounterTheme
 import kotlinx.coroutines.launch
 
-class MainActivity  : ComponentActivity() {
+class MainActivity : ComponentActivity() {
 
     private val viewModel: MainScreenViewModel by viewModels()
 
@@ -52,7 +49,11 @@ class MainActivity  : ComponentActivity() {
                 ),
                 uiState = mainUiState,
                 onItemSelected = { selectedItemName, selectedItemGroupType ->
-                    viewModel.updateSelectedItem(selectedItemName, selectedItemGroupType, (mainUiState as MainScreenUiState.Content).descriptionUiState.selectedItemCount)
+                    viewModel.updateSelectedItem(
+                        selectedItemName = selectedItemName,
+                        selectedItemGroupType = selectedItemGroupType,
+                        (mainUiState as MainScreenUiState.Content).inputSectionUiState?.itemCount ?: 0
+                    )
                 },
                 onCountChange = { newItemCount ->
                     viewModel.updateSelectedItemCount(newItemCount)

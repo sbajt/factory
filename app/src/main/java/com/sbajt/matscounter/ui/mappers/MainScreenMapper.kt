@@ -1,5 +1,8 @@
 package com.sbajt.matscounter.ui.mappers
 
+import android.util.DisplayMetrics
+import androidx.compose.ui.unit.Dp
+import androidx.compose.ui.unit.dp
 import com.sbajt.matscounter.domain.models.ItemDomain
 import com.sbajt.matscounter.ui.models.BuildingMaterialUiState
 import com.sbajt.matscounter.ui.models.DescriptionSectionUiState
@@ -15,23 +18,28 @@ class MainScreenMapper {
 
     fun mapToUiState(inputData: InputData): MainScreenUiState = with(inputData) {
         MainScreenUiState.Content(
-            descriptionUiState = DescriptionSectionUiState(
-                selectedItem = selectedItem,
-                selectedItemCount = selectedItemCount,
-                itemUiStatList = itemDomainList.toItemUiStateList(),
-                buildingMaterialList = selectedItem.toItemBuildingMaterialList(
-                    itemDomainList = itemDomainList,
+            descriptionUiState = inputData.selectedItem?.run {
+                DescriptionSectionUiState(
+                    selectedItem = selectedItem,
+                    selectedItemCount = selectedItemCount,
+                    itemUiStatList = itemDomainList.toItemUiStateList(),
+                    buildingMaterialList = selectedItem.toItemBuildingMaterialList(
+                        itemDomainList = itemDomainList,
+                    )
                 )
-            ),
-            inputSectionUiState = InputSectionUiState(
-                selectedItem = selectedItem,
-                itemCount = selectedItemCount
-            ),
+            },
+            inputSectionUiState = inputData.selectedItem?.run {
+                InputSectionUiState(
+                    selectedItem = selectedItem,
+                    itemCount = selectedItemCount
+                )
+            },
             itemUiStateList = itemDomainList
                 .mapNotNull { it.toItemUiState() }
                 .sortedWith(compareBy({ it.groupType }, { it.name }))
                 .toImmutableList()
         )
+
     }
 
     private fun Collection<ItemDomain>.toItemUiStateList(): ImmutableList<ItemUiState> = mapNotNull {
@@ -121,5 +129,7 @@ fun ItemGroupType?.getName() = this
     ?.replace("_", " ")
     ?: ""
 
-
+fun Int?.pxToDp(displayMetrics: DisplayMetrics): Dp = this?.let {
+    (it / (displayMetrics.xdpi / DisplayMetrics.DENSITY_DEFAULT)).dp
+} ?: 0.dp
 

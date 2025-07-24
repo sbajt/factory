@@ -43,6 +43,7 @@ enum class ItemGroupType {
     TASKER_BUY,
     TASKER_SELL,
     TASKER_DELIVERY,
+    ALL,
     NONE,
 }
 
