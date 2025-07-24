@@ -57,4 +57,6 @@ dependencies {
     implementation(libs.koin.android)
     implementation(libs.koin.androidx.compose)
     implementation(libs.numberPicker)
+    implementation(libs.accompanist.pager)
+    implementation(libs.accompanist.pager.indicators)
 }

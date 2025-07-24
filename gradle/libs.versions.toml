@@ -8,9 +8,11 @@ lifecycleRuntimeKtx = "2.9.2"
 activityCompose = "1.10.1"
 composeBom = "2025.07.00"
 uiTooling = "1.8.3"
-coil = "3.2.0"
+coil = "3.3.0"
 koin = "4.1.0"
 numberPicker = "1.0.3"
+accompanistPager = "0.36.0"
+accompanistPagerIndicator = "0.36.0"
 
 
 [libraries]
@@ -30,6 +32,8 @@ kotlinx-collections = { group = "org.jetbrains.kotlinx", name = "kotlinx-collect
 koin-android = { group = "io.insert-koin", name = "koin-android", version.ref = "koin" }
 koin-androidx-compose = { group = "io.insert-koin", name = "koin-androidx-compose", version.ref = "koin" }
 numberPicker = {group = "com.chargemap.compose", name = "numberpicker", version.ref = "numberPicker"}
+accompanist_pager = { group = "com.google.accompanist", name = "accompanist-pager", version.ref = "accompanistPager" }
+accompanist_pager_indicators = { group = "com.google.accompanist", name = "accompanist-pager-indicators", version.ref = "accompanistPagerIndicator" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
