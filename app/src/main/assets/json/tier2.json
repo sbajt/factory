@@ -99,7 +99,7 @@
     "priceBuy": 0,
     "buildMaterials": [
       {
-        "name": "wire",
+        "name": "Wire",
         "count": 5
       },
       {

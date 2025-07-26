@@ -77,16 +77,28 @@ class MainScreenMapper {
         multiplier: Int = 1,
     ) {
         buildingMaterials.map { buildingMaterial ->
-            val itemUiState = itemDomainList.find { item ->
-                item.name == buildingMaterial.name
-                        && item.groupType == materialGroupTypeLimit.ordinal
-            }
+            val itemUiState = itemDomainList.find { item -> item.name == buildingMaterial.name }
                 .toItemUiState()
-            if (buildingMaterial.name != null && itemUiState != null) {
-                basicBuildingMaterialsMap[buildingMaterial.name] =
-                    (multiplier * buildingMaterial.count) +
-                            (basicBuildingMaterialsMap[buildingMaterial.name] ?: 0)
+            if (itemUiState == null) {
+                return
+            } else {
+                if (
+                    itemUiState.groupType == materialGroupTypeLimit
+                    && buildingMaterial.name != null
+                ) {
+                    basicBuildingMaterialsMap[buildingMaterial.name] =
+                        (multiplier * buildingMaterial.count) +
+                                (basicBuildingMaterialsMap[buildingMaterial.name] ?: 0)
 
+                } else {
+                    processBuildingMaterials(
+                        buildingMaterials = itemUiState.buildingMaterials,
+                        itemDomainList = itemDomainList,
+                        materialGroupTypeLimit = materialGroupTypeLimit,
+                        basicBuildingMaterialsMap = basicBuildingMaterialsMap,
+                        multiplier = multiplier * buildingMaterial.count,
+                    )
+                }
             }
         }
     }
