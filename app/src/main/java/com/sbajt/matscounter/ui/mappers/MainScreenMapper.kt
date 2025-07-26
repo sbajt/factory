@@ -42,9 +42,10 @@ class MainScreenMapper {
 
     }
 
-    private fun Collection<ItemDomain>.toItemUiStateList(): ImmutableList<ItemUiState> = mapNotNull {
-        it.toItemUiState()
-    }.toImmutableList()
+    private fun Collection<ItemDomain>.toItemUiStateList(): ImmutableList<ItemUiState> =
+        mapNotNull {
+            it.toItemUiState()
+        }.toImmutableList()
 
     private fun ItemUiState?.toItemBuildingMaterialList(
         itemDomainList: List<ItemDomain>,
@@ -55,7 +56,6 @@ class MainScreenMapper {
                 buildingMaterials = this.buildingMaterials,
                 itemDomainList = itemDomainList,
                 basicBuildingMaterialsMap = basicBuildingMaterialMap,
-                multiplier = 1,
             )
         }
         return basicBuildingMaterialMap
@@ -69,26 +69,24 @@ class MainScreenMapper {
             .toPersistentList()
     }
 
-    fun processBuildingMaterials(
+    private fun processBuildingMaterials(
         buildingMaterials: List<BuildingMaterialUiState>,
         itemDomainList: List<ItemDomain>,
+        materialGroupTypeLimit: ItemGroupType = ItemGroupType.BASIC_MATERIAL,
         basicBuildingMaterialsMap: MutableMap<String, Int>,
-        multiplier: Int,
+        multiplier: Int = 1,
     ) {
-        buildingMaterials.map {
-            val itemUiState = itemDomainList.find { item -> item.name == it.name }.toItemUiState()
-            if (itemUiState != null && it.name != null) {
-                val buildingMaterialCount = basicBuildingMaterialsMap.getOrDefault(it.name, 0)
-                if (itemUiState.groupType == ItemGroupType.BASIC_MATERIAL) {
-                    basicBuildingMaterialsMap[it.name] = buildingMaterialCount + multiplier * it.count
-                } else {
-                    processBuildingMaterials(
-                        buildingMaterials = itemUiState.buildingMaterials.toPersistentList(),
-                        itemDomainList = itemDomainList,
-                        basicBuildingMaterialsMap = basicBuildingMaterialsMap,
-                        multiplier = multiplier * it.count,
-                    )
-                }
+        buildingMaterials.map { buildingMaterial ->
+            val itemUiState = itemDomainList.find { item ->
+                item.name == buildingMaterial.name
+                        && item.groupType == materialGroupTypeLimit.ordinal
+            }
+                .toItemUiState()
+            if (buildingMaterial.name != null && itemUiState != null) {
+                basicBuildingMaterialsMap[buildingMaterial.name] =
+                    (multiplier * buildingMaterial.count) +
+                            (basicBuildingMaterialsMap[buildingMaterial.name] ?: 0)
+
             }
         }
     }
