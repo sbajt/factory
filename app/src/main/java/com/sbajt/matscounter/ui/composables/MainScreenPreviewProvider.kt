@@ -1,48 +1,35 @@
 package com.sbajt.matscounter.ui.composables
 
 import androidx.compose.ui.tooling.preview.PreviewParameterProvider
-import com.sbajt.matscounter.ui.models.DescriptionSectionUiState
-import com.sbajt.matscounter.ui.models.InputSectionUiState
 import com.sbajt.matscounter.ui.models.MainScreenUiState
-import kotlinx.collections.immutable.persistentListOf
 
 class MainScreenPreviewProvider : PreviewParameterProvider<MainScreenUiState> {
 
     override val values: Sequence<MainScreenUiState> = sequenceOf(
-        loadingItem,
-        emptyItem,
+        loading,
+        empty,
         emptyContent,
-        commonItem,
-        commonWithSelectedItem,
+        itemUiStateList,
+        itemDetails,
+        itemBuildPath
     )
 
     companion object {
 
-        val loadingItem = MainScreenUiState.Loading
+        val loading = MainScreenUiState.Loading
 
-        val emptyItem = MainScreenUiState.Empty
+        val empty = MainScreenUiState.Empty
 
-        val emptyContent = MainScreenUiState.Content(
-            descriptionUiState = DescriptionSectionUiState(),
-            inputSectionUiState = InputSectionUiState(),
-            itemUiStateList = persistentListOf()
+        val emptyContent = MainScreenUiState.Content()
+
+        val itemUiStateList = MainScreenUiState.Content(
+            itemUiStateList = ItemUiStateProvider.mockItemUiStateList()
         )
-
-        val commonItem = MainScreenUiState.Content(
-            descriptionUiState = DescriptionSectionUiState(),
-            inputSectionUiState = InputSectionUiState(),
-            itemUiStateList = ItemUiStateProvider.mockItemUiStateList(),
+        val itemDetails = MainScreenUiState.Content(
+            itemDetailsUiState = ItemDetailsUiStateProvider.defaultItemDetailsScreenUiState
         )
-
-        val commonWithSelectedItem = MainScreenUiState.Content(
-            descriptionUiState = DescriptionSectionUiState(
-                selectedItem = ItemUiStateProvider.defaultItemUiState
-            ),
-            inputSectionUiState = InputSectionUiState(
-                selectedItem = ItemUiStateProvider.defaultItemUiState,
-                itemCount = 1
-            ),
-            itemUiStateList = ItemUiStateProvider.mockItemUiStateList(),
+        val itemBuildPath = MainScreenUiState.Content(
+            itemBuildPathUiState = ItemBuildPathUiStateProvider.defaultBuildPathUiState
         )
     }
 }

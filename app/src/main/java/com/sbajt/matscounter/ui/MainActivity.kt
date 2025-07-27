@@ -20,10 +20,11 @@ import com.sbajt.matscounter.ui.composables.MainScreen
 import com.sbajt.matscounter.ui.models.MainScreenUiState
 import com.sbajt.matscounter.ui.theme.MatsCounterTheme
 import kotlinx.coroutines.launch
+import org.koin.android.ext.android.inject
 
 class MainActivity : ComponentActivity() {
 
-    private val viewModel: MainScreenViewModel by viewModels()
+    private val viewModel: MainScreenViewModel by inject()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -37,7 +38,9 @@ class MainActivity : ComponentActivity() {
     }
 
     @Composable
-    private fun setupContent(modifier: Modifier = Modifier) {
+    private fun setupContent(
+        modifier: Modifier = Modifier
+    ) {
         MatsCounterTheme {
             val mainUiState by viewModel.uiState.collectAsStateWithLifecycle()
             val topPadding = WindowInsets.statusBars.asPaddingValues()
@@ -49,10 +52,12 @@ class MainActivity : ComponentActivity() {
                 ),
                 uiState = mainUiState,
                 onItemSelected = { selectedItemName, selectedItemGroupType ->
+                    val selectedItemCount =
+                        (mainUiState as MainScreenUiState.Content).itemUiStateList.size
                     viewModel.updateSelectedItem(
                         selectedItemName = selectedItemName,
                         selectedItemGroupType = selectedItemGroupType,
-                        (mainUiState as MainScreenUiState.Content).inputSectionUiState?.itemCount ?: 0
+                        selectedItemCount = selectedItemCount
                     )
                 },
                 onCountChange = { newItemCount ->

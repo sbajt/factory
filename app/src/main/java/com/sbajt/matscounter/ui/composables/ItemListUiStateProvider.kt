@@ -6,7 +6,7 @@ import com.sbajt.matscounter.ui.models.ItemUiState
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.toPersistentList
 
-class GridSectionUiStateProvider : PreviewParameterProvider<ImmutableList<ItemUiState>> {
+class ItemListUiStateProvider : PreviewParameterProvider<ImmutableList<ItemUiState>> {
 
     override val values: Sequence<ImmutableList<ItemUiState>> = sequenceOf(
         defaultGridSectionUiState,

@@ -16,33 +16,37 @@ import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.sbajt.matscounter.ui.models.BuildingMaterialUiState
-import com.sbajt.matscounter.ui.models.DescriptionSectionUiState
+import com.sbajt.matscounter.ui.models.ItemDetailsScreenUiState
 import com.sbajt.matscounter.ui.theme.MatsCounterTheme
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.persistentListOf
 import kotlinx.collections.immutable.toImmutableList
 
 @Composable
-fun DescriptionSection(
-    uiState: DescriptionSectionUiState,
+fun ItemDetailsScreen(
+    uiState: ItemDetailsScreenUiState,
+    onCountChange: OnCountChange,
     modifier: Modifier = Modifier
 ) {
-    Row(modifier = modifier, horizontalArrangement = Arrangement.Start) {
-        ItemView(
-            modifier = Modifier.padding(start = 8.dp, top = 8.dp),
-            uiState = uiState.selectedItem,
-            onItemSelected = { _, _ -> },
-        )
-        MaterialsListView(
-            buildingMaterialsList = uiState.selectedItem?.buildingMaterials ?: persistentListOf(),
-            selectedItemCount = uiState.selectedItemCount,
-            titleText = "Materials:"
-        )
-        MaterialsListView(
-            buildingMaterialsList = uiState.buildingMaterialList.toImmutableList(),
-            selectedItemCount = uiState.selectedItemCount,
-            titleText = "Basic materials:"
-        )
+    Column(modifier = modifier) {
+        Row(modifier = modifier, horizontalArrangement = Arrangement.Start) {
+            ItemView(
+                modifier = Modifier.padding(start = 8.dp, top = 8.dp),
+                uiState = uiState.selectedItem,
+                onItemSelected = { _, _ -> },
+            )
+            MaterialsListView(
+                buildingMaterialsList = uiState.selectedItem?.buildingMaterials
+                    ?: persistentListOf(),
+                selectedItemCount = uiState.selectedItemCount,
+                titleText = "Materials:"
+            )
+            MaterialsListView(
+                buildingMaterialsList = uiState.buildingMaterialList.toImmutableList(),
+                selectedItemCount = uiState.selectedItemCount,
+                titleText = "Basic materials:"
+            )
+        }
     }
 }
 
@@ -89,10 +93,11 @@ private fun NoMaterialsView() {
 
 @PreviewLightDark
 @Composable
-fun DescriptionSectionPreview(@PreviewParameter(DescriptionSectionUiStateProvider::class) uiState: DescriptionSectionUiState) {
+fun DescriptionSectionPreview(@PreviewParameter(ItemDetailsUiStateProvider::class) uiState: ItemDetailsScreenUiState) {
     MatsCounterTheme {
-        DescriptionSection(
+        ItemDetailsScreen(
             uiState = uiState,
+            onCountChange = {}
         )
     }
 }

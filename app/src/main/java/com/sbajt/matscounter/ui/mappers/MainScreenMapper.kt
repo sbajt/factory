@@ -5,8 +5,8 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.sbajt.matscounter.domain.models.ItemDomain
 import com.sbajt.matscounter.ui.models.BuildingMaterialUiState
-import com.sbajt.matscounter.ui.models.DescriptionSectionUiState
-import com.sbajt.matscounter.ui.models.InputSectionUiState
+import com.sbajt.matscounter.ui.models.ItemDetailsScreenUiState
+import com.sbajt.matscounter.ui.models.ItemBuildPathUiState
 import com.sbajt.matscounter.ui.models.ItemGroupType
 import com.sbajt.matscounter.ui.models.ItemUiState
 import com.sbajt.matscounter.ui.models.MainScreenUiState
@@ -18,8 +18,12 @@ class MainScreenMapper {
 
     fun mapToUiState(inputData: InputData): MainScreenUiState = with(inputData) {
         MainScreenUiState.Content(
-            descriptionUiState = inputData.selectedItem?.run {
-                DescriptionSectionUiState(
+            itemUiStateList = itemDomainList
+                .mapNotNull { it.toItemUiState() }
+                .sortedWith(compareBy({ it.groupType }, { it.name }))
+                .toImmutableList(),
+            itemDetailsUiState = inputData.selectedItem?.run {
+                ItemDetailsScreenUiState(
                     selectedItem = selectedItem,
                     selectedItemCount = selectedItemCount,
                     itemUiStatList = itemDomainList.toItemUiStateList(),
@@ -28,16 +32,11 @@ class MainScreenMapper {
                     )
                 )
             },
-            inputSectionUiState = inputData.selectedItem?.run {
-                InputSectionUiState(
-                    selectedItem = selectedItem,
-                    itemCount = selectedItemCount
+            itemBuildPathUiState = inputData.selectedItem?.let {
+                ItemBuildPathUiState(
+                    selectedItem = it,
                 )
-            },
-            itemUiStateList = itemDomainList
-                .mapNotNull { it.toItemUiState() }
-                .sortedWith(compareBy({ it.groupType }, { it.name }))
-                .toImmutableList()
+            }
         )
 
     }

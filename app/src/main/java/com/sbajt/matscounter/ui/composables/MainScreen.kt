@@ -1,19 +1,21 @@
 package com.sbajt.matscounter.ui.composables
 
-import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.compose.ui.tooling.preview.PreviewParameter
-import com.sbajt.matscounter.ui.models.DescriptionSectionUiState
-import com.sbajt.matscounter.ui.models.InputSectionUiState
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.composable
+import androidx.navigation.compose.rememberNavController
+import androidx.navigation.createGraph
 import com.sbajt.matscounter.ui.models.ItemGroupType
-import com.sbajt.matscounter.ui.models.ItemUiState
 import com.sbajt.matscounter.ui.models.MainScreenUiState
+import com.sbajt.matscounter.ui.navigation.ItemBuildComponents
+import com.sbajt.matscounter.ui.navigation.ItemDetails
+import com.sbajt.matscounter.ui.navigation.ItemList
 import com.sbajt.matscounter.ui.theme.MatsCounterTheme
-import kotlinx.collections.immutable.toImmutableList
 
 typealias OnItemSelected = (String?, ItemGroupType?) -> Unit
 typealias OnCountChange = (Int) -> Unit
@@ -32,40 +34,60 @@ fun MainScreen(
             is MainScreenUiState.Loading -> LoadingScreen()
             is MainScreenUiState.Empty -> EmptyScreen()
             is MainScreenUiState.Content -> ContentScreen(
-                descriptionUiState = uiState.descriptionUiState,
-                inputSectionUiState = uiState.inputSectionUiState,
-                itemUiStateList = uiState.itemUiStateList,
+                uiState = uiState,
                 onItemSelected = onItemSelected,
-                onCountChange = onCountChange,
+                onCountChange = onCountChange
             )
         }
     }
 }
 
+
 @Composable
 fun ContentScreen(
-    descriptionUiState: DescriptionSectionUiState?,
-    inputSectionUiState: InputSectionUiState?,
-    itemUiStateList: List<ItemUiState>,
+    uiState: MainScreenUiState.Content,
     onItemSelected: OnItemSelected,
     onCountChange: OnCountChange,
     modifier: Modifier = Modifier
 ) {
-    Column(modifier = modifier.fillMaxSize()) {
-        descriptionUiState?.run {
-            DescriptionSection(uiState = descriptionUiState)
+    val navController = rememberNavController()
+    Surface {
+        NavHost(
+            modifier = modifier,
+            navController = navController,
+            startDestination = ItemList
+        ) {
+            composable<ItemList> {
+                if (uiState.itemUiStateList.isNotEmpty()) {
+                    ItemListScree(
+                        uiState = uiState.itemUiStateList,
+                        onItemSelected = onItemSelected,
+                    )
+                } else {
+                    EmptyScreen()
+                }
+            }
+            composable<ItemDetails> {
+                uiState.itemDetailsUiState?.let {
+                    ItemDetailsScreen(
+                        uiState = it,
+                        onCountChange = onCountChange
+                    )
+                } ?: EmptyScreen()
+            }
+            composable<ItemBuildComponents> {
+                uiState.itemBuildPathUiState?.let {
+                    ItemBuildPathScreen(
+                        uiState = it,
+                    )
+                } ?: EmptyScreen()
+            }
         }
-        inputSectionUiState?.selectedItem?.run {
-            InputSection(
-                uiState = inputSectionUiState,
-                onCountChange = onCountChange,
-            )
-        }
-        GridSection(
-            modifier = Modifier.weight(1f),
-            uiState = itemUiStateList.toImmutableList(),
-            onItemSelected = onItemSelected,
-        )
+    }
+    navController.graph = navController.createGraph(startDestination = ItemList) {
+        composable<ItemList> {}
+        composable<ItemDetails> {}
+        composable<ItemBuildComponents> {}
     }
 }
 

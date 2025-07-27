@@ -3,7 +3,7 @@ package com.sbajt.matscounter.ui.models
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.persistentListOf
 
-data class DescriptionSectionUiState(
+data class ItemDetailsScreenUiState(
     val selectedItem: ItemUiState? = null,
     val selectedItemCount: Int = 0,
     val itemUiStatList: List<ItemUiState> = persistentListOf(),
