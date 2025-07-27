@@ -2,7 +2,7 @@
   {
     "name": "Air gun",
     "imageRes": "ic_air_gun",
-    "groupType": 2,
+    "groupType": 14,
     "priceSell": 19.78,
     "priceBuy": 0,
     "buildMaterials": [
@@ -19,7 +19,7 @@
   {
     "name": "Arm",
     "imageRes": "ic_arm",
-    "groupType": 2,
+    "groupType": 14,
     "priceSell": 51.68,
     "priceBuy": 0,
     "buildMaterials": [
@@ -40,7 +40,7 @@
   {
     "name": "Conveyor",
     "imageRes": "ic_conveyor",
-    "groupType": 2,
+    "groupType": 14,
     "priceSell": 102.58,
     "priceBuy": 0,
     "buildMaterials": [
@@ -65,7 +65,7 @@
   {
     "name": "Lifter",
     "imageRes": "ic_lifter",
-    "groupType": 2,
+    "groupType": 14,
     "priceSell": 55.46,
     "priceBuy": 0,
     "buildMaterials": [
@@ -94,7 +94,7 @@
   {
     "name": "Logic unit",
     "imageRes": "ic_logic_unit",
-    "groupType": 2,
+    "groupType": 14,
     "priceSell": 17.92,
     "priceBuy": 0,
     "buildMaterials": [
@@ -111,7 +111,7 @@
   {
     "name": "Mover",
     "imageRes": "ic_mover",
-    "groupType": 2,
+    "groupType": 14,
     "priceSell": 113.65,
     "priceBuy": 0,
     "buildMaterials": [
@@ -136,7 +136,7 @@
   {
     "name": "Road",
     "imageRes": "ic_road",
-    "groupType": 2,
+    "groupType": 14,
     "priceSell": 49.8,
     "priceBuy": 0,
     "buildMaterials": [
@@ -153,7 +153,7 @@
   {
     "name": "Support",
     "imageRes": "ic_support",
-    "groupType": 2,
+    "groupType": 14,
     "priceSell": 40.53,
     "priceBuy": 0,
     "buildMaterials": [
@@ -170,7 +170,7 @@
   {
     "name": "Thing-a-ma-jig",
     "imageRes": "ic_thing_a_ma_jig",
-    "groupType": 2,
+    "groupType": 14,
     "priceSell": 61.02,
     "priceBuy": 0,
     "buildMaterials": [
@@ -195,7 +195,7 @@
   {
     "name": "Widget",
     "imageRes": "ic_widget",
-    "groupType": 2,
+    "groupType": 14,
     "priceSell": 14.78,
     "priceBuy": 0,
     "buildMaterials": [
@@ -220,7 +220,7 @@
   {
     "name": "Toy car",
     "imageRes": "ic_toy_car",
-    "groupType": 2,
+    "groupType": 14,
     "priceSell": 33.16,
     "priceBuy": 0,
     "buildMaterials": [
@@ -249,7 +249,7 @@
   {
     "name": "Water gun",
     "imageRes": "ic_water_gun",
-    "groupType": 2,
+    "groupType": 14,
     "priceSell": 27.4,
     "priceBuy": 0,
     "buildMaterials": [

@@ -2,7 +2,7 @@
   {
     "name": "Tasker: Purchasing",
     "imageRes": "ic_tasker_purchasing",
-    "groupType": 13,
+    "groupType": 9,
     "priceSell": 69.16,
     "priceBuy": 0,
     "buildMaterials": [
@@ -31,7 +31,7 @@
   {
     "name": "Tasker: Sales",
     "imageRes": "ic_tasker_sales",
-    "groupType": 16,
+    "groupType": 10,
     "priceSell": 153.3,
     "priceBuy": 0,
     "buildMaterials": [
@@ -60,7 +60,7 @@
   {
     "name": "Tasker: Delivery",
     "imageRes": "ic_tasker_delivery",
-    "groupType": 15,
+    "groupType": 11,
     "priceSell": 380.28,
     "priceBuy": 0,
     "buildMaterials": [

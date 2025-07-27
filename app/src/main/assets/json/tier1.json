@@ -2,7 +2,7 @@
   {
     "name": "Avd concrete",
     "imageRes": "ic_avd_concrete",
-    "groupType": 1,
+    "groupType": 13,
     "priceSell": 14.47,
     "priceBuy": 0,
     "buildMaterials": [
@@ -19,7 +19,7 @@
   {
     "name": "Belt",
     "imageRes": "ic_belt",
-    "groupType": 1,
+    "groupType": 13,
     "priceSell": 2.6,
     "priceBuy": 0,
     "buildMaterials": [
@@ -32,7 +32,7 @@
   {
     "name": "Box",
     "imageRes": "ic_box",
-    "groupType": 1,
+    "groupType": 13,
     "priceSell": 1.1,
     "priceBuy": 0,
     "buildMaterials": [
@@ -45,7 +45,7 @@
   {
     "name": "Cable",
     "imageRes": "ic_cable",
-    "groupType": 1,
+    "groupType": 13,
     "priceSell": 3.28,
     "priceBuy": 0,
     "buildMaterials": [
@@ -58,7 +58,7 @@
   {
     "name": "Circuit",
     "imageRes": "ic_circuit",
-    "groupType": 1,
+    "groupType": 13,
     "priceSell": 3.54,
     "priceBuy": 0,
     "buildMaterials": [
@@ -75,7 +75,7 @@
   {
     "name": "Gear",
     "imageRes": "ic_gear",
-    "groupType": 1,
+    "groupType": 13,
     "priceSell": 6.56,
     "priceBuy": 0,
     "buildMaterials": [
@@ -88,7 +88,7 @@
   {
     "name": "Hose",
     "imageRes": "ic_hose",
-    "groupType": 1,
+    "groupType": 13,
     "priceSell": 2.6,
     "priceBuy": 0,
     "buildMaterials": [
@@ -101,7 +101,7 @@
   {
     "name": "Metal wheel",
     "imageRes": "ic_metal_wheel",
-    "groupType": 1,
+    "groupType": 13,
     "priceSell": 6.56,
     "priceBuy": 0,
     "buildMaterials": [
@@ -114,7 +114,7 @@
   {
     "name": "Motor",
     "imageRes": "ic_motor",
-    "groupType": 1,
+    "groupType": 13,
     "priceSell": 17.4,
     "priceBuy": 0,
     "buildMaterials": [
@@ -134,7 +134,7 @@
   {
     "name": "Plastic wheel",
     "imageRes": "ic_plastic_wheel",
-    "groupType": 1,
+    "groupType": 13,
     "priceSell": 1.72,
     "priceBuy": 0,
     "buildMaterials": [
@@ -147,7 +147,7 @@
   {
     "name": "Pump",
     "imageRes": "ic_pump",
-    "groupType": 1,
+    "groupType": 13,
     "priceSell": 8.72,
     "priceBuy": 0,
     "buildMaterials": [
@@ -168,7 +168,7 @@
   {
     "name": "Rubber wheel",
     "imageRes": "ic_rubber_wheel",
-    "groupType": 1,
+    "groupType": 13,
     "priceSell": 9.15,
     "priceBuy": 0,
     "buildMaterials": [
@@ -185,7 +185,7 @@
   {
     "name": "Garden gnome",
     "imageRes": "ic_garden_gnome",
-    "groupType": 1,
+    "groupType": 13,
     "priceSell": 13.68,
     "priceBuy": 0,
     "buildMaterials": [
@@ -206,7 +206,7 @@
   {
     "name": "Speakers",
     "imageRes": "ic_speakers",
-    "groupType": 1,
+    "groupType": 13,
     "priceSell": 27.2,
     "priceBuy": 0,
     "buildMaterials": [
@@ -231,7 +231,7 @@
   {
     "name": "Sporks",
     "imageRes": "ic_sporks",
-    "groupType": 1,
+    "groupType": 13,
     "priceSell": 8.8,
     "priceBuy": 0,
     "buildMaterials": [
@@ -248,7 +248,7 @@
   {
     "name": "Toaster",
     "imageRes": "ic_toaster",
-    "groupType": 1,
+    "groupType": 13,
     "priceSell": 20.52,
     "priceBuy": 0,
     "buildMaterials": [

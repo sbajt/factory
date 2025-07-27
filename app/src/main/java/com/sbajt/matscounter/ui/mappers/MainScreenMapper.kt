@@ -72,33 +72,27 @@ class MainScreenMapper {
     private fun processBuildingMaterials(
         buildingMaterials: List<BuildingMaterialUiState>,
         itemDomainList: List<ItemDomain>,
-        materialGroupTypeLimit: ItemGroupType = ItemGroupType.BASIC_MATERIAL,
+        limitGroupType: ItemGroupType = ItemGroupType.BASIC_MATERIAL,
         basicBuildingMaterialsMap: MutableMap<String, Int>,
         multiplier: Int = 1,
     ) {
-        buildingMaterials.map { buildingMaterial ->
-            val itemUiState = itemDomainList.find { item -> item.name == buildingMaterial.name }
-                .toItemUiState()
-            if (itemUiState == null) {
-                return
-            } else {
-                if (
-                    itemUiState.groupType == materialGroupTypeLimit
-                    && buildingMaterial.name != null
-                ) {
-                    basicBuildingMaterialsMap[buildingMaterial.name] =
-                        (multiplier * buildingMaterial.count) +
-                                (basicBuildingMaterialsMap[buildingMaterial.name] ?: 0)
+        buildingMaterials.forEach { buildingMaterial ->
+            val itemUiState =
+                itemDomainList.find { item -> item.name == buildingMaterial.name }?.toItemUiState()
+                    ?: return@forEach
 
-                } else {
-                    processBuildingMaterials(
-                        buildingMaterials = itemUiState.buildingMaterials,
-                        itemDomainList = itemDomainList,
-                        materialGroupTypeLimit = materialGroupTypeLimit,
-                        basicBuildingMaterialsMap = basicBuildingMaterialsMap,
-                        multiplier = multiplier * buildingMaterial.count,
-                    )
-                }
+            if (itemUiState.groupType == limitGroupType && buildingMaterial.name != null) {
+                basicBuildingMaterialsMap[buildingMaterial.name] =
+                    (multiplier * buildingMaterial.count) +
+                            (basicBuildingMaterialsMap[buildingMaterial.name] ?: 0)
+            } else if (itemUiState.groupType > limitGroupType) {
+                processBuildingMaterials(
+                    buildingMaterials = itemUiState.buildingMaterials,
+                    itemDomainList = itemDomainList,
+                    limitGroupType = limitGroupType,
+                    basicBuildingMaterialsMap = basicBuildingMaterialsMap,
+                    multiplier = multiplier * buildingMaterial.count,
+                )
             }
         }
     }
