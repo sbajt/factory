@@ -57,11 +57,12 @@ class MainScreenViewModel : ViewModel(), KoinComponent {
     fun updateSelectedItem(
         selectedItemName: String?,
         selectedItemGroupType: ItemGroupType?,
-        selectedItemCount: Int
+        selectedItemCount: Int,
+        onFinish: (Boolean) -> Unit
     ) {
         viewModelScope.launch {
             val previousSelectedItem = stateSubject.value.selectedItem
-            if (previousSelectedItem != null) {
+            if (selectedItemName != previousSelectedItem?.name) {
                 stateSubject.update { uiState ->
                     val list = useCase().firstOrNull() ?: emptyList()
                     val selectedItem = list
@@ -69,12 +70,12 @@ class MainScreenViewModel : ViewModel(), KoinComponent {
                         ?.toItemUiState()
                     uiState.copy(
                         selectedItem = selectedItem,
-                        itemCount = selectedItemCount,
+                        itemCount = 1,
                     )
                 }
-            } else {
-                // todo navigate to details screen
+                onFinish.invoke(true)
             }
+            onFinish.invoke(false)
         }
 
     }
