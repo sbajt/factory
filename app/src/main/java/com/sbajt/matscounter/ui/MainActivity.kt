@@ -59,8 +59,7 @@ class MainActivity : ComponentActivity() {
                         (mainUiState as MainScreenUiState.Content).itemUiStateList.size
                     viewModel.updateSelectedItem(
                         selectedItemName = selectedItemName,
-                        selectedItemGroupType = selectedItemGroupType,
-                        selectedItemCount = selectedItemCount
+                        selectedItemGroupType = selectedItemGroupType
                     ) { hasItem ->
                         if (hasItem) {
                             navController.navigate(ItemDetails)

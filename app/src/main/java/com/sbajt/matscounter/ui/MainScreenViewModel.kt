@@ -57,7 +57,6 @@ class MainScreenViewModel : ViewModel(), KoinComponent {
     fun updateSelectedItem(
         selectedItemName: String?,
         selectedItemGroupType: ItemGroupType?,
-        selectedItemCount: Int,
         onFinish: (Boolean) -> Unit
     ) {
         viewModelScope.launch {
