@@ -26,6 +26,11 @@ fun InputSection(
         modifier = modifier.padding(16.dp),
         verticalAlignment = Alignment.CenterVertically
     ) {
+        Text(
+            modifier = Modifier.padding(8.dp),
+            color = MaterialTheme.colorScheme.onSurface,
+            text = "Selected item count:"
+        )
         NumberPicker(
             value = uiState?.itemCount ?: 1,
             range = 1..20,
@@ -34,11 +39,6 @@ fun InputSection(
             onValueChange = {
                 onCountChange.invoke(it)
             }
-        )
-        Text(
-            modifier = Modifier.padding(start = 16.dp),
-            color = MaterialTheme.colorScheme.onSurface,
-            text = "Number of selected item"
         )
     }
 }

@@ -73,6 +73,7 @@ fun ContentScreen(
                 ShowContentOrEmpty(uiState.itemDetailsUiState) { detailsUiState ->
                     ItemDetailsScreen(
                         uiState = detailsUiState,
+                        navController = navController, // todo fix this
                         onCountChange = onCountChange
                     )
                 }

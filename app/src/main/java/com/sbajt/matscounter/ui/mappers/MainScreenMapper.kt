@@ -5,6 +5,7 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.sbajt.matscounter.domain.models.ItemDomain
 import com.sbajt.matscounter.ui.models.BuildingMaterialUiState
+import com.sbajt.matscounter.ui.models.InputSectionUiState
 import com.sbajt.matscounter.ui.models.ItemDetailsScreenUiState
 import com.sbajt.matscounter.ui.models.ItemBuildPathUiState
 import com.sbajt.matscounter.ui.models.ItemGroupType

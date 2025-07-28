@@ -17,7 +17,6 @@ import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.compose.rememberNavController
 import com.sbajt.matscounter.ui.composables.MainScreen
-import com.sbajt.matscounter.ui.models.MainScreenUiState
 import com.sbajt.matscounter.ui.navigation.ItemDetails
 import com.sbajt.matscounter.ui.theme.MatsCounterTheme
 import kotlinx.coroutines.launch
@@ -55,8 +54,6 @@ class MainActivity : ComponentActivity() {
                 uiState = mainUiState,
                 navController = navController,
                 onItemSelected = { selectedItemName, selectedItemGroupType ->
-                    val selectedItemCount =
-                        (mainUiState as MainScreenUiState.Content).itemUiStateList.size
                     viewModel.updateSelectedItem(
                         selectedItemName = selectedItemName,
                         selectedItemGroupType = selectedItemGroupType
