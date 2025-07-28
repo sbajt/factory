@@ -23,7 +23,7 @@ import kotlinx.collections.immutable.ImmutableList
 import kotlinx.coroutines.launch
 
 @Composable
-fun ItemListScree(
+fun ItemListScreen(
     uiState: ImmutableList<ItemUiState>,
     onItemSelected: OnItemSelected,
     modifier: Modifier = Modifier
@@ -74,7 +74,7 @@ fun ItemListScree(
 @Composable
 fun GridSectionPreview(@PreviewParameter(ItemListUiStateProvider::class) uiState: ImmutableList<ItemUiState>) {
     MatsCounterTheme {
-        ItemListScree(
+        ItemListScreen(
             uiState = uiState,
             onItemSelected = { _, _ -> },
         )

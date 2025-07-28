@@ -6,6 +6,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.compose.ui.tooling.preview.PreviewParameter
+import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
@@ -23,6 +24,7 @@ typealias OnCountChange = (Int) -> Unit
 @Composable
 fun MainScreen(
     uiState: MainScreenUiState,
+    navController: NavHostController,
     onItemSelected: OnItemSelected,
     onCountChange: OnCountChange,
     modifier: Modifier = Modifier
@@ -35,6 +37,7 @@ fun MainScreen(
             is MainScreenUiState.Empty -> EmptyScreen()
             is MainScreenUiState.Content -> ContentScreen(
                 uiState = uiState,
+                navController = navController,
                 onItemSelected = onItemSelected,
                 onCountChange = onCountChange
             )
@@ -46,50 +49,55 @@ fun MainScreen(
 @Composable
 fun ContentScreen(
     uiState: MainScreenUiState.Content,
+    navController: NavHostController,
     onItemSelected: OnItemSelected,
     onCountChange: OnCountChange,
     modifier: Modifier = Modifier
 ) {
-    val navController = rememberNavController()
     Surface {
         NavHost(
             modifier = modifier,
             navController = navController,
             startDestination = ItemList
         ) {
+
             composable<ItemList> {
-                if (uiState.itemUiStateList.isNotEmpty()) {
-                    ItemListScree(
-                        uiState = uiState.itemUiStateList,
+                ShowContentOrEmpty(uiState.itemUiStateList) { itemList ->
+                    ItemListScreen(
+                        uiState = itemList,
                         onItemSelected = onItemSelected,
                     )
-                } else {
-                    EmptyScreen()
                 }
             }
             composable<ItemDetails> {
-                uiState.itemDetailsUiState?.let {
+                ShowContentOrEmpty(uiState.itemDetailsUiState) { detailsUiState ->
                     ItemDetailsScreen(
-                        uiState = it,
+                        uiState = detailsUiState,
                         onCountChange = onCountChange
                     )
-                } ?: EmptyScreen()
+                }
             }
             composable<ItemBuildComponents> {
-                uiState.itemBuildPathUiState?.let {
+                ShowContentOrEmpty(uiState.itemBuildPathUiState) { buildPathUiState ->
                     ItemBuildPathScreen(
-                        uiState = it,
+                        uiState = buildPathUiState
                     )
-                } ?: EmptyScreen()
+                }
             }
         }
     }
-    navController.graph = navController.createGraph(startDestination = ItemList) {
-        composable<ItemList> {}
-        composable<ItemDetails> {}
-        composable<ItemBuildComponents> {}
+}
+
+@Composable
+inline fun <T> ShowContentOrEmpty(data: T?, crossinline content: @Composable (T) -> Unit) {
+    if (data != null) {
+        content(data)
+    } else {
+        EmptyScreen()
     }
 }
+
+
 
 @PreviewLightDark
 @Composable
@@ -97,6 +105,7 @@ fun MainScreenPreview(@PreviewParameter(MainScreenPreviewProvider::class) uiStat
     MatsCounterTheme {
         MainScreen(
             uiState = uiState,
+            navController = rememberNavController(),
             onItemSelected = { _, _ -> },
             onCountChange = {}
         )
