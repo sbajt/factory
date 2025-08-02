@@ -63,7 +63,7 @@ fun ItemView(
         Text(
             textAlign = TextAlign.Center,
             fontFamily = FontFamily.SansSerif,
-            color = MaterialTheme.colorScheme.onSurface,
+            color = MaterialTheme.colorScheme.inverseOnSurface,
             fontSize = 12.sp,
             text = remember(key1 = uiState?.name.toString()) {
                 uiState?.name ?: ""

@@ -28,7 +28,7 @@ fun InputSection(
     ) {
         Text(
             modifier = Modifier.padding(8.dp),
-            color = MaterialTheme.colorScheme.onSurface,
+            color = MaterialTheme.colorScheme.inverseOnSurface,
             text = "Selected item count:"
         )
         NumberPicker(

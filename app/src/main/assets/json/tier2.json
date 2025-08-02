@@ -71,22 +71,27 @@
     "buildMaterials": [
       {
         "name": "Metal",
+        "groupType": 12,
         "count": 3
       },
       {
         "name": "Cable",
+        "groupType": 13,
         "count": 2
       },
       {
         "name": "Hose",
+        "groupType": 13,
         "count": 2
       },
       {
         "name": "Motor",
+        "groupType": 13,
         "count": 1
       },
       {
         "name": "Pump",
+        "groupType": 13,
         "count": 1
       }
     ]
@@ -100,10 +105,12 @@
     "buildMaterials": [
       {
         "name": "Wire",
+        "groupType": 12,
         "count": 5
       },
       {
         "name": "Circuit",
+        "groupType": 13,
         "count": 2
       }
     ]
@@ -117,18 +124,22 @@
     "buildMaterials": [
       {
         "name": "Metal",
+        "groupType": 12,
         "count": 3
       },
       {
         "name": "Gear",
+        "groupType": 13,
         "count": 4
       },
       {
         "name": "Metal wheel",
+        "groupType": 13,
         "count": 4
       },
       {
         "name": "Motor",
+        "groupType": 13,
         "count": 2
       }
     ]
@@ -142,10 +153,12 @@
     "buildMaterials": [
       {
         "name": "Concrete",
+        "groupType": 12,
         "count": 4
       },
       {
         "name": "Avd concrete",
+        "groupType": 13,
         "count": 2
       }
     ]
@@ -159,10 +172,12 @@
     "buildMaterials": [
       {
         "name": "Metal",
+        "groupType": 12,
         "count": 2
       },
       {
         "name": "Avd concrete",
+        "groupType": 13,
         "count": 2
       }
     ]
@@ -176,18 +191,22 @@
     "buildMaterials": [
       {
         "name": "Circuit",
+        "groupType": 13,
         "count": 3
       },
       {
         "name": "Hose",
+        "groupType": 13,
         "count": 2
       },
       {
         "name": "Motor",
+        "groupType": 13,
         "count": 1
       },
       {
         "name": "Pump",
+        "groupType": 13,
         "count": 2
       }
     ]
@@ -201,18 +220,22 @@
     "buildMaterials": [
       {
         "name": "Metal",
+        "groupType": 12,
         "count": 1
       },
       {
         "name": "Plastic",
+        "groupType": 12,
         "count": 4
       },
       {
         "name": "Wire",
+        "groupType": 12,
         "count": 2
       },
       {
         "name": "Circuit",
+        "groupType": 13,
         "count": 1
       }
     ]
@@ -226,22 +249,27 @@
     "buildMaterials": [
       {
         "name": "Metal",
+        "groupType": 12,
         "count": 1
       },
       {
         "name": "Paint",
+        "groupType": 12,
         "count": 1
       },
       {
         "name": "Plastic",
+        "groupType": 12,
         "count": 3
       },
       {
         "name": "Plastic wheel",
+        "groupType": 13,
         "count": 4
       },
       {
         "name": "Box",
+        "groupType": 13,
         "count": 1
       }
     ]
@@ -255,18 +283,22 @@
     "buildMaterials": [
       {
         "name": "Paint",
+        "groupType": 12,
         "count": 1
       },
       {
         "name": "Plastic",
+        "groupType": 12,
         "count": 6
       },
       {
         "name": "Hose",
+        "groupType": 13,
         "count": 2
       },
       {
         "name": "Box",
+        "groupType": 13,
         "count": 1
       }
     ]

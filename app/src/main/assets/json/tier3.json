@@ -8,14 +8,17 @@
     "buildMaterials": [
       {
         "name": "Wire",
+        "groupType": 12,
         "count": 4
       },
       {
         "name": "Circuit",
+        "groupType": 13,
         "count": 4
       },
       {
         "name": "Logic unit",
+        "groupType": 14,
         "count": 2
       }
     ]
@@ -29,22 +32,27 @@
     "buildMaterials": [
       {
         "name": "Air gun",
+        "groupType": 14,
         "count": 2
       },
       {
         "name": "Arm",
+        "groupType": 14,
         "count": 2
       },
       {
         "name": "Conveyor",
+        "groupType": 14,
         "count": 3
       },
       {
         "name": "Lifter",
+        "groupType": 14,
         "count": 1
       },
       {
         "name": "Mover",
+        "groupType": 14,
         "count": 1
       }
     ]
@@ -58,22 +66,27 @@
     "buildMaterials": [
       {
         "name": "Metal",
+        "groupType": 12,
         "count": 8
       },
       {
         "name": "Wire",
+        "groupType": 12,
         "count": 12
       },
       {
         "name": "Hose",
+        "groupType": 13,
         "count": 6
       },
       {
         "name": "Pump",
+        "groupType": 13,
         "count": 4
       },
       {
         "name": "Thing-a-ma-jig",
+        "groupType": 14,
         "count": 1
       }
     ]
@@ -87,18 +100,22 @@
     "buildMaterials": [
       {
         "name": "Rare metal",
+        "groupType": 12,
         "count": 2
       },
       {
         "name": "Wire",
+        "groupType": 12,
         "count": 1
       },
       {
         "name": "Circuit",
+        "groupType": 13,
         "count": 1
       },
       {
         "name": "Logic unit",
+        "groupType": 14,
         "count": 1
       }
     ]
@@ -112,10 +129,12 @@
     "buildMaterials": [
       {
         "name": "Road",
+        "groupType": 12,
         "count": 6
       },
       {
         "name": "Support",
+        "groupType": 13,
         "count": 6
       }
     ]
@@ -129,18 +148,22 @@
     "buildMaterials": [
       {
         "name": "Metal",
+        "groupType": 12,
         "count": 6
       },
       {
         "name": "Motor",
+        "groupType": 13,
         "count": 2
       },
       {
         "name": "Rubber wheel",
+        "groupType": 13,
         "count": 4
       },
       {
         "name": "Box",
+        "groupType": 13,
         "count": 4
       }
     ]
@@ -154,14 +177,17 @@
     "buildMaterials": [
       {
         "name": "Metal",
+        "groupType": 12,
         "count": 12
       },
       {
         "name": "Wire",
+        "groupType": 12,
         "count": 6
       },
       {
         "name": "Support",
+        "groupType": 13,
         "count": 4
       }
     ]
@@ -175,22 +201,27 @@
     "buildMaterials": [
         {
             "name": "Plastic",
+            "groupType": 12,
             "count": 1
         },
         {
             "name": "Wire",
+            "groupType": 12,
             "count": 3
         },
         {
             "name": "Circuit",
+            "groupType": 13,
             "count": 3
         },
         {
             "name": "Logic unit",
+            "groupType": 14,
             "count": 1
         },
         {
             "name": "Box",
+            "groupType": 12,
             "count": 1
         }
     ]

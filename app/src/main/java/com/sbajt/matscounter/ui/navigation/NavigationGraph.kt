@@ -6,7 +6,10 @@ import kotlinx.serialization.Serializable
 object ItemList
 
 @Serializable
-object ItemDetails
+object ItemDetails {
+    const val route: String = "com.sbajt.matscounter.ui.navigation.ItemDetails"
+}
 
 @Serializable
 object ItemBuildComponents
+

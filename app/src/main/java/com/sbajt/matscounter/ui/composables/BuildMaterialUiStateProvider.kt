@@ -3,7 +3,7 @@ package com.sbajt.matscounter.ui.composables
 import androidx.compose.ui.tooling.preview.PreviewParameterProvider
 import com.sbajt.matscounter.ui.models.BuildingMaterialUiState
 
-class BuildingMaterialUiStateProvider : PreviewParameterProvider<BuildingMaterialUiState> {
+class BuildMaterialUiStateProvider : PreviewParameterProvider<BuildingMaterialUiState> {
 
     override val values: Sequence<BuildingMaterialUiState> = sequenceOf(
         emptyBuildingMaterialUiState,

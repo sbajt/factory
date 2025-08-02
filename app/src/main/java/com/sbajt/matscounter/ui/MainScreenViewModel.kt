@@ -84,4 +84,13 @@ class MainScreenViewModel : ViewModel(), KoinComponent {
             uiState.copy(itemCount = newItemCount)
         }
     }
+
+    fun removeSelectedItem() {
+        stateSubject.update { uiState ->
+            uiState.copy(
+                selectedItem = null,
+                itemCount = 0,
+            )
+        }
+    }
 }

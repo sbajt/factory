@@ -7,7 +7,9 @@ data class ItemDetailsScreenUiState(
     val selectedItem: ItemUiState? = null,
     val selectedItemCount: Int = 0,
     val itemUiStatList: List<ItemUiState> = persistentListOf(),
-    val buildingMaterialList: List<BuildingMaterialUiState> = persistentListOf()
+    val itemBuildingMaterialList: List<BuildingMaterialUiState> = persistentListOf(),
+    val itemBuildMaterialsUiState: BuildMaterialListUiState? = null,
+    val itemBasicBuildMaterialsUiState: BuildMaterialListUiState? = null,
 )
 
 data class InputSectionUiState(
@@ -24,5 +26,13 @@ data class ItemUiState(
 
 data class BuildingMaterialUiState(
     val name: String? = null,
+    val groupType: ItemGroupType = ItemGroupType.NONE,
     val count: Int = 0,
+)
+
+data class ItemBuildPathUiState(
+    val selectedItem: ItemUiState? = null,
+    val selectedItemCount: Int = 0,
+    val buildPath: Map<ItemGroupType, ImmutableList<BuildingMaterialUiState>>,
+    val buildMaterialListUiState: BuildMaterialListUiState,
 )

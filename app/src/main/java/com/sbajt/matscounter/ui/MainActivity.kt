@@ -15,6 +15,7 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
+import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import com.sbajt.matscounter.ui.composables.MainScreen
 import com.sbajt.matscounter.ui.navigation.ItemDetails
@@ -25,6 +26,7 @@ import org.koin.android.ext.android.inject
 class MainActivity : ComponentActivity() {
 
     private val viewModel: MainScreenViewModel by inject()
+    private lateinit var navController: NavHostController
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -45,7 +47,7 @@ class MainActivity : ComponentActivity() {
             val mainUiState by viewModel.uiState.collectAsStateWithLifecycle()
             val topPadding = WindowInsets.statusBars.asPaddingValues()
             val bottomPadding = WindowInsets.navigationBars.asPaddingValues()
-            val navController = rememberNavController()
+            navController = rememberNavController()
             MainScreen(
                 modifier = modifier.padding(
                     top = topPadding.calculateTopPadding(),
@@ -69,4 +71,16 @@ class MainActivity : ComponentActivity() {
             )
         }
     }
+
+    @Deprecated("Deprecated in Java")
+    override fun onBackPressed() {
+        if (::navController.isInitialized) {
+            val destination = navController.currentBackStackEntry?.destination
+            if (destination?.route == ItemDetails.route) {
+                viewModel.removeSelectedItem()
+            }
+        }
+        super.onBackPressed()
+    }
 }
+

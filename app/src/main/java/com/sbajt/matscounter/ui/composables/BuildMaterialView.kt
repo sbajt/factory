@@ -1,12 +1,11 @@
 package com.sbajt.matscounter.ui.composables
 
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontFamily
@@ -18,22 +17,21 @@ import androidx.compose.ui.unit.sp
 import com.sbajt.matscounter.ui.models.BuildingMaterialUiState
 
 @Composable
-fun BuildingMaterialView(
+fun BuildMaterialView(
     uiState: BuildingMaterialUiState,
     selectedItemCount: Int,
     modifier: Modifier = Modifier
 ) {
     Row(
-        modifier = modifier.width(135.dp)
+        modifier = modifier
+            .fillMaxWidth()
+            .padding(vertical = 4.dp, horizontal = 8.dp),
     ) {
-        val nameText by remember(key1 = uiState.name ?: "") {
-            mutableStateOf(uiState.name ?: "")
-        }
         Text(
             fontFamily = FontFamily.SansSerif,
             fontSize = 12.sp,
             color = MaterialTheme.colorScheme.onSurfaceVariant,
-            text = nameText
+            text = remember { uiState.name ?: "" }
         )
         if (uiState.count > 0) {
             Text(
@@ -54,8 +52,8 @@ fun BuildingMaterialView(
 
 @PreviewLightDark
 @Composable
-fun previewBuildingMaterialView(@PreviewParameter(BuildingMaterialUiStateProvider::class) uiState: BuildingMaterialUiState) {
-    BuildingMaterialView(
+fun previewBuildingMaterialView(@PreviewParameter(BuildMaterialUiStateProvider::class) uiState: BuildingMaterialUiState) {
+    BuildMaterialView(
         uiState = uiState,
         selectedItemCount = 0,
     )

@@ -8,22 +8,27 @@
     "buildMaterials": [
       {
         "name": "Rare metal",
+        "groupType": 12,
         "count": 4
       },
       {
         "name": "Wire",
+        "groupType": 12,
         "count": 8
       },
       {
         "name": "Circuit",
+        "groupType": 13,
         "count": 2
       },
       {
         "name": "Avd logic unit",
+        "groupType": 15,
         "count": 1
       },
       {
         "name": "Sensor",
+        "groupType": 15,
         "count": 6
       }
     ]
@@ -37,22 +42,27 @@
     "buildMaterials": [
       {
         "name": "Plastic",
+        "groupType": 12,
         "count": 4
       },
       {
         "name": "Rare metal",
+        "groupType": 12,
         "count": 1
       },
       {
         "name": "Motor",
+        "groupType": 13,
         "count": 4
       },
       {
         "name": "Avd logic unit",
+        "groupType": 15,
         "count": 1
       },
       {
         "name": "Sensor",
+        "groupType": 15,
         "count": 2
       }
     ]
@@ -66,22 +76,27 @@
     "buildMaterials": [
       {
         "name": "Metal",
+        "groupType": 12,
         "count": 24
       },
       {
         "name": "Wire",
+        "groupType": 12,
         "count": 18
       },
       {
         "name": "Avd logic unit",
+        "groupType": 15,
         "count": 6
       },
       {
         "name": "Jet engine",
+        "groupType": 15,
         "count": 4
       },
       {
         "name": "Sensor",
+        "groupType": 15,
         "count": 8
       }
     ]
@@ -95,22 +110,27 @@
     "buildMaterials": [
       {
         "name": "Plastic",
+        "groupType": 12,
         "count": 2
       },
       {
         "name": "Rare metal",
+        "groupType": 12,
         "count": 2
       },
       {
         "name": "Wire",
+        "groupType": 12,
         "count": 4
       },
       {
         "name": "Widget",
+        "groupType": 13,
         "count": 2
       },
       {
         "name": "Sensor",
+        "groupType": 15,
         "count": 2
       }
     ]

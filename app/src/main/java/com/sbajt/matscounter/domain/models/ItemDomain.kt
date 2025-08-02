@@ -11,6 +11,7 @@ data class ItemDomain(
 
 data class BuildingMaterial(
     val name: String?,
+    val groupType: Int?,
     val count: Int,
 )
 

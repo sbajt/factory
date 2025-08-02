@@ -20,6 +20,8 @@ data class Item(
 data class BuildingMaterial(
     @SerializedName("name")
     val name: String?,
+    @SerializedName("groupType")
+    val groupType: Int?,
     @SerializedName("count")
     val count: Int,
 )
