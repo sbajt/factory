@@ -8,138 +8,75 @@ import com.sbajt.matscounter.ui.models.ItemDetailsScreenUiState
 import com.sbajt.matscounter.ui.models.ItemGroupType
 import com.sbajt.matscounter.ui.models.ItemUiState
 import com.sbajt.matscounter.ui.models.MainScreenUiState
-import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.toImmutableList
-import kotlinx.collections.immutable.toImmutableMap
 import kotlinx.collections.immutable.toPersistentList
 
 class MainScreenMapper {
 
     fun mapToUiState(inputData: InputData): MainScreenUiState = with(inputData) {
         MainScreenUiState.Content(
-            itemUiStateList = itemDomainList
-                .mapNotNull { it.toItemUiState() }
+            itemUiStateList = itemUiStateList
                 .sortedWith(compareBy({ it.groupType }, { it.name }))
                 .toImmutableList(),
-            itemDetailsUiState = inputData.selectedItem?.run {
+            itemDetailsUiState = inputData.selectedItem?.let { selectedItem ->
                 ItemDetailsScreenUiState(
                     selectedItem = selectedItem,
                     selectedItemCount = selectedItemCount,
-                    itemUiStatList = itemDomainList.toItemUiStateList(),
-                    itemBuildingMaterialList = selectedItem.toItemBuildingMaterialList(
-                        itemDomainList = itemDomainList,
-                    ),
-                    itemBuildMaterialsUiState = BuildMaterialListUiState(
-                        titleText = "Build Mats",
+                    selectedItemBuildingMaterialListUiState = createBuildMaterialList(
+                        groupType = selectedItem.groupType,
                         selectedItemCount = selectedItemCount,
-                        buildingMaterialsList = selectedItem.toItemBuildingMaterialList(
-                            itemDomainList = itemDomainList,
-                        ),
-                    ),
-                    itemBasicBuildMaterialsUiState = BuildMaterialListUiState(
-                        titleText = "Basic Build Mats",
-                        selectedItemCount = selectedItemCount,
-                        buildingMaterialsList = selectedItem.toItemBuildingMaterialList(
-                            itemDomainList = itemDomainList,
-                        ),
+                        buildingMaterialsList = selectedItem.buildingMaterials
                     ),
                 )
             },
             itemBuildPathUiState = inputData.selectedItem?.let {
                 ItemBuildPathUiState(
                     selectedItem = it,
-                    selectedItemCount = 1,
-                    buildPathMap = createBuildPathMap(
-                        selectedItem = it,
-                        itemDomainList = itemDomainList,
-                    ),
+                    selectedItemCount = inputData.selectedItemCount,
+                    buildPathList = createBuildPathList(
+                        selectedItem = inputData.selectedItem,
+                        selectedItemCount = inputData.selectedItemCount,
+                    )
                 )
             }
         )
     }
 
-    private fun createBuildPathMap(
+    private fun createBuildPathList(
         selectedItem: ItemUiState,
-        itemDomainList: List<ItemDomain>,
-    ): Map<ItemGroupType, ImmutableList<BuildingMaterialUiState>> {
-        val map = mutableMapOf<ItemGroupType, ImmutableList<BuildingMaterialUiState>>()
-        selectedItem.groupType.toLowerGroupsList().forEach { groupType ->
-            val buildingMaterials = selectedItem.buildingMaterials.filter {
-                it.groupType == groupType
-            }
-            if (buildingMaterials.isNotEmpty()) {
-                map[groupType] = buildingMaterials.toPersistentList()
-            }
-            processBuildingMaterials(
-                baseBuildingMaterials = selectedItem.buildingMaterials,
-                itemDomainList = itemDomainList,
-                limitGroupType = groupType,
-                basicBuildingMaterialsMap = mutableMapOf(),
+        selectedItemCount: Int,
+    ): List<BuildMaterialListUiState> = selectedItem
+        .groupType
+        .toLowerGroupsList()
+        .map { groupType ->
+            createBuildMaterialList(
+                groupType = groupType,
+                selectedItemCount = selectedItemCount,
+                buildingMaterialsList = selectedItem.buildingMaterials,
             )
         }
-        return map.toImmutableMap()
-    }
 
-    private fun Collection<ItemDomain>.toItemUiStateList(): ImmutableList<ItemUiState> =
-        mapNotNull {
-            it.toItemUiState()
-        }.toImmutableList()
-
-    private fun ItemUiState?.toItemBuildingMaterialList(
-        itemDomainList: List<ItemDomain>,
-    ): ImmutableList<BuildingMaterialUiState> {
-        val basicBuildingMaterialMap: MutableMap<String, Int> = mutableMapOf()
-        if (this != null) {
-            processBuildingMaterials(
-                baseBuildingMaterials = this.buildingMaterials,
-                itemDomainList = itemDomainList,
-                basicBuildingMaterialsMap = basicBuildingMaterialMap,
+    private fun createBuildMaterialList(
+        groupType: ItemGroupType,
+        selectedItemCount: Int,
+        buildingMaterialsList: List<BuildingMaterialUiState>,
+    ) = BuildMaterialListUiState(
+        titleText = groupType.getName(),
+        selectedItemCount = selectedItemCount,
+        buildingMaterialsList = buildingMaterialsList.map { material ->
+            BuildingMaterialUiState(
+                name = material.name,
+                groupType = material.groupType,
+                count = material.count * selectedItemCount
             )
-        }
-        return basicBuildingMaterialMap
-            .map {
-                BuildingMaterialUiState(
-                    name = it.key,
-                    count = it.value
-                )
-            }
-            .sortedBy { it.name }
-            .toPersistentList()
-    }
-
-    private fun processBuildingMaterials(
-        baseBuildingMaterials: List<BuildingMaterialUiState>,
-        itemDomainList: List<ItemDomain>,
-        limitGroupType: ItemGroupType = ItemGroupType.BASIC_MATERIAL,
-        basicBuildingMaterialsMap: MutableMap<String, Int>,
-        multiplier: Int = 1
-    ) {
-        baseBuildingMaterials.forEach { buildingMaterial ->
-            itemDomainList.find { item -> item.name == buildingMaterial.name }
-                ?.toItemUiState()
-                ?.let { itemUiState ->
-                    if (itemUiState.groupType == limitGroupType && buildingMaterial.name != null) {
-                        basicBuildingMaterialsMap[buildingMaterial.name] =
-                            (multiplier * buildingMaterial.count) +
-                                (basicBuildingMaterialsMap[buildingMaterial.name] ?: 0)
-                    } else if (itemUiState.groupType > limitGroupType) {
-                        processBuildingMaterials(
-                            baseBuildingMaterials = itemUiState.buildingMaterials,
-                            itemDomainList = itemDomainList,
-                            limitGroupType = limitGroupType,
-                            basicBuildingMaterialsMap = basicBuildingMaterialsMap,
-                            multiplier = multiplier * buildingMaterial.count
-                        )
-                    }
-                }
-        }
-    }
+        }.toPersistentList()
+    )
 
     companion object {
         class InputData(
             val selectedItem: ItemUiState?,
             val selectedItemCount: Int,
-            val itemDomainList: List<ItemDomain>
+            val itemUiStateList: List<ItemUiState>
         )
     }
 }

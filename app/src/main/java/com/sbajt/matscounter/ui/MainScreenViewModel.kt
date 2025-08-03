@@ -4,7 +4,6 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.sbajt.matscounter.ui.mappers.MainScreenMapper
 import com.sbajt.matscounter.ui.mappers.MainScreenMapper.Companion.InputData
-import com.sbajt.matscounter.ui.mappers.toItemUiState
 import com.sbajt.matscounter.ui.models.ItemGroupType
 import com.sbajt.matscounter.ui.models.MainScreenState
 import com.sbajt.matscounter.ui.models.MainScreenUiState
@@ -38,12 +37,12 @@ class MainScreenViewModel : ViewModel(), KoinComponent {
     val uiState = combine(
         stateSubject,
         itemDomainListShare,
-    ) { state, itemDomainList ->
+    ) { state, itemUiStateList ->
         mapper.mapToUiState(
             InputData(
                 selectedItem = state.selectedItem,
                 selectedItemCount = state.itemCount,
-                itemDomainList = itemDomainList
+                itemUiStateList = itemUiStateList
             )
         )
     }
@@ -64,9 +63,7 @@ class MainScreenViewModel : ViewModel(), KoinComponent {
             if (selectedItemName != previousSelectedItem?.name) {
                 stateSubject.update { uiState ->
                     val list = useCase().firstOrNull() ?: emptyList()
-                    val selectedItem = list
-                        .find { it.name == selectedItemName && it.groupType == selectedItemGroupType?.ordinal }
-                        ?.toItemUiState()
+                    val selectedItem = list.find { it.name == selectedItemName && it.groupType == selectedItemGroupType }
                     uiState.copy(
                         selectedItem = selectedItem,
                         itemCount = 1,
@@ -76,7 +73,6 @@ class MainScreenViewModel : ViewModel(), KoinComponent {
             }
             onFinish.invoke(false)
         }
-
     }
 
     fun updateSelectedItemCount(newItemCount: Int) {

@@ -30,7 +30,7 @@ fun ItemBuildPathScreen(
             onItemSelected = { _, _ -> },
         )
         if (uiState.selectedItem?.buildingMaterials?.isNotEmpty() == true) {
-            uiState.buildPathMap.mapKeys{ groupType ->
+            uiState.buildPathList.forEach { buildMaterialList ->
                 Image(
                     modifier = Modifier
                         .padding(4.dp)
@@ -39,7 +39,7 @@ fun ItemBuildPathScreen(
                     contentDescription = "Arrow icon",
                 )
                 BuildMaterialListView(
-                    uiState =  uiState.buildPathMap[groupType],
+                    uiState = buildMaterialList,
                 )
             }
         }

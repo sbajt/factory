@@ -1,10 +1,9 @@
 package com.sbajt.matscounter.ui.composables
 
 import androidx.compose.ui.tooling.preview.PreviewParameterProvider
+import com.sbajt.matscounter.ui.mappers.toLowerGroupsList
+import com.sbajt.matscounter.ui.models.BuildMaterialListUiState
 import com.sbajt.matscounter.ui.models.ItemBuildPathUiState
-import com.sbajt.matscounter.ui.models.ItemGroupType
-import kotlinx.collections.immutable.persistentListOf
-import kotlinx.collections.immutable.toPersistentMap
 
 class ItemBuildPathUiStateProvider : PreviewParameterProvider<ItemBuildPathUiState> {
 
@@ -16,19 +15,16 @@ class ItemBuildPathUiStateProvider : PreviewParameterProvider<ItemBuildPathUiSta
 
         val defaultBuildPathUiState: ItemBuildPathUiState = ItemBuildPathUiState(
             selectedItem = ItemUiStateProvider.tier1ItemUiState,
-            buildPathMap = mapOf(
-                ItemGroupType.TIER1 to persistentListOf(
-                    BuildMaterialUiStateProvider.defaultBuildingMaterialUiState
-                ),
-                ItemGroupType.TIER2 to persistentListOf(
-                    BuildMaterialUiStateProvider.defaultBuildingMaterialUiState
-                ),
-                ItemGroupType.TIER3 to persistentListOf(
-                    BuildMaterialUiStateProvider.defaultBuildingMaterialUiState
-                ),
-            ).toPersistentMap(),
-            buildMaterialListUiState = BuildMaterialListUiStateProvider.defaultMaterialList
+            buildPathList = listOf(
+                BuildMaterialListUiState(
+                    titleText = ItemUiStateProvider.tier1ItemUiState.groupType.name,
+                    selectedItemCount = 1,
+                    buildingMaterialsList = ItemUiStateProvider.mockBuildingMaterials(
+                        count = 3,
+                        lowerGroupTypeList = ItemUiStateProvider.tier1ItemUiState.groupType.toLowerGroupsList()
+                    )
+                )
+            )
         )
     }
-
 }

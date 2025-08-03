@@ -7,15 +7,15 @@ import kotlinx.collections.immutable.persistentListOf
 class BuildMaterialListUiStateProvider : PreviewParameterProvider<BuildMaterialListUiState> {
 
     override val values: Sequence<BuildMaterialListUiState> = sequenceOf(
-        emptyMaterialList,
-        defaultMaterialList,
+        emptyBuildMaterialList,
+        defaultBuildMaterialList,
     )
 
     companion object {
 
-        val emptyMaterialList = BuildMaterialListUiState()
+        val emptyBuildMaterialList = BuildMaterialListUiState()
 
-        val defaultMaterialList = BuildMaterialListUiState(
+        val defaultBuildMaterialList = BuildMaterialListUiState(
             titleText = "Building Materials",
             buildingMaterialsList = persistentListOf(
                 BuildMaterialUiStateProvider.defaultBuildingMaterialUiState,

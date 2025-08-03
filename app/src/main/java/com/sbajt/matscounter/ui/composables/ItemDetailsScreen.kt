@@ -42,14 +42,9 @@ fun ItemDetailsScreen(
                 )
             }
         }
-        uiState.itemBuildMaterialsUiState?.let {
+        uiState.selectedItemBuildingMaterialListUiState?.let {
             BuildMaterialListView(
-                uiState = it,
-            )
-        }
-        uiState.itemBasicBuildMaterialsUiState?.let {
-            BuildMaterialListView(
-                uiState = it,
+                uiState = uiState.selectedItemBuildingMaterialListUiState,
             )
         }
         Button(
