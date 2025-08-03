@@ -76,7 +76,7 @@ class MainActivity : ComponentActivity() {
     override fun onBackPressed() {
         if (::navController.isInitialized) {
             val destination = navController.currentBackStackEntry?.destination
-            if (destination?.route == ItemDetails.route) {
+            if (destination?.route == ItemDetails.ROUTE) {
                 viewModel.removeSelectedItem()
             }
         }

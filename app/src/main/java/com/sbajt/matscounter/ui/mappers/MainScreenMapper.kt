@@ -48,23 +48,17 @@ class MainScreenMapper {
             itemBuildPathUiState = inputData.selectedItem?.let {
                 ItemBuildPathUiState(
                     selectedItem = it,
-                    buildMaterialListUiState = BuildMaterialListUiState(
-                        titleText = "",
-                        selectedItemCount = 1,
-                        buildingMaterialsList = selectedItem.toItemBuildingMaterialList(
-                            itemDomainList = itemDomainList,
-                        ),
-                    ),
-                    buildPath = createBuildPath(
+                    selectedItemCount = 1,
+                    buildPathMap = createBuildPathMap(
                         selectedItem = it,
                         itemDomainList = itemDomainList,
-                    )
+                    ),
                 )
             }
         )
     }
 
-    private fun createBuildPath(
+    private fun createBuildPathMap(
         selectedItem: ItemUiState,
         itemDomainList: List<ItemDomain>,
     ): Map<ItemGroupType, ImmutableList<BuildingMaterialUiState>> {
@@ -76,13 +70,13 @@ class MainScreenMapper {
             if (buildingMaterials.isNotEmpty()) {
                 map[groupType] = buildingMaterials.toPersistentList()
             }
+            processBuildingMaterials(
+                baseBuildingMaterials = selectedItem.buildingMaterials,
+                itemDomainList = itemDomainList,
+                limitGroupType = groupType,
+                basicBuildingMaterialsMap = mutableMapOf(),
+            )
         }
-        processBuildingMaterials(
-            buildingMaterials = selectedItem.buildingMaterials,
-            itemDomainList = itemDomainList,
-            limitGroupType = ItemGroupType.BASIC_MATERIAL,
-            basicBuildingMaterialsMap = mutableMapOf(),
-        )
         return map.toImmutableMap()
     }
 
@@ -97,7 +91,7 @@ class MainScreenMapper {
         val basicBuildingMaterialMap: MutableMap<String, Int> = mutableMapOf()
         if (this != null) {
             processBuildingMaterials(
-                buildingMaterials = this.buildingMaterials,
+                baseBuildingMaterials = this.buildingMaterials,
                 itemDomainList = itemDomainList,
                 basicBuildingMaterialsMap = basicBuildingMaterialMap,
             )
@@ -114,13 +108,13 @@ class MainScreenMapper {
     }
 
     private fun processBuildingMaterials(
-        buildingMaterials: List<BuildingMaterialUiState>,
+        baseBuildingMaterials: List<BuildingMaterialUiState>,
         itemDomainList: List<ItemDomain>,
         limitGroupType: ItemGroupType = ItemGroupType.BASIC_MATERIAL,
         basicBuildingMaterialsMap: MutableMap<String, Int>,
         multiplier: Int = 1
     ) {
-        buildingMaterials.forEach { buildingMaterial ->
+        baseBuildingMaterials.forEach { buildingMaterial ->
             itemDomainList.find { item -> item.name == buildingMaterial.name }
                 ?.toItemUiState()
                 ?.let { itemUiState ->
@@ -130,7 +124,7 @@ class MainScreenMapper {
                                 (basicBuildingMaterialsMap[buildingMaterial.name] ?: 0)
                     } else if (itemUiState.groupType > limitGroupType) {
                         processBuildingMaterials(
-                            buildingMaterials = itemUiState.buildingMaterials,
+                            baseBuildingMaterials = itemUiState.buildingMaterials,
                             itemDomainList = itemDomainList,
                             limitGroupType = limitGroupType,
                             basicBuildingMaterialsMap = basicBuildingMaterialsMap,

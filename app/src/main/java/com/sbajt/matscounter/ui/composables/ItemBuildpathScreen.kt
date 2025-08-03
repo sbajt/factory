@@ -7,7 +7,6 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.rotate
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.compose.ui.tooling.preview.PreviewParameter
@@ -31,17 +30,16 @@ fun ItemBuildPathScreen(
             onItemSelected = { _, _ -> },
         )
         if (uiState.selectedItem?.buildingMaterials?.isNotEmpty() == true) {
-            uiState.buildPath.keys.forEach { groupType ->
+            uiState.buildPathMap.mapKeys{ groupType ->
                 Image(
                     modifier = Modifier
                         .padding(4.dp)
-                        .size(80.dp)
-                        .rotate(90f),
+                        .size(54.dp),
                     painter = painterResource(id = R.drawable.ic_arrow),
                     contentDescription = "Arrow icon",
                 )
                 BuildMaterialListView(
-                    uiState = uiState.buildMaterialListUiState,
+                    uiState =  uiState.buildPathMap[groupType],
                 )
             }
         }

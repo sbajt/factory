@@ -16,7 +16,7 @@ class ItemBuildPathUiStateProvider : PreviewParameterProvider<ItemBuildPathUiSta
 
         val defaultBuildPathUiState: ItemBuildPathUiState = ItemBuildPathUiState(
             selectedItem = ItemUiStateProvider.tier1ItemUiState,
-            buildPath = mapOf(
+            buildPathMap = mapOf(
                 ItemGroupType.TIER1 to persistentListOf(
                     BuildMaterialUiStateProvider.defaultBuildingMaterialUiState
                 ),

@@ -33,6 +33,5 @@ data class BuildingMaterialUiState(
 data class ItemBuildPathUiState(
     val selectedItem: ItemUiState? = null,
     val selectedItemCount: Int = 0,
-    val buildPath: Map<ItemGroupType, ImmutableList<BuildingMaterialUiState>>,
-    val buildMaterialListUiState: BuildMaterialListUiState,
+    val buildPathMap: Map<ItemGroupType, BuildMaterialListUiState>,
 )
