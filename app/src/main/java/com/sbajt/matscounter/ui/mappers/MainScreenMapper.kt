@@ -62,6 +62,7 @@ class MainScreenMapper {
         buildingMaterialsList: List<BuildingMaterialUiState>,
     ) = BuildMaterialListUiState(
         titleText = groupType.getName(),
+        groupType = groupType,
         selectedItemCount = selectedItemCount,
         buildingMaterialsList = buildingMaterialsList.map { material ->
             BuildingMaterialUiState(
@@ -85,14 +86,14 @@ fun ItemDomain?.toItemUiState(): ItemUiState? = if (this == null) {
     null
 } else {
     ItemUiState(
-        name = this.name ?: "",
-        imageName = this.imageName ?: "",
-        groupType = this.groupType.toGroupType(),
-        buildingMaterials = this.buildMaterials.map {
+        name = name ?: "",
+        imageName = imageName ?: "",
+        groupType = groupType.toGroupType(),
+        buildingMaterials = buildMaterials.map { buildMaterial ->
             BuildingMaterialUiState(
-                name = it.name,
-                groupType = it.groupType.toGroupType(),
-                count = it.count,
+                name = buildMaterial.name,
+                groupType = buildMaterial.groupType.toGroupType(),
+                count = buildMaterial.count,
             )
         }.toPersistentList()
     )

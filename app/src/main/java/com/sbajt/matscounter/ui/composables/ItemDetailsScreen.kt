@@ -4,12 +4,16 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Button
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import com.sbajt.matscounter.ui.models.InputSectionUiState
@@ -43,9 +47,21 @@ fun ItemDetailsScreen(
             }
         }
         uiState.selectedItemBuildingMaterialListUiState?.let {
-            BuildMaterialListView(
-                uiState = uiState.selectedItemBuildingMaterialListUiState,
+            Text(
+                modifier = Modifier.padding(bottom = 8.dp),
+                fontFamily = FontFamily.SansSerif,
+                color = MaterialTheme.colorScheme.onSurface,
+                fontSize = 14.sp,
+                text = remember { it.titleText ?: "" },
             )
+            if (it.buildingMaterialsList.isNotEmpty()) {
+                it.buildingMaterialsList.forEachIndexed { index, state ->
+                    BuildMaterialView(
+                        uiState = it.buildingMaterialsList[index],
+                        selectedItemCount = uiState.selectedItemCount,
+                    )
+                }
+            }
         }
         Button(
             modifier = Modifier.padding(16.dp),
