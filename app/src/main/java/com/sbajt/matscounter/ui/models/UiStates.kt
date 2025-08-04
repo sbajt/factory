@@ -5,13 +5,19 @@ import kotlinx.collections.immutable.persistentListOf
 
 data class ItemDetailsScreenUiState(
     val selectedItem: ItemUiState? = null,
-    val selectedItemNumber: Int = 0,
-    val selectedItemBuildingMaterialListUiState: BuildMaterialListUiState? = null,
+    val selectedItemAmount: Int = 0,
+    val selectedItemBuildingMaterialListUiState: BuildMaterialListWrapper? = null,
 )
 
 data class InputSectionUiState(
     val selectedItem: ItemUiState? = null,
     val itemCount: Int = 0,
+)
+
+data class ItemBuildPathUiState(
+    val selectedItem: ItemUiState? = null,
+    val selectedItemAmount: Int = 0,
+    val buildPathList: List<BuildMaterialListWrapper>,
 )
 
 data class ItemUiState(
@@ -27,15 +33,9 @@ data class BuildingMaterialUiState(
     val count: Int = 0,
 )
 
-data class BuildMaterialListUiState(
+data class BuildMaterialListWrapper(
     val titleText: String? = null,
     val groupType: ItemGroupType? = null,
-    val selectedItemNumber: Int = 0,
+    val selectedItemAmount: Int = 0,
     val buildingMaterialsList: ImmutableList<BuildingMaterialUiState> = persistentListOf(),
-)
-
-data class ItemBuildPathUiState(
-    val selectedItem: ItemUiState? = null,
-    val selectedItemNumber: Int = 0,
-    val buildPathList: List<BuildMaterialListUiState>,
 )

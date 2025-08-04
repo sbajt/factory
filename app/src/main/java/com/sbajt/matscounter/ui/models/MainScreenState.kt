@@ -2,5 +2,5 @@ package com.sbajt.matscounter.ui.models
 
 data class MainScreenState(
     val selectedItem: ItemUiState? = null,
-    val selectedItemNumber: Int = 0,
+    val selectedItemAmount: Int = 0,
 )

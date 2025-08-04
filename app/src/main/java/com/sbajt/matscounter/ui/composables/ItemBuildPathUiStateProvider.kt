@@ -2,7 +2,7 @@ package com.sbajt.matscounter.ui.composables
 
 import androidx.compose.ui.tooling.preview.PreviewParameterProvider
 import com.sbajt.matscounter.ui.mappers.toLowerGroupsList
-import com.sbajt.matscounter.ui.models.BuildMaterialListUiState
+import com.sbajt.matscounter.ui.models.BuildMaterialListWrapper
 import com.sbajt.matscounter.ui.models.ItemBuildPathUiState
 
 class ItemBuildPathUiStateProvider : PreviewParameterProvider<ItemBuildPathUiState> {
@@ -16,9 +16,9 @@ class ItemBuildPathUiStateProvider : PreviewParameterProvider<ItemBuildPathUiSta
         val defaultBuildPathUiState: ItemBuildPathUiState = ItemBuildPathUiState(
             selectedItem = ItemUiStateProvider.tier1ItemUiState,
             buildPathList = listOf(
-                BuildMaterialListUiState(
+                BuildMaterialListWrapper(
                     titleText = ItemUiStateProvider.tier1ItemUiState.groupType.name,
-                    selectedItemNumber = 1,
+                    selectedItemAmount = 1,
                     buildingMaterialsList = ItemUiStateProvider.mockBuildingMaterials(
                         count = 3,
                         lowerGroupTypeList = ItemUiStateProvider.tier1ItemUiState.groupType.toLowerGroupsList()

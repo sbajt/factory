@@ -38,12 +38,12 @@ fun ItemDetailsScreen(
                 uiState = uiState.selectedItem,
                 onItemSelected = { _, _ -> },
             )
-            if (uiState.selectedItem != null && uiState.selectedItemNumber > 0) {
+            if (uiState.selectedItem != null && uiState.selectedItemAmount > 0) {
                 InputSection(
                     modifier = Modifier.padding(start = 8.dp, top = 8.dp),
                     uiState = InputSectionUiState(
                         selectedItem = uiState.selectedItem,
-                        itemCount = uiState.selectedItemNumber,
+                        itemCount = uiState.selectedItemAmount,
                     ),
                     onCountChange = onCountChange
                 )
@@ -62,7 +62,7 @@ fun ItemDetailsScreen(
                     buildingMaterialsList.forEachIndexed { index, state ->
                         BuildMaterialView(
                             uiState = buildingMaterialsList[index],
-                            selectedItemNumber = uiState.selectedItemNumber,
+                            selectedItemAmount = uiState.selectedItemAmount,
                         )
                     }
                 }

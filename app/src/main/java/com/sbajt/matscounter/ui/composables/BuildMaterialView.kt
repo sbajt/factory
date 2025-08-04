@@ -19,7 +19,7 @@ import com.sbajt.matscounter.ui.models.BuildingMaterialUiState
 @Composable
 fun BuildMaterialView(
     uiState: BuildingMaterialUiState,
-    selectedItemNumber: Int,
+    selectedItemAmount: Int,
     modifier: Modifier = Modifier
 ) {
     Row(
@@ -40,8 +40,8 @@ fun BuildMaterialView(
                 fontFamily = FontFamily.SansSerif,
                 fontSize = 12.sp,
                 color = MaterialTheme.colorScheme.onSurfaceVariant,
-                text = if (selectedItemNumber > 0) {
-                    "x${uiState.count * selectedItemNumber}"
+                text = if (selectedItemAmount > 0) {
+                    "x${uiState.count * selectedItemAmount}"
                 } else {
                     "x${uiState.count}"
                 }
@@ -55,6 +55,6 @@ fun BuildMaterialView(
 fun previewBuildingMaterialView(@PreviewParameter(BuildMaterialUiStateProvider::class) uiState: BuildingMaterialUiState) {
     BuildMaterialView(
         uiState = uiState,
-        selectedItemNumber = 0,
+        selectedItemAmount = 0,
     )
 }

@@ -75,7 +75,7 @@ fun ItemBuildPathScreen(
                     item("item_${buildMaterial.name}_${buildMaterialList.groupType}") {
                         BuildMaterialView(
                             uiState = buildMaterial,
-                            selectedItemNumber = uiState.selectedItemNumber,
+                            selectedItemAmount = uiState.selectedItemAmount,
                         )
                     }
                 }

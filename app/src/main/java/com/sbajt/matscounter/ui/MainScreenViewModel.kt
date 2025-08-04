@@ -41,7 +41,7 @@ class MainScreenViewModel : ViewModel(), KoinComponent {
         mapper.mapToUiState(
             InputData(
                 selectedItem = state.selectedItem,
-                selectedItemNumber = state.selectedItemNumber,
+                selectedItemAmount = state.selectedItemAmount,
                 itemUiStateList = itemUiStateList
             )
         )
@@ -66,7 +66,7 @@ class MainScreenViewModel : ViewModel(), KoinComponent {
                     val selectedItem = list.find { it.name == selectedItemName && it.groupType == selectedItemGroupType }
                     uiState.copy(
                         selectedItem = selectedItem,
-                        selectedItemNumber = 1,
+                        selectedItemAmount = 1,
                     )
                 }
                 onFinish.invoke(true)
@@ -75,9 +75,9 @@ class MainScreenViewModel : ViewModel(), KoinComponent {
         }
     }
 
-    fun updateSelectedItemNumber(newItemCount: Int) {
+    fun updateSelectedItemAmount(newItemCount: Int) {
         stateSubject.update { uiState ->
-            uiState.copy(selectedItemNumber = newItemCount)
+            uiState.copy(selectedItemAmount = newItemCount)
         }
     }
 
@@ -85,7 +85,7 @@ class MainScreenViewModel : ViewModel(), KoinComponent {
         stateSubject.update { uiState ->
             uiState.copy(
                 selectedItem = null,
-                selectedItemNumber = 0,
+                selectedItemAmount = 0,
             )
         }
     }

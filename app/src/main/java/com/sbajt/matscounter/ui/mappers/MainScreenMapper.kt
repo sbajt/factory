@@ -1,7 +1,7 @@
 package com.sbajt.matscounter.ui.mappers
 
 import com.sbajt.matscounter.domain.models.ItemDomain
-import com.sbajt.matscounter.ui.models.BuildMaterialListUiState
+import com.sbajt.matscounter.ui.models.BuildMaterialListWrapper
 import com.sbajt.matscounter.ui.models.BuildingMaterialUiState
 import com.sbajt.matscounter.ui.models.ItemBuildPathUiState
 import com.sbajt.matscounter.ui.models.ItemDetailsScreenUiState
@@ -21,10 +21,10 @@ class MainScreenMapper {
             itemDetailsUiState = inputData.selectedItem?.let { selectedItem ->
                 ItemDetailsScreenUiState(
                     selectedItem = selectedItem,
-                    selectedItemNumber = selectedItemNumber,
-                    selectedItemBuildingMaterialListUiState = createBuildMaterialList(
+                    selectedItemAmount = selectedItemAmount,
+                    selectedItemBuildingMaterialListUiState = createBuildMaterialListWrapper(
                         groupType = selectedItem.groupType,
-                        selectedItemNumber = selectedItemNumber,
+                        selectedItemAmount = selectedItemAmount,
                         buildingMaterialsList = selectedItem.buildingMaterials
                     ),
                 )
@@ -32,10 +32,10 @@ class MainScreenMapper {
             itemBuildPathUiState = inputData.selectedItem?.let {
                 ItemBuildPathUiState(
                     selectedItem = it,
-                    selectedItemNumber = inputData.selectedItemNumber,
+                    selectedItemAmount = inputData.selectedItemAmount,
                     buildPathList = createBuildPathList(
                         selectedItem = inputData.selectedItem,
-                        selectedItemNumber = inputData.selectedItemNumber,
+                        selectedItemAmount = inputData.selectedItemAmount,
                     )
                 )
             }
@@ -44,31 +44,31 @@ class MainScreenMapper {
 
     private fun createBuildPathList(
         selectedItem: ItemUiState,
-        selectedItemNumber: Int,
-    ): List<BuildMaterialListUiState> = selectedItem
+        selectedItemAmount: Int,
+    ): List<BuildMaterialListWrapper> = selectedItem
         .groupType
         .toLowerGroupsList()
         .map { groupType ->
-            createBuildMaterialList(
+            createBuildMaterialListWrapper(
                 groupType = groupType,
-                selectedItemNumber = selectedItemNumber,
+                selectedItemAmount = selectedItemAmount,
                 buildingMaterialsList = selectedItem.buildingMaterials,
             )
         }
 
-    private fun createBuildMaterialList(
+    private fun createBuildMaterialListWrapper(
         groupType: ItemGroupType,
-        selectedItemNumber: Int,
+        selectedItemAmount: Int,
         buildingMaterialsList: List<BuildingMaterialUiState>,
-    ) = BuildMaterialListUiState(
+    ) = BuildMaterialListWrapper(
         titleText = groupType.getName(),
         groupType = groupType,
-        selectedItemNumber = selectedItemNumber,
+        selectedItemAmount = selectedItemAmount,
         buildingMaterialsList = buildingMaterialsList.map { material ->
             BuildingMaterialUiState(
                 name = material.name,
                 groupType = material.groupType,
-                count = material.count * selectedItemNumber
+                count = material.count * selectedItemAmount
             )
         }.toPersistentList()
     )
@@ -76,7 +76,7 @@ class MainScreenMapper {
     companion object {
         class InputData(
             val selectedItem: ItemUiState?,
-            val selectedItemNumber: Int,
+            val selectedItemAmount: Int,
             val itemUiStateList: List<ItemUiState>
         )
     }

@@ -65,8 +65,8 @@ class MainActivity : ComponentActivity() {
                         }
                     }
                 },
-                onCountChange = { newItemCount ->
-                    viewModel.updateSelectedItemNumber(newItemCount)
+                onCountChange = { newItemAmount ->
+                    viewModel.updateSelectedItemAmount(newItemAmount)
                 }
             )
         }
