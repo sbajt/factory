@@ -18,7 +18,7 @@ class ItemBuildPathUiStateProvider : PreviewParameterProvider<ItemBuildPathUiSta
             buildPathList = listOf(
                 BuildMaterialListUiState(
                     titleText = ItemUiStateProvider.tier1ItemUiState.groupType.name,
-                    selectedItemCount = 1,
+                    selectedItemNumber = 1,
                     buildingMaterialsList = ItemUiStateProvider.mockBuildingMaterials(
                         count = 3,
                         lowerGroupTypeList = ItemUiStateProvider.tier1ItemUiState.groupType.toLowerGroupsList()

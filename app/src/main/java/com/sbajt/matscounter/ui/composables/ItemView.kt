@@ -38,8 +38,7 @@ fun ItemView(
         modifier = modifier
             .clickable(
                 onClick = { onItemSelected(uiState?.name, uiState?.groupType) }
-            )
-            .padding(bottom = 4.dp),
+            ),
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.SpaceBetween
     ) {

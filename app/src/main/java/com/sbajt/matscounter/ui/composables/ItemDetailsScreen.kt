@@ -2,9 +2,11 @@ package com.sbajt.matscounter.ui.composables
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Button
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
@@ -18,6 +20,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import com.sbajt.matscounter.ui.models.InputSectionUiState
 import com.sbajt.matscounter.ui.models.ItemDetailsScreenUiState
+import com.sbajt.matscounter.ui.models.ItemGroupType
 import com.sbajt.matscounter.ui.navigation.ItemBuildComponents
 import com.sbajt.matscounter.ui.theme.MatsCounterTheme
 
@@ -35,41 +38,48 @@ fun ItemDetailsScreen(
                 uiState = uiState.selectedItem,
                 onItemSelected = { _, _ -> },
             )
-            if (uiState.selectedItem != null && uiState.selectedItemCount > 0) {
+            if (uiState.selectedItem != null && uiState.selectedItemNumber > 0) {
                 InputSection(
                     modifier = Modifier.padding(start = 8.dp, top = 8.dp),
                     uiState = InputSectionUiState(
                         selectedItem = uiState.selectedItem,
-                        itemCount = uiState.selectedItemCount,
+                        itemCount = uiState.selectedItemNumber,
                     ),
                     onCountChange = onCountChange
                 )
             }
         }
-        uiState.selectedItemBuildingMaterialListUiState?.let {
-            Text(
-                modifier = Modifier.padding(bottom = 8.dp),
-                fontFamily = FontFamily.SansSerif,
-                color = MaterialTheme.colorScheme.onSurface,
-                fontSize = 14.sp,
-                text = remember { it.titleText ?: "" },
-            )
-            if (it.buildingMaterialsList.isNotEmpty()) {
-                it.buildingMaterialsList.forEachIndexed { index, state ->
-                    BuildMaterialView(
-                        uiState = it.buildingMaterialsList[index],
-                        selectedItemCount = uiState.selectedItemCount,
-                    )
+        if (uiState.selectedItem?.groupType != ItemGroupType.BASIC_MATERIAL) {
+            with(uiState.selectedItemBuildingMaterialListUiState) {
+                Text(
+                    modifier = Modifier.padding(bottom = 8.dp),
+                    fontFamily = FontFamily.SansSerif,
+                    color = MaterialTheme.colorScheme.onSurface,
+                    fontSize = 14.sp,
+                    text = remember { this?.titleText ?: "" },
+                )
+                if (this?.buildingMaterialsList?.isNotEmpty() == true) {
+                    buildingMaterialsList.forEachIndexed { index, state ->
+                        BuildMaterialView(
+                            uiState = buildingMaterialsList[index],
+                            selectedItemNumber = uiState.selectedItemNumber,
+                        )
+                    }
                 }
             }
-        }
-        Button(
-            modifier = Modifier.padding(16.dp),
-            onClick = {
-                navController.navigate(ItemBuildComponents)
+            Surface( modifier = Modifier
+                .fillMaxWidth()
+                .padding(top = 24.dp)
+            ) {
+                Button(
+                    modifier = Modifier.padding(16.dp),
+                    onClick = {
+                        navController.navigate(ItemBuildComponents)
+                    }
+                ) {
+                    Text(text = "Show build path")
+                }
             }
-        ) {
-            Text(text = "Show build path")
         }
     }
 }

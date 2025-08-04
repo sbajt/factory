@@ -21,10 +21,10 @@ class MainScreenMapper {
             itemDetailsUiState = inputData.selectedItem?.let { selectedItem ->
                 ItemDetailsScreenUiState(
                     selectedItem = selectedItem,
-                    selectedItemCount = selectedItemCount,
+                    selectedItemNumber = selectedItemNumber,
                     selectedItemBuildingMaterialListUiState = createBuildMaterialList(
                         groupType = selectedItem.groupType,
-                        selectedItemCount = selectedItemCount,
+                        selectedItemNumber = selectedItemNumber,
                         buildingMaterialsList = selectedItem.buildingMaterials
                     ),
                 )
@@ -32,10 +32,10 @@ class MainScreenMapper {
             itemBuildPathUiState = inputData.selectedItem?.let {
                 ItemBuildPathUiState(
                     selectedItem = it,
-                    selectedItemCount = inputData.selectedItemCount,
+                    selectedItemNumber = inputData.selectedItemNumber,
                     buildPathList = createBuildPathList(
                         selectedItem = inputData.selectedItem,
-                        selectedItemCount = inputData.selectedItemCount,
+                        selectedItemNumber = inputData.selectedItemNumber,
                     )
                 )
             }
@@ -44,31 +44,31 @@ class MainScreenMapper {
 
     private fun createBuildPathList(
         selectedItem: ItemUiState,
-        selectedItemCount: Int,
+        selectedItemNumber: Int,
     ): List<BuildMaterialListUiState> = selectedItem
         .groupType
         .toLowerGroupsList()
         .map { groupType ->
             createBuildMaterialList(
                 groupType = groupType,
-                selectedItemCount = selectedItemCount,
+                selectedItemNumber = selectedItemNumber,
                 buildingMaterialsList = selectedItem.buildingMaterials,
             )
         }
 
     private fun createBuildMaterialList(
         groupType: ItemGroupType,
-        selectedItemCount: Int,
+        selectedItemNumber: Int,
         buildingMaterialsList: List<BuildingMaterialUiState>,
     ) = BuildMaterialListUiState(
         titleText = groupType.getName(),
         groupType = groupType,
-        selectedItemCount = selectedItemCount,
+        selectedItemNumber = selectedItemNumber,
         buildingMaterialsList = buildingMaterialsList.map { material ->
             BuildingMaterialUiState(
                 name = material.name,
                 groupType = material.groupType,
-                count = material.count * selectedItemCount
+                count = material.count * selectedItemNumber
             )
         }.toPersistentList()
     )
@@ -76,7 +76,7 @@ class MainScreenMapper {
     companion object {
         class InputData(
             val selectedItem: ItemUiState?,
-            val selectedItemCount: Int,
+            val selectedItemNumber: Int,
             val itemUiStateList: List<ItemUiState>
         )
     }

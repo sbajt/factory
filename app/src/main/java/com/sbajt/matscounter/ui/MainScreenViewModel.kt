@@ -41,7 +41,7 @@ class MainScreenViewModel : ViewModel(), KoinComponent {
         mapper.mapToUiState(
             InputData(
                 selectedItem = state.selectedItem,
-                selectedItemCount = state.itemCount,
+                selectedItemNumber = state.itemCount,
                 itemUiStateList = itemUiStateList
             )
         )

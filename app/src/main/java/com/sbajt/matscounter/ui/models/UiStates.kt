@@ -5,7 +5,7 @@ import kotlinx.collections.immutable.persistentListOf
 
 data class ItemDetailsScreenUiState(
     val selectedItem: ItemUiState? = null,
-    val selectedItemCount: Int = 0,
+    val selectedItemNumber: Int = 0,
     val selectedItemBuildingMaterialListUiState: BuildMaterialListUiState? = null,
 )
 
@@ -30,12 +30,12 @@ data class BuildingMaterialUiState(
 data class BuildMaterialListUiState(
     val titleText: String? = null,
     val groupType: ItemGroupType? = null,
-    val selectedItemCount: Int = 0,
+    val selectedItemNumber: Int = 0,
     val buildingMaterialsList: ImmutableList<BuildingMaterialUiState> = persistentListOf(),
 )
 
 data class ItemBuildPathUiState(
     val selectedItem: ItemUiState? = null,
-    val selectedItemCount: Int = 0,
+    val selectedItemNumber: Int = 0,
     val buildPathList: List<BuildMaterialListUiState>,
 )
