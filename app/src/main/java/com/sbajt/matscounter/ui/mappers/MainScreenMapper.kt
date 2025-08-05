@@ -43,7 +43,7 @@ class MainScreenMapper {
         selectedItemAmount: Int,
         itemUiStateList: List<ItemUiState>,
     ): List<BuildMaterialListWrapper> {
-        val processedBuildMaterialList: MutableList<BuildingMaterialUiState> = mutableListOf()
+        val newBuildMaterialList: MutableList<BuildingMaterialUiState> = mutableListOf()
         return selectedItem
             .groupType
             .toLowerGroupsList()
@@ -51,14 +51,15 @@ class MainScreenMapper {
                 processBuildingMaterialList(
                     groupType = groupType,
                     multiplier = selectedItemAmount,
-                    processedBuildMaterialList = processedBuildMaterialList,
+                    newBuildMaterialList = newBuildMaterialList,
                     allowedItemGroupTypeList = groupType.toLowerGroupsList(),
-                    buildMaterialList = selectedItem.buildMaterialListWrapper?.buildingMaterialsList ?: persistentListOf()
+                    buildMaterialList = selectedItem.buildMaterialListWrapper?.buildingMaterialsList ?: persistentListOf(),
+                    itemUiStateList = itemUiStateList,
                 )
                 BuildMaterialListWrapper(
                     titleText = groupType.getName(),
                     groupType = groupType,
-                    buildingMaterialsList = processedBuildMaterialList.toPersistentList(),
+                    buildingMaterialsList = newBuildMaterialList.toPersistentList(),
                 )
             }
     }
@@ -66,15 +67,26 @@ class MainScreenMapper {
     private fun processBuildingMaterialList(
         groupType: ItemGroupType,
         multiplier: Int,
-        processedBuildMaterialList: MutableList<BuildingMaterialUiState>,
+        newBuildMaterialList: MutableList<BuildingMaterialUiState>,
         allowedItemGroupTypeList: List<ItemGroupType>,
-        buildMaterialList: List<BuildingMaterialUiState>
+        buildMaterialList: List<BuildingMaterialUiState>,
+        itemUiStateList: List<ItemUiState>,
     ) {
         buildMaterialList.map { material ->
+            val itemUiState = itemUiStateList.firstOrNull { it.name == material.name }
             if (groupType.isBuildingMaterialValid(allowedItemGroupTypeList = allowedItemGroupTypeList)) {
-                processedBuildMaterialList.addToProcessedBuildingMaterialList(
+                newBuildMaterialList.addToProcessedBuildingMaterialList(
                     material = material,
                     multiplier = multiplier,
+                )
+            } else {
+                processBuildingMaterialList(
+                    groupType = groupType.toLowerGroupType(),
+                    multiplier = multiplier * material.count,
+                    newBuildMaterialList = newBuildMaterialList,
+                    allowedItemGroupTypeList = groupType.toLowerGroupsList(),
+                    buildMaterialList = itemUiState?.buildMaterialListWrapper?.buildingMaterialsList?.toPersistentList() ?: persistentListOf(),
+                    itemUiStateList = itemUiStateList
                 )
             }
         }
@@ -88,22 +100,22 @@ class MainScreenMapper {
         material: BuildingMaterialUiState,
         multiplier: Int,
     ) {
-        if (this.isEmpty()) return
-
-        val existingMaterial = this.firstOrNull { it.name == material.name }
-        if (existingMaterial != null) {
+        val existingItem = this.firstOrNull { it.name == material.name } //fix
+        if (existingItem != null) {
             val updatedMaterial = BuildingMaterialUiState(
                 name = material.name,
-                count = (existingMaterial.count) + material.count * multiplier
+                count = (existingItem.count) + material.count * multiplier
             )
-            remove(existingMaterial)
-            add(updatedMaterial)
-        } else {
-            val newMaterial = BuildingMaterialUiState(
-                name = material.name,
-                count = material.count * multiplier
-            )
-            add(newMaterial)
+            if (this.isEmpty()) {
+                add(updatedMaterial)
+            } else {
+                val newMaterial = BuildingMaterialUiState(
+                    name = material.name,
+                    count = material.count * multiplier
+                )
+                remove(existingItem)
+                add(newMaterial)
+            }
         }
     }
 
