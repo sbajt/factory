@@ -1,12 +1,12 @@
 package com.sbajt.matscounter.ui.composables
 
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Button
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
@@ -50,7 +50,7 @@ fun ItemDetailsScreen(
             }
         }
         if (uiState.selectedItem?.groupType != ItemGroupType.BASIC_MATERIAL) {
-            with(uiState.selectedItemBuildingMaterialListUiState) {
+            with(uiState.selectedItemBuildMaterialListWrapper) {
                 Text(
                     modifier = Modifier.padding(bottom = 8.dp),
                     fontFamily = FontFamily.SansSerif,
@@ -67,9 +67,10 @@ fun ItemDetailsScreen(
                     }
                 }
             }
-            Surface( modifier = Modifier
-                .fillMaxWidth()
-                .padding(top = 24.dp)
+            Box(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(top = 24.dp)
             ) {
                 Button(
                     modifier = Modifier.padding(16.dp),

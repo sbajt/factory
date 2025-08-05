@@ -8,7 +8,6 @@ class MainScreenPreviewProvider : PreviewParameterProvider<MainScreenUiState> {
     override val values: Sequence<MainScreenUiState> = sequenceOf(
         loading,
         empty,
-        emptyContent,
         itemUiStateList,
         itemDetails,
         itemBuildPath
@@ -19,8 +18,6 @@ class MainScreenPreviewProvider : PreviewParameterProvider<MainScreenUiState> {
         val loading = MainScreenUiState.Loading
 
         val empty = MainScreenUiState.Empty
-
-        val emptyContent = MainScreenUiState.Content()
 
         val itemUiStateList = MainScreenUiState.Content(
             itemUiStateList = ItemUiStateProvider.mockItemUiStateList()

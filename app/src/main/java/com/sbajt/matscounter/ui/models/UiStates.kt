@@ -6,7 +6,7 @@ import kotlinx.collections.immutable.persistentListOf
 data class ItemDetailsScreenUiState(
     val selectedItem: ItemUiState? = null,
     val selectedItemAmount: Int = 0,
-    val selectedItemBuildingMaterialListUiState: BuildMaterialListWrapper? = null,
+    val selectedItemBuildMaterialListWrapper: BuildMaterialListWrapper? = null,
 )
 
 data class InputSectionUiState(
@@ -24,18 +24,16 @@ data class ItemUiState(
     val name: String = "",
     val imageName: String = "",
     val groupType: ItemGroupType = ItemGroupType.NONE,
-    val buildingMaterials: ImmutableList<BuildingMaterialUiState> = persistentListOf(),
+    val buildMaterialListWrapper: BuildMaterialListWrapper? = null,
 )
 
 data class BuildingMaterialUiState(
     val name: String? = null,
-    val groupType: ItemGroupType = ItemGroupType.NONE,
     val count: Int = 0,
 )
 
 data class BuildMaterialListWrapper(
     val titleText: String? = null,
     val groupType: ItemGroupType? = null,
-    val selectedItemAmount: Int = 0,
     val buildingMaterialsList: ImmutableList<BuildingMaterialUiState> = persistentListOf(),
 )

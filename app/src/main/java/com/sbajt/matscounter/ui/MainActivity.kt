@@ -59,8 +59,8 @@ class MainActivity : ComponentActivity() {
                     viewModel.updateSelectedItem(
                         selectedItemName = selectedItemName,
                         selectedItemGroupType = selectedItemGroupType
-                    ) { hasItem ->
-                        if (hasItem) {
+                    ) { isFinished ->
+                        if (isFinished) {
                             navController.navigate(ItemDetails)
                         }
                     }

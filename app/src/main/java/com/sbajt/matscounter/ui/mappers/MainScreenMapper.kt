@@ -8,6 +8,7 @@ import com.sbajt.matscounter.ui.models.ItemDetailsScreenUiState
 import com.sbajt.matscounter.ui.models.ItemGroupType
 import com.sbajt.matscounter.ui.models.ItemUiState
 import com.sbajt.matscounter.ui.models.MainScreenUiState
+import kotlinx.collections.immutable.persistentListOf
 import kotlinx.collections.immutable.toImmutableList
 import kotlinx.collections.immutable.toPersistentList
 
@@ -15,18 +16,12 @@ class MainScreenMapper {
 
     fun mapToUiState(inputData: InputData): MainScreenUiState = with(inputData) {
         MainScreenUiState.Content(
-            itemUiStateList = itemUiStateList
-                .sortedWith(compareBy({ it.groupType }, { it.name }))
-                .toImmutableList(),
+            itemUiStateList = itemUiStateList.toImmutableList(),
             itemDetailsUiState = inputData.selectedItem?.let { selectedItem ->
                 ItemDetailsScreenUiState(
                     selectedItem = selectedItem,
                     selectedItemAmount = selectedItemAmount,
-                    selectedItemBuildingMaterialListUiState = createBuildMaterialListWrapper(
-                        groupType = selectedItem.groupType,
-                        selectedItemAmount = selectedItemAmount,
-                        buildingMaterialsList = selectedItem.buildingMaterials
-                    ),
+                    selectedItemBuildMaterialListWrapper = selectedItem.buildMaterialListWrapper
                 )
             },
             itemBuildPathUiState = inputData.selectedItem?.let {
@@ -34,8 +29,9 @@ class MainScreenMapper {
                     selectedItem = it,
                     selectedItemAmount = inputData.selectedItemAmount,
                     buildPathList = createBuildPathList(
-                        selectedItem = inputData.selectedItem,
+                        selectedItem = it,
                         selectedItemAmount = inputData.selectedItemAmount,
+                        itemUiStateList = inputData.itemUiStateList
                     )
                 )
             }
@@ -45,33 +41,71 @@ class MainScreenMapper {
     private fun createBuildPathList(
         selectedItem: ItemUiState,
         selectedItemAmount: Int,
-    ): List<BuildMaterialListWrapper> = selectedItem
-        .groupType
-        .toLowerGroupsList()
-        .map { groupType ->
-            createBuildMaterialListWrapper(
-                groupType = groupType,
-                selectedItemAmount = selectedItemAmount,
-                buildingMaterialsList = selectedItem.buildingMaterials,
-            )
-        }
+        itemUiStateList: List<ItemUiState>,
+    ): List<BuildMaterialListWrapper> {
+        val processedBuildMaterialList: MutableList<BuildingMaterialUiState> = mutableListOf()
+        return selectedItem
+            .groupType
+            .toLowerGroupsList()
+            .map { groupType ->
+                processBuildingMaterialList(
+                    groupType = groupType,
+                    multiplier = selectedItemAmount,
+                    processedBuildMaterialList = processedBuildMaterialList,
+                    allowedItemGroupTypeList = groupType.toLowerGroupsList(),
+                    buildMaterialList = selectedItem.buildMaterialListWrapper?.buildingMaterialsList ?: persistentListOf()
+                )
+                BuildMaterialListWrapper(
+                    titleText = groupType.getName(),
+                    groupType = groupType,
+                    buildingMaterialsList = processedBuildMaterialList.toPersistentList(),
+                )
+            }
+    }
 
-    private fun createBuildMaterialListWrapper(
+    private fun processBuildingMaterialList(
         groupType: ItemGroupType,
-        selectedItemAmount: Int,
-        buildingMaterialsList: List<BuildingMaterialUiState>,
-    ) = BuildMaterialListWrapper(
-        titleText = groupType.getName(),
-        groupType = groupType,
-        selectedItemAmount = selectedItemAmount,
-        buildingMaterialsList = buildingMaterialsList.map { material ->
-            BuildingMaterialUiState(
+        multiplier: Int,
+        processedBuildMaterialList: MutableList<BuildingMaterialUiState>,
+        allowedItemGroupTypeList: List<ItemGroupType>,
+        buildMaterialList: List<BuildingMaterialUiState>
+    ) {
+        buildMaterialList.map { material ->
+            if (groupType.isBuildingMaterialValid(allowedItemGroupTypeList = allowedItemGroupTypeList)) {
+                processedBuildMaterialList.addToProcessedBuildingMaterialList(
+                    material = material,
+                    multiplier = multiplier,
+                )
+            }
+        }
+    }
+
+    private fun ItemGroupType?.isBuildingMaterialValid(
+        allowedItemGroupTypeList: List<ItemGroupType>,
+    ): Boolean = allowedItemGroupTypeList.any { it == this }
+
+    private fun MutableList<BuildingMaterialUiState>.addToProcessedBuildingMaterialList(
+        material: BuildingMaterialUiState,
+        multiplier: Int,
+    ) {
+        if (this.isEmpty()) return
+
+        val existingMaterial = this.firstOrNull { it.name == material.name }
+        if (existingMaterial != null) {
+            val updatedMaterial = BuildingMaterialUiState(
                 name = material.name,
-                groupType = material.groupType,
-                count = material.count * selectedItemAmount
+                count = (existingMaterial.count) + material.count * multiplier
             )
-        }.toPersistentList()
-    )
+            remove(existingMaterial)
+            add(updatedMaterial)
+        } else {
+            val newMaterial = BuildingMaterialUiState(
+                name = material.name,
+                count = material.count * multiplier
+            )
+            add(newMaterial)
+        }
+    }
 
     companion object {
         class InputData(
@@ -82,21 +116,26 @@ class MainScreenMapper {
     }
 }
 
-fun ItemDomain?.toItemUiState(): ItemUiState? = if (this == null) {
-    null
-} else {
+fun ItemDomain?.toItemUiState(): ItemUiState? = if (this != null) {
+    val itemGroupType = groupType.toGroupType()
+    val lowerGroupType = itemGroupType.toLowerGroupType()
     ItemUiState(
         name = name ?: "",
         imageName = imageName ?: "",
-        groupType = groupType.toGroupType(),
-        buildingMaterials = buildMaterials.map { buildMaterial ->
-            BuildingMaterialUiState(
-                name = buildMaterial.name,
-                groupType = buildMaterial.groupType.toGroupType(),
-                count = buildMaterial.count,
-            )
-        }.toPersistentList()
+        groupType = itemGroupType,
+        buildMaterialListWrapper = BuildMaterialListWrapper(
+            titleText = lowerGroupType.getName(),
+            groupType = lowerGroupType,
+            buildingMaterialsList = buildMaterials.map {
+                BuildingMaterialUiState(
+                    name = it.name,
+                    count = it.count,
+                )
+            }.toPersistentList(),
+        )
     )
+} else {
+    null
 }
 
 fun Int?.toGroupType(): ItemGroupType = ItemGroupType.entries
@@ -109,6 +148,14 @@ fun ItemGroupType?.getName() = this
     ?.replaceFirstChar { it.uppercase() }
     ?.replace("_", " ")
     ?: ""
+
+fun ItemGroupType.toLowerGroupType(): ItemGroupType = when (this) {
+    ItemGroupType.TIER1 -> ItemGroupType.BASIC_MATERIAL
+    ItemGroupType.TIER2 -> ItemGroupType.TIER1
+    ItemGroupType.TIER3 -> ItemGroupType.TIER2
+    ItemGroupType.TIER4 -> ItemGroupType.TIER3
+    else -> this
+}
 
 fun ItemGroupType.toLowerGroupsList(): List<ItemGroupType> = when (this) {
     ItemGroupType.TIER1 -> listOf(ItemGroupType.BASIC_MATERIAL).reversed()

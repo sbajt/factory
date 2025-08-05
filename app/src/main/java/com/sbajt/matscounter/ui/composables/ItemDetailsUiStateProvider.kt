@@ -17,9 +17,9 @@ class ItemDetailsUiStateProvider : PreviewParameterProvider<ItemDetailsScreenUiS
         val defaultItemDetailsScreenUiState = ItemDetailsScreenUiState(
             selectedItem = ItemUiStateProvider.tier2ItemUiState,
             selectedItemAmount = 1,
-            selectedItemBuildingMaterialListUiState = BuildMaterialListWrapper(
+            selectedItemBuildMaterialListWrapper = BuildMaterialListWrapper(
                 titleText = "Building Materials",
-                buildingMaterialsList = ItemUiStateProvider.tier2ItemUiState.buildingMaterials
+                buildingMaterialsList = ItemUiStateProvider.mockBuildingMaterials()
             )
         )
     }
