@@ -33,7 +33,7 @@ fun BuildMaterialView(
             color = MaterialTheme.colorScheme.onSurfaceVariant,
             text = remember { uiState.name ?: "" }
         )
-        if (uiState.count > 0) {
+        if (uiState.amount > 0) {
             Text(
                 modifier = Modifier.weight(1f),
                 textAlign = TextAlign.End,
@@ -41,9 +41,9 @@ fun BuildMaterialView(
                 fontSize = 12.sp,
                 color = MaterialTheme.colorScheme.onSurfaceVariant,
                 text = if (selectedItemAmount > 0) {
-                    "x${uiState.count * selectedItemAmount}"
+                    "x${uiState.amount * selectedItemAmount}"
                 } else {
-                    "x${uiState.count}"
+                    "x${uiState.amount}"
                 }
             )
         }

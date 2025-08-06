@@ -49,7 +49,7 @@ class ItemUiStateProvider : PreviewParameterProvider<ItemUiState> {
         ): ImmutableList<BuildingMaterialUiState> = List(count) {
             BuildingMaterialUiState(
                 name = "Material $it",
-                count = 1,
+                amount = 1,
             )
         }.toPersistentList()
 

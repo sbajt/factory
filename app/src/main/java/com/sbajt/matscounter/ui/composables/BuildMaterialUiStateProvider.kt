@@ -15,21 +15,21 @@ class BuildMaterialUiStateProvider : PreviewParameterProvider<BuildingMaterialUi
     companion object {
         val emptyBuildingMaterialUiState = BuildingMaterialUiState(
             name = null,
-            count = 0,
+            amount = 0,
         )
 
         val defaultBuildingMaterialUiState = BuildingMaterialUiState(
             name = "Default Material",
-            count = 1,
+            amount = 1,
         )
 
         val basicMaterialUiState = BuildingMaterialUiState(
             name = "Basic Material",
-            count = 5,
+            amount = 5,
         )
         val basicMaterial2UiState = BuildingMaterialUiState(
             name = "Basic Material",
-            count = 5,
+            amount = 5,
         )
     }
 }

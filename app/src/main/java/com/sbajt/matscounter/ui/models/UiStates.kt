@@ -29,7 +29,7 @@ data class ItemUiState(
 
 data class BuildingMaterialUiState(
     val name: String? = null,
-    val count: Int = 0,
+    val amount: Int = 0,
 )
 
 data class BuildMaterialListWrapper(

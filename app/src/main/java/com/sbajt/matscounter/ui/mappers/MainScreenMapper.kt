@@ -74,7 +74,7 @@ class MainScreenMapper {
     ) {
         buildMaterialList.map { material ->
             val itemUiState = itemUiStateList.firstOrNull { it.name == material.name }
-            if (groupType.isBuildingMaterialValid(allowedItemGroupTypeList = allowedItemGroupTypeList)) {
+            if (itemUiState?.groupType.isBuildingMaterialValid(allowedItemGroupTypeList = allowedItemGroupTypeList)) {
                 newBuildMaterialList.addToProcessedBuildingMaterialList(
                     material = material,
                     multiplier = multiplier,
@@ -82,7 +82,7 @@ class MainScreenMapper {
             } else {
                 processBuildingMaterialList(
                     groupType = groupType.toLowerGroupType(),
-                    multiplier = multiplier * material.count,
+                    multiplier = multiplier * material.amount,
                     newBuildMaterialList = newBuildMaterialList,
                     allowedItemGroupTypeList = groupType.toLowerGroupsList(),
                     buildMaterialList = itemUiState?.buildMaterialListWrapper?.buildingMaterialsList?.toPersistentList() ?: persistentListOf(),
@@ -100,22 +100,17 @@ class MainScreenMapper {
         material: BuildingMaterialUiState,
         multiplier: Int,
     ) {
-        val existingItem = this.firstOrNull { it.name == material.name } //fix
-        if (existingItem != null) {
-            val updatedMaterial = BuildingMaterialUiState(
-                name = material.name,
-                count = (existingItem.count) + material.count * multiplier
-            )
-            if (this.isEmpty()) {
-                add(updatedMaterial)
-            } else {
-                val newMaterial = BuildingMaterialUiState(
-                    name = material.name,
-                    count = material.count * multiplier
+        val existingBuildingMaterial = this.firstOrNull { it.name == material.name }
+        if (existingBuildingMaterial != null) {
+            existingBuildingMaterial
+            remove(existingBuildingMaterial)
+            add(
+                existingBuildingMaterial.copy(
+                    amount = existingBuildingMaterial.amount + (material.amount * multiplier)
                 )
-                remove(existingItem)
-                add(newMaterial)
-            }
+            )
+        } else {
+            add(material)
         }
     }
 
@@ -141,7 +136,7 @@ fun ItemDomain?.toItemUiState(): ItemUiState? = if (this != null) {
             buildingMaterialsList = buildMaterials.map {
                 BuildingMaterialUiState(
                     name = it.name,
-                    count = it.count,
+                    amount = it.count,
                 )
             }.toPersistentList(),
         )
