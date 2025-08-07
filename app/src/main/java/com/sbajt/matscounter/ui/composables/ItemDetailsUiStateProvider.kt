@@ -8,17 +8,28 @@ class ItemDetailsUiStateProvider : PreviewParameterProvider<ItemDetailsScreenUiS
 
     override val values: Sequence<ItemDetailsScreenUiState> = sequenceOf(
         emptyItemDetailsScreenUiState,
-        defaultItemDetailsScreenUiState,
+        tier1ItemDetailsScreenUiState,
+        tier2ItemDetailsScreenUiState,
     )
 
     companion object {
         val emptyItemDetailsScreenUiState = ItemDetailsScreenUiState()
 
-        val defaultItemDetailsScreenUiState = ItemDetailsScreenUiState(
+        val tier1ItemDetailsScreenUiState = ItemDetailsScreenUiState(
             selectedItem = ItemUiStateProvider.tier2ItemUiState,
             selectedItemAmount = 1,
             selectedItemBuildMaterialListWrapper = BuildMaterialListWrapper(
                 titleText = "Building Materials",
+                subtitleText = "Basic materials",
+                buildingMaterialsList = ItemUiStateProvider.mockBuildingMaterials()
+            )
+        )
+        val tier2ItemDetailsScreenUiState = ItemDetailsScreenUiState(
+            selectedItem = ItemUiStateProvider.tier2ItemUiState,
+            selectedItemAmount = 1,
+            selectedItemBuildMaterialListWrapper = BuildMaterialListWrapper(
+                titleText = "Build materials",
+                subtitleText = "Tier 1",
                 buildingMaterialsList = ItemUiStateProvider.mockBuildingMaterials()
             )
         )

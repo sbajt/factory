@@ -52,11 +52,17 @@ fun ItemDetailsScreen(
         if (uiState.selectedItem?.groupType != ItemGroupType.BASIC_MATERIAL) {
             with(uiState.selectedItemBuildMaterialListWrapper) {
                 Text(
-                    modifier = Modifier.padding(bottom = 8.dp),
                     fontFamily = FontFamily.SansSerif,
                     color = MaterialTheme.colorScheme.onSurface,
                     fontSize = 14.sp,
                     text = remember { this?.titleText ?: "" },
+                )
+                Text(
+                    modifier = Modifier.padding(top = 16.dp),
+                    fontFamily = FontFamily.SansSerif,
+                    color = MaterialTheme.colorScheme.onSurface,
+                    fontSize = 13.sp,
+                    text = remember { this?.subtitleText ?: "" },
                 )
                 if (this?.buildingMaterialsList?.isNotEmpty() == true) {
                     buildingMaterialsList.forEachIndexed { index, state ->

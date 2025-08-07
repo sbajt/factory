@@ -1,7 +1,7 @@
 package com.sbajt.matscounter.ui.composables
 
 import androidx.compose.ui.tooling.preview.PreviewParameterProvider
-import com.sbajt.matscounter.ui.mappers.getBuildGroupTypeList
+import com.sbajt.matscounter.ui.mappers.getItmGroupTypeList
 import com.sbajt.matscounter.ui.models.BuildingMaterialUiState
 import com.sbajt.matscounter.ui.models.ItemGroupType
 import com.sbajt.matscounter.ui.models.ItemUiState
@@ -59,7 +59,7 @@ class ItemUiStateProvider : PreviewParameterProvider<ItemUiState> {
             ItemUiState(
                 name = "Item $it",
                 imageName = "ic_item_$it",
-                groupType = getBuildGroupTypeList()[it % getBuildGroupTypeList().size]
+                groupType = getItmGroupTypeList()[it % getItmGroupTypeList().size]
             )
         }.toPersistentList()
     }

@@ -1,5 +1,6 @@
 package com.sbajt.matscounter.ui.mappers
 
+import androidx.compose.ui.res.integerResource
 import com.sbajt.matscounter.domain.models.ItemDomain
 import com.sbajt.matscounter.ui.models.BuildMaterialListWrapper
 import com.sbajt.matscounter.ui.models.BuildingMaterialUiState
@@ -8,7 +9,6 @@ import com.sbajt.matscounter.ui.models.ItemDetailsScreenUiState
 import com.sbajt.matscounter.ui.models.ItemGroupType
 import com.sbajt.matscounter.ui.models.ItemUiState
 import com.sbajt.matscounter.ui.models.MainScreenUiState
-import kotlinx.collections.immutable.persistentListOf
 import kotlinx.collections.immutable.toImmutableList
 import kotlinx.collections.immutable.toPersistentList
 
@@ -21,7 +21,10 @@ class MainScreenMapper {
                 ItemDetailsScreenUiState(
                     selectedItem = selectedItem,
                     selectedItemAmount = selectedItemAmount,
-                    selectedItemBuildMaterialListWrapper = selectedItem.buildMaterialListWrapper
+                    selectedItemBuildMaterialListWrapper = selectedItem.buildMaterialListWrapper?.copy(
+                        titleText = "Build materials",
+                        subtitleText = selectedItem.groupType.toLowerGroupType().getName()
+                    )
                 )
             },
             itemBuildPathUiState = inputData.selectedItem?.let {
@@ -42,26 +45,23 @@ class MainScreenMapper {
         selectedItem: ItemUiState,
         selectedItemAmount: Int,
         itemUiStateList: List<ItemUiState>,
-    ): List<BuildMaterialListWrapper> {
-        val newBuildMaterialList: MutableList<BuildingMaterialUiState> = mutableListOf()
-        return selectedItem
-            .groupType
-            .toLowerGroupsList()
-            .map { groupType ->
-                processBuildingMaterialList(
-                    groupType = groupType,
-                    multiplier = selectedItemAmount,
-                    newBuildMaterialList = newBuildMaterialList,
-                    allowedItemGroupTypeList = groupType.toLowerGroupsList(),
-                    buildMaterialList = selectedItem.buildMaterialListWrapper?.buildingMaterialsList ?: persistentListOf(),
-                    itemUiStateList = itemUiStateList,
-                )
-                BuildMaterialListWrapper(
-                    titleText = groupType.getName(),
-                    groupType = groupType,
-                    buildingMaterialsList = newBuildMaterialList.toPersistentList(),
-                )
-            }
+    ): List<BuildMaterialListWrapper> = selectedItem.groupType.toLowerGroupsList().map { groupType ->
+        val newBuildMaterialList = mutableListOf<BuildingMaterialUiState>()
+        if (selectedItem.buildMaterialListWrapper?.buildingMaterialsList?.isNotEmpty() == true) {
+            processBuildingMaterialList(
+                groupType = groupType,
+                multiplier = selectedItemAmount,
+                newBuildMaterialList = newBuildMaterialList,
+                allowedItemGroupTypeList = groupType.toLowerGroupsList(),
+                buildMaterialList = selectedItem.buildMaterialListWrapper.buildingMaterialsList,
+                itemUiStateList = itemUiStateList
+            )
+        }
+        BuildMaterialListWrapper(
+            titleText = groupType.getName(),
+            groupType = groupType,
+            buildingMaterialsList = newBuildMaterialList.toPersistentList(),
+        )
     }
 
     private fun processBuildingMaterialList(
@@ -73,30 +73,35 @@ class MainScreenMapper {
         itemUiStateList: List<ItemUiState>,
     ) {
         buildMaterialList.map { material ->
-            val itemUiState = itemUiStateList.firstOrNull { it.name == material.name }
-            if (itemUiState?.groupType.isBuildingMaterialValid(allowedItemGroupTypeList = allowedItemGroupTypeList)) {
-                newBuildMaterialList.addToProcessedBuildingMaterialList(
+            if (material.isValid(allowedItemGroupTypeList, itemUiStateList)) {
+                newBuildMaterialList.addToBuildingMaterialList(
                     material = material,
                     multiplier = multiplier,
                 )
             } else {
+                val lowerGroupType = groupType.toLowerGroupType()
+                val itemUiState = itemUiStateList.firstOrNull { it.name == material.name }
                 processBuildingMaterialList(
-                    groupType = groupType.toLowerGroupType(),
+                    groupType = lowerGroupType,
                     multiplier = multiplier * material.amount,
                     newBuildMaterialList = newBuildMaterialList,
-                    allowedItemGroupTypeList = groupType.toLowerGroupsList(),
-                    buildMaterialList = itemUiState?.buildMaterialListWrapper?.buildingMaterialsList?.toPersistentList() ?: persistentListOf(),
-                    itemUiStateList = itemUiStateList
+                    allowedItemGroupTypeList = allowedItemGroupTypeList - groupType,
+                    buildMaterialList = itemUiState?.buildMaterialListWrapper?.buildingMaterialsList ?: emptyList(),
+                    itemUiStateList = itemUiStateList,
                 )
             }
         }
     }
 
-    private fun ItemGroupType?.isBuildingMaterialValid(
+    private fun BuildingMaterialUiState.isValid(
         allowedItemGroupTypeList: List<ItemGroupType>,
-    ): Boolean = allowedItemGroupTypeList.any { it == this }
+        itemUiStateList: List<ItemUiState>,
+    ): Boolean {
+        val buildingMaterialItemUiState = itemUiStateList.firstOrNull { it.name == name }
+        return allowedItemGroupTypeList.contains(buildingMaterialItemUiState?.groupType)
+    }
 
-    private fun MutableList<BuildingMaterialUiState>.addToProcessedBuildingMaterialList(
+    private fun MutableList<BuildingMaterialUiState>.addToBuildingMaterialList(
         material: BuildingMaterialUiState,
         multiplier: Int,
     ) {
@@ -165,18 +170,18 @@ fun ItemGroupType.toLowerGroupType(): ItemGroupType = when (this) {
 }
 
 fun ItemGroupType.toLowerGroupsList(): List<ItemGroupType> = when (this) {
-    ItemGroupType.TIER1 -> listOf(ItemGroupType.BASIC_MATERIAL).reversed()
-    ItemGroupType.TIER2 -> listOf(ItemGroupType.BASIC_MATERIAL, ItemGroupType.TIER1).reversed()
-    ItemGroupType.TIER3 -> listOf(ItemGroupType.BASIC_MATERIAL, ItemGroupType.TIER1, ItemGroupType.TIER2).reversed()
-    ItemGroupType.TIER4 -> listOf(ItemGroupType.BASIC_MATERIAL, ItemGroupType.TIER1, ItemGroupType.TIER2, ItemGroupType.TIER3).reversed()
+    ItemGroupType.TIER1 -> listOf(ItemGroupType.BASIC_MATERIAL)
+    ItemGroupType.TIER2 -> listOf(ItemGroupType.TIER1, ItemGroupType.BASIC_MATERIAL)
+    ItemGroupType.TIER3 -> listOf(ItemGroupType.TIER2, ItemGroupType.TIER1, ItemGroupType.BASIC_MATERIAL)
+    ItemGroupType.TIER4 -> listOf(ItemGroupType.TIER3, ItemGroupType.TIER2, ItemGroupType.TIER1, ItemGroupType.BASIC_MATERIAL)
     else -> emptyList()
 }
 
-fun getBuildGroupTypeList(): List<ItemGroupType> = listOf(
+fun getItmGroupTypeList(): List<ItemGroupType> = listOf(
     ItemGroupType.BASIC_MATERIAL,
     ItemGroupType.TIER1,
     ItemGroupType.TIER2,
     ItemGroupType.TIER3,
     ItemGroupType.TIER4
-).sortedBy { it.ordinal }
+)
 

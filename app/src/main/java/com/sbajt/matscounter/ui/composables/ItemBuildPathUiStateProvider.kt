@@ -15,14 +15,14 @@ class ItemBuildPathUiStateProvider : PreviewParameterProvider<ItemBuildPathUiSta
 
         val defaultBuildPathUiState: ItemBuildPathUiState = ItemBuildPathUiState(
             selectedItem = ItemUiStateProvider.tier1ItemUiState,
-            buildPathList = listOf(
+            buildPathList = List(3) { index ->
                 BuildMaterialListWrapper(
                     titleText = ItemUiStateProvider.tier1ItemUiState.groupType.name,
                     buildingMaterialsList = ItemUiStateProvider.mockBuildingMaterials(
                         count = 3
                     ).toPersistentList()
                 )
-            )
+            }
         )
     }
 }

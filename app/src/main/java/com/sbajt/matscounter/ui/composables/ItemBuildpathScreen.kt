@@ -1,7 +1,9 @@
 package com.sbajt.matscounter.ui.composables
 
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
@@ -12,7 +14,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.scale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.tooling.preview.PreviewLightDark
@@ -30,17 +31,23 @@ fun ItemBuildPathScreen(
 ) {
     LazyColumn(modifier = modifier.padding(horizontal = 16.dp)) {
         item {
-            Box(
-                modifier = Modifier
-                    .fillMaxWidth(),
-                contentAlignment = Alignment.Center
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.spacedBy(8.dp, Alignment.CenterHorizontally),
+                verticalAlignment = Alignment.CenterVertically
             ) {
                 ItemView(
                     modifier = Modifier
-                        .scale(0.8f)
                         .padding(start = 8.dp, top = 8.dp),
                     uiState = uiState.selectedItem,
                     onItemSelected = { _, _ -> },
+                )
+                Text(
+                    modifier = Modifier,
+                    fontFamily = FontFamily.SansSerif,
+                    color = MaterialTheme.colorScheme.onSurface,
+                    fontSize = 12.sp,
+                    text = remember { "x${uiState.selectedItemAmount}" },
                 )
             }
         }

@@ -23,7 +23,7 @@ class MainScreenPreviewProvider : PreviewParameterProvider<MainScreenUiState> {
             itemUiStateList = ItemUiStateProvider.mockItemUiStateList()
         )
         val itemDetails = MainScreenUiState.Content(
-            itemDetailsUiState = ItemDetailsUiStateProvider.defaultItemDetailsScreenUiState
+            itemDetailsUiState = ItemDetailsUiStateProvider.tier2ItemDetailsScreenUiState
         )
         val itemBuildPath = MainScreenUiState.Content(
             itemBuildPathUiState = ItemBuildPathUiStateProvider.defaultBuildPathUiState
