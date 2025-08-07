@@ -1,6 +1,5 @@
 package com.sbajt.matscounter.ui.mappers
 
-import androidx.compose.ui.res.integerResource
 import com.sbajt.matscounter.domain.models.ItemDomain
 import com.sbajt.matscounter.ui.models.BuildMaterialListWrapper
 import com.sbajt.matscounter.ui.models.BuildingMaterialUiState
@@ -45,23 +44,25 @@ class MainScreenMapper {
         selectedItem: ItemUiState,
         selectedItemAmount: Int,
         itemUiStateList: List<ItemUiState>,
-    ): List<BuildMaterialListWrapper> = selectedItem.groupType.toLowerGroupsList().map { groupType ->
-        val newBuildMaterialList = mutableListOf<BuildingMaterialUiState>()
-        if (selectedItem.buildMaterialListWrapper?.buildingMaterialsList?.isNotEmpty() == true) {
+    ): List<BuildMaterialListWrapper> {
+        val lowerItemGroupTypeList = selectedItem.groupType.toLowerGroupsList()
+        return lowerItemGroupTypeList.map { groupType ->
+            val newBuildMaterialList = mutableListOf<BuildingMaterialUiState>()
             processBuildingMaterialList(
                 groupType = groupType,
                 multiplier = selectedItemAmount,
                 newBuildMaterialList = newBuildMaterialList,
-                allowedItemGroupTypeList = groupType.toLowerGroupsList(),
-                buildMaterialList = selectedItem.buildMaterialListWrapper.buildingMaterialsList,
+                allowedItemGroupTypeList = lowerItemGroupTypeList,
+                buildMaterialList = selectedItem.buildMaterialListWrapper?.buildingMaterialsList ?: emptyList(),
                 itemUiStateList = itemUiStateList
             )
+
+            BuildMaterialListWrapper(
+                titleText = groupType.getName(),
+                groupType = groupType,
+                buildingMaterialsList = newBuildMaterialList.toPersistentList(),
+            )
         }
-        BuildMaterialListWrapper(
-            titleText = groupType.getName(),
-            groupType = groupType,
-            buildingMaterialsList = newBuildMaterialList.toPersistentList(),
-        )
     }
 
     private fun processBuildingMaterialList(
