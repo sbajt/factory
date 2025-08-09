@@ -16,13 +16,19 @@ class MainScreenMapper {
     fun mapToUiState(inputData: InputData): MainScreenUiState = with(inputData) {
         MainScreenUiState.Content(
             itemUiStateList = itemUiStateList.toImmutableList(),
-            itemDetailsUiState = inputData.selectedItem?.let { selectedItem ->
+            itemDetailsUiState = selectedItem?.let { selectedItem ->
                 ItemDetailsScreenUiState(
                     selectedItem = selectedItem,
                     selectedItemAmount = selectedItemAmount,
                     selectedItemBuildMaterialListWrapper = selectedItem.buildMaterialListWrapper?.copy(
                         titleText = "Build materials",
-                        subtitleText = selectedItem.groupType.toLowerGroupType().getName()
+                        subtitleText = selectedItem.buildMaterialListWrapper.buildingMaterialsList
+                            .mapNotNull { material ->
+                                itemUiStateList.firstOrNull { itemUiState -> itemUiState.name == material.name }?.groupType
+                            }
+                            .maxOfOrNull { it.ordinal }
+                            ?.let { ItemGroupType.entries[it].getName() }
+                            ?: "",
                     )
                 )
             },
