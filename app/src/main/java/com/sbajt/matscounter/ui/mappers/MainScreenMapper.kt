@@ -22,13 +22,9 @@ class MainScreenMapper {
                     selectedItemAmount = selectedItemAmount,
                     selectedItemBuildMaterialListWrapper = selectedItem.buildMaterialListWrapper?.copy(
                         titleText = "Build materials",
-                        subtitleText = selectedItem.buildMaterialListWrapper.buildMaterialsList
-                            .mapNotNull { material ->
-                                itemUiStateList.firstOrNull { itemUiState -> itemUiState.name == material.name }?.groupType
-                            }
-                            .maxOfOrNull { it.ordinal }
-                            ?.let { ItemGroupType.entries[it].getName() }
-                            ?: "",
+                        subtitleText = selectedItem.mapToSubtitleText(
+                            itemUiStateList = itemUiStateList,
+                        )
                     )
                 )
             },
@@ -46,6 +42,16 @@ class MainScreenMapper {
         )
     }
 
+    fun ItemUiState.mapToSubtitleText(itemUiStateList: List<ItemUiState>) = this
+        .buildMaterialListWrapper
+        ?.buildMaterialsList
+        ?.mapNotNull { material ->
+            itemUiStateList.firstOrNull { itemUiState -> itemUiState.name == material.name }?.groupType
+        }
+        ?.maxOfOrNull { it.ordinal }
+        ?.let { ItemGroupType.entries[it].getName() }
+        ?: ""
+
     private fun createBuildPathList(
         selectedItem: ItemUiState,
         selectedItemAmount: Int,
@@ -57,7 +63,7 @@ class MainScreenMapper {
             processBuildMaterialList(
                 groupType = groupType,
                 multiplier = selectedItemAmount,
-                finalBuilMaterialList = finalBuildMaterialList,
+                finalBuildMaterialList = finalBuildMaterialList,
                 allowedItemGroupTypeList = lowerItemGroupTypeList,
                 itemBuildMaterialList = selectedItem.buildMaterialListWrapper?.buildMaterialsList ?: emptyList(),
                 itemUiStateList = itemUiStateList
@@ -74,7 +80,7 @@ class MainScreenMapper {
     private fun processBuildMaterialList(
         groupType: ItemGroupType,
         multiplier: Int,
-        finalBuilMaterialList: MutableList<BuildMaterialUiState>,
+        finalBuildMaterialList: MutableList<BuildMaterialUiState>,
         allowedItemGroupTypeList: List<ItemGroupType>,
         itemBuildMaterialList: List<BuildMaterialUiState>,
         itemUiStateList: List<ItemUiState>,
@@ -82,7 +88,7 @@ class MainScreenMapper {
         itemBuildMaterialList.map { material ->
             val materialItemUiState = itemUiStateList.firstOrNull { it.name == material.name }
             if (materialItemUiState?.groupType.isValid(allowedItemGroupTypeList)) {
-                finalBuilMaterialList.addToBuildMaterialList(
+                finalBuildMaterialList.addToBuildMaterialList(
                     material = material,
                     multiplier = multiplier,
                 )
@@ -90,7 +96,7 @@ class MainScreenMapper {
                 processBuildMaterialList(
                     groupType = materialItemUiState?.groupType ?: ItemGroupType.NONE,
                     multiplier = multiplier * material.amount,
-                    finalBuilMaterialList = finalBuilMaterialList,
+                    finalBuildMaterialList = finalBuildMaterialList,
                     allowedItemGroupTypeList = allowedItemGroupTypeList - groupType,
                     itemBuildMaterialList = materialItemUiState?.buildMaterialListWrapper?.buildMaterialsList ?: emptyList(),
                     itemUiStateList = itemUiStateList
