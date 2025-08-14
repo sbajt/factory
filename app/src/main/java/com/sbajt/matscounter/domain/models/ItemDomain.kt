@@ -6,10 +6,10 @@ data class ItemDomain(
     val groupType: Int?,
     val priceBuy: Float?,
     val priceSell: Float?,
-    val buildMaterials: List<BuildingMaterial>,
+    val buildMaterials: List<BuildMaterial>,
 )
 
-data class BuildingMaterial(
+data class BuildMaterial(
     val name: String?,
     val groupType: Int?,
     val count: Int,

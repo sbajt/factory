@@ -2,7 +2,7 @@ package com.sbajt.matscounter.ui.mappers
 
 import com.sbajt.matscounter.domain.models.ItemDomain
 import com.sbajt.matscounter.ui.models.BuildMaterialListWrapper
-import com.sbajt.matscounter.ui.models.BuildingMaterialUiState
+import com.sbajt.matscounter.ui.models.BuildMaterialUiState
 import com.sbajt.matscounter.ui.models.ItemBuildPathUiState
 import com.sbajt.matscounter.ui.models.ItemDetailsScreenUiState
 import com.sbajt.matscounter.ui.models.ItemGroupType
@@ -22,7 +22,7 @@ class MainScreenMapper {
                     selectedItemAmount = selectedItemAmount,
                     selectedItemBuildMaterialListWrapper = selectedItem.buildMaterialListWrapper?.copy(
                         titleText = "Build materials",
-                        subtitleText = selectedItem.buildMaterialListWrapper.buildingMaterialsList
+                        subtitleText = selectedItem.buildMaterialListWrapper.buildMaterialsList
                             .mapNotNull { material ->
                                 itemUiStateList.firstOrNull { itemUiState -> itemUiState.name == material.name }?.groupType
                             }
@@ -53,72 +53,69 @@ class MainScreenMapper {
     ): List<BuildMaterialListWrapper> {
         val lowerItemGroupTypeList = selectedItem.groupType.toLowerGroupsList()
         return lowerItemGroupTypeList.map { groupType ->
-            val newBuildMaterialList = mutableListOf<BuildingMaterialUiState>()
-            processBuildingMaterialList(
+            val finalBuildMaterialList = mutableListOf<BuildMaterialUiState>()
+            processBuildMaterialList(
                 groupType = groupType,
                 multiplier = selectedItemAmount,
-                newBuildMaterialList = newBuildMaterialList,
+                finalBuilMaterialList = finalBuildMaterialList,
                 allowedItemGroupTypeList = lowerItemGroupTypeList,
-                buildMaterialList = selectedItem.buildMaterialListWrapper?.buildingMaterialsList ?: emptyList(),
+                itemBuildMaterialList = selectedItem.buildMaterialListWrapper?.buildMaterialsList ?: emptyList(),
                 itemUiStateList = itemUiStateList
             )
 
             BuildMaterialListWrapper(
                 titleText = groupType.getName(),
                 groupType = groupType,
-                buildingMaterialsList = newBuildMaterialList.toPersistentList(),
+                buildMaterialsList = finalBuildMaterialList.toPersistentList(),
             )
         }
     }
 
-    private fun processBuildingMaterialList(
+    private fun processBuildMaterialList(
         groupType: ItemGroupType,
         multiplier: Int,
-        newBuildMaterialList: MutableList<BuildingMaterialUiState>,
+        finalBuilMaterialList: MutableList<BuildMaterialUiState>,
         allowedItemGroupTypeList: List<ItemGroupType>,
-        buildMaterialList: List<BuildingMaterialUiState>,
+        itemBuildMaterialList: List<BuildMaterialUiState>,
         itemUiStateList: List<ItemUiState>,
     ) {
-        buildMaterialList.map { material ->
-            if (material.isValid(allowedItemGroupTypeList, itemUiStateList)) {
-                newBuildMaterialList.addToBuildingMaterialList(
+        itemBuildMaterialList.map { material ->
+            val materialItemUiState = itemUiStateList.firstOrNull { it.name == material.name }
+            if (materialItemUiState?.groupType.isValid(allowedItemGroupTypeList)) {
+                finalBuilMaterialList.addToBuildMaterialList(
                     material = material,
                     multiplier = multiplier,
                 )
             } else {
-                val lowerGroupType = groupType.toLowerGroupType()
-                val itemUiState = itemUiStateList.firstOrNull { it.name == material.name }
-                processBuildingMaterialList(
-                    groupType = lowerGroupType,
+                processBuildMaterialList(
+                    groupType = materialItemUiState?.groupType ?: ItemGroupType.NONE,
                     multiplier = multiplier * material.amount,
-                    newBuildMaterialList = newBuildMaterialList,
+                    finalBuilMaterialList = finalBuilMaterialList,
                     allowedItemGroupTypeList = allowedItemGroupTypeList - groupType,
-                    buildMaterialList = itemUiState?.buildMaterialListWrapper?.buildingMaterialsList ?: emptyList(),
-                    itemUiStateList = itemUiStateList,
+                    itemBuildMaterialList = materialItemUiState?.buildMaterialListWrapper?.buildMaterialsList ?: emptyList(),
+                    itemUiStateList = itemUiStateList
                 )
             }
         }
     }
 
-    private fun BuildingMaterialUiState.isValid(
+    private fun ItemGroupType?.isValid(
         allowedItemGroupTypeList: List<ItemGroupType>,
-        itemUiStateList: List<ItemUiState>,
-    ): Boolean {
-        val buildingMaterialItemUiState = itemUiStateList.firstOrNull { it.name == name }
-        return allowedItemGroupTypeList.contains(buildingMaterialItemUiState?.groupType)
+    ) = if (this != null) {
+        allowedItemGroupTypeList.contains(this)
+    } else {
+        false
     }
 
-    private fun MutableList<BuildingMaterialUiState>.addToBuildingMaterialList(
-        material: BuildingMaterialUiState,
+    private fun MutableList<BuildMaterialUiState>.addToBuildMaterialList(
+        material: BuildMaterialUiState,
         multiplier: Int,
     ) {
-        val existingBuildingMaterial = this.firstOrNull { it.name == material.name }
-        if (existingBuildingMaterial != null) {
-            existingBuildingMaterial
-            remove(existingBuildingMaterial)
+        if (this.contains(material)) {
+            remove(material)
             add(
-                existingBuildingMaterial.copy(
-                    amount = existingBuildingMaterial.amount + (material.amount * multiplier)
+                material.copy(
+                    amount = material.amount + (material.amount * multiplier)
                 )
             )
         } else {
@@ -145,8 +142,8 @@ fun ItemDomain?.toItemUiState(): ItemUiState? = if (this != null) {
         buildMaterialListWrapper = BuildMaterialListWrapper(
             titleText = lowerGroupType.getName(),
             groupType = lowerGroupType,
-            buildingMaterialsList = buildMaterials.map {
-                BuildingMaterialUiState(
+            buildMaterialsList = buildMaterials.map {
+                BuildMaterialUiState(
                     name = it.name,
                     amount = it.count,
                 )

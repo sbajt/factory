@@ -1,5 +1,6 @@
 package com.sbajt.matscounter.ui
 
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.sbajt.matscounter.ui.mappers.MainScreenMapper
@@ -46,7 +47,10 @@ class MainScreenViewModel : ViewModel(), KoinComponent {
             )
         )
     }
-        .catch { MainScreenUiState.Empty }
+        .catch {
+            Log.e(this::class.java.simpleName, "Error while collecting item list", it)
+            MainScreenUiState.Empty
+        }
         .stateIn(
             scope = viewModelScope,
             started = WhileSubscribed(5_000),

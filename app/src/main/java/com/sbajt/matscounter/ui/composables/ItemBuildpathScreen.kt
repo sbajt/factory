@@ -78,7 +78,7 @@ fun ItemBuildPathScreen(
                         text = remember { buildMaterialList.titleText ?: "" },
                     )
                 }
-                buildMaterialList.buildingMaterialsList.forEach { buildMaterial ->
+                buildMaterialList.buildMaterialsList.forEach { buildMaterial ->
                     item("item_${buildMaterial.name}_${buildMaterialList.groupType}") {
                         BuildMaterialView(
                             uiState = buildMaterial,

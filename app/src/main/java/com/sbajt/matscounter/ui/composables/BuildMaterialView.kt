@@ -14,11 +14,11 @@ import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.sbajt.matscounter.ui.models.BuildingMaterialUiState
+import com.sbajt.matscounter.ui.models.BuildMaterialUiState
 
 @Composable
 fun BuildMaterialView(
-    uiState: BuildingMaterialUiState,
+    uiState: BuildMaterialUiState,
     selectedItemAmount: Int,
     modifier: Modifier = Modifier
 ) {
@@ -52,7 +52,7 @@ fun BuildMaterialView(
 
 @PreviewLightDark
 @Composable
-fun previewBuildingMaterialView(@PreviewParameter(BuildMaterialUiStateProvider::class) uiState: BuildingMaterialUiState) {
+fun previewBuildMaterialView(@PreviewParameter(BuildMaterialUiStateProvider::class) uiState: BuildMaterialUiState) {
     BuildMaterialView(
         uiState = uiState,
         selectedItemAmount = 0,

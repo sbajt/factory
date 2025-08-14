@@ -19,9 +19,9 @@ class ItemDetailsUiStateProvider : PreviewParameterProvider<ItemDetailsScreenUiS
             selectedItem = ItemUiStateProvider.tier2ItemUiState,
             selectedItemAmount = 1,
             selectedItemBuildMaterialListWrapper = BuildMaterialListWrapper(
-                titleText = "Building Materials",
+                titleText = "Build Materials",
                 subtitleText = "Basic materials",
-                buildingMaterialsList = ItemUiStateProvider.mockBuildingMaterials()
+                buildMaterialsList = ItemUiStateProvider.mockBuildMaterials()
             )
         )
         val tier2ItemDetailsScreenUiState = ItemDetailsScreenUiState(
@@ -30,7 +30,7 @@ class ItemDetailsUiStateProvider : PreviewParameterProvider<ItemDetailsScreenUiS
             selectedItemBuildMaterialListWrapper = BuildMaterialListWrapper(
                 titleText = "Build materials",
                 subtitleText = "Tier 1",
-                buildingMaterialsList = ItemUiStateProvider.mockBuildingMaterials()
+                buildMaterialsList = ItemUiStateProvider.mockBuildMaterials()
             )
         )
     }

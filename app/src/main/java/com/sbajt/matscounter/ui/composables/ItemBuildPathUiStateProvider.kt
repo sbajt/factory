@@ -18,7 +18,7 @@ class ItemBuildPathUiStateProvider : PreviewParameterProvider<ItemBuildPathUiSta
             buildPathList = List(3) { index ->
                 BuildMaterialListWrapper(
                     titleText = ItemUiStateProvider.tier1ItemUiState.groupType.name,
-                    buildingMaterialsList = ItemUiStateProvider.mockBuildingMaterials(
+                    buildMaterialsList = ItemUiStateProvider.mockBuildMaterials(
                         count = 3
                     ).toPersistentList()
                 )
