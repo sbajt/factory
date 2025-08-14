@@ -27,7 +27,7 @@ data class ItemUiState(
     val buildMaterialListWrapper: BuildMaterialListWrapper? = null,
 )
 
-data class BuildingMaterialUiState(
+data class BuildMaterialUiState(
     val name: String? = null,
     val amount: Int = 0,
 )
@@ -36,5 +36,5 @@ data class BuildMaterialListWrapper(
     val titleText: String? = null,
     val subtitleText: String? = null,
     val groupType: ItemGroupType? = null,
-    val buildingMaterialsList: ImmutableList<BuildingMaterialUiState> = persistentListOf(),
+    val buildMaterialsList: ImmutableList<BuildMaterialUiState> = persistentListOf(),
 )

@@ -2,7 +2,7 @@ package com.sbajt.matscounter.ui.composables
 
 import androidx.compose.ui.tooling.preview.PreviewParameterProvider
 import com.sbajt.matscounter.ui.mappers.getItmGroupTypeList
-import com.sbajt.matscounter.ui.models.BuildingMaterialUiState
+import com.sbajt.matscounter.ui.models.BuildMaterialUiState
 import com.sbajt.matscounter.ui.models.ItemGroupType
 import com.sbajt.matscounter.ui.models.ItemUiState
 import kotlinx.collections.immutable.ImmutableList
@@ -44,10 +44,10 @@ class ItemUiStateProvider : PreviewParameterProvider<ItemUiState> {
             groupType = ItemGroupType.TIER2
         )
 
-        fun mockBuildingMaterials(
+        fun mockBuildMaterials(
             count: Int = 2,
-        ): ImmutableList<BuildingMaterialUiState> = List(count) {
-            BuildingMaterialUiState(
+        ): ImmutableList<BuildMaterialUiState> = List(count) {
+            BuildMaterialUiState(
                 name = "Material $it",
                 amount = 1,
             )

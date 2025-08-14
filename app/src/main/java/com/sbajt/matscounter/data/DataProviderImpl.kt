@@ -9,7 +9,7 @@ class DataProviderImpl(override val context: Context) : DataProvider {
 
     override fun getData(): List<Item> = Cache(assetManager = context.assets).run {
         itemList.addAll(
-            getBuildingMaterialItemList() +
+            getBuildMaterialItemList() +
                 getTier1ItemList() +
                 getTier2ItemList() +
                 getTier3ItemList() +

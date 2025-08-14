@@ -14,10 +14,10 @@ data class Item(
     @SerializedName("priceSell")
     val priceSell: Float?,
     @SerializedName("buildMaterials")
-    val buildMaterials: List<BuildingMaterial>,
+    val buildMaterials: List<BuildMaterial>,
 )
 
-data class BuildingMaterial(
+data class BuildMaterial(
     @SerializedName("name")
     val name: String?,
     @SerializedName("groupType")

@@ -11,8 +11,8 @@ class Cache(private val assetManager: AssetManager?) {
 
     private val gson = GsonBuilder().create()
 
-    fun getBuildingMaterialItemList(): List<Item> = gson.fromJson<List<Item?>>(
-        BufferedReader(InputStreamReader(assetManager?.open("json/building_materials.json"))),
+    fun getBuildMaterialItemList(): List<Item> = gson.fromJson<List<Item?>>(
+        BufferedReader(InputStreamReader(assetManager?.open("json/build_materials.json"))),
         object : TypeToken<List<Item?>>() {}.type
     ).filterNotNull()
 

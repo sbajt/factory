@@ -1,7 +1,7 @@
 package com.sbajt.matscounter.domain.repositories
 
 import com.sbajt.matscounter.data.DataProvider
-import com.sbajt.matscounter.domain.models.BuildingMaterial
+import com.sbajt.matscounter.domain.models.BuildMaterial
 import com.sbajt.matscounter.domain.models.ItemDomain
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flowOf
@@ -21,7 +21,7 @@ class ItemsRepositoryImpl(
                     priceBuy = item.priceBuy,
                     priceSell = item.priceSell,
                     buildMaterials = item.buildMaterials.map {
-                        BuildingMaterial(
+                        BuildMaterial(
                             name = it.name,
                             groupType = it.groupType,
                             count = it.count,
@@ -42,7 +42,7 @@ class ItemsRepositoryImpl(
                     priceBuy = item.priceBuy,
                     priceSell = item.priceSell,
                     buildMaterials = item.buildMaterials.map {
-                        BuildingMaterial(
+                        BuildMaterial(
                             name = it.name,
                             groupType = it.groupType,
                             count = it.count,

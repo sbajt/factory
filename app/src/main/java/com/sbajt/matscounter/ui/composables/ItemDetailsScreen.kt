@@ -64,10 +64,10 @@ fun ItemDetailsScreen(
                     fontSize = 13.sp,
                     text = remember { this?.subtitleText ?: "" },
                 )
-                if (this?.buildingMaterialsList?.isNotEmpty() == true) {
-                    buildingMaterialsList.forEachIndexed { index, state ->
+                if (this?.buildMaterialsList?.isNotEmpty() == true) {
+                    buildMaterialsList.forEachIndexed { index, state ->
                         BuildMaterialView(
-                            uiState = buildingMaterialsList[index],
+                            uiState = buildMaterialsList[index],
                             selectedItemAmount = uiState.selectedItemAmount,
                         )
                     }
