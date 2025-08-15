@@ -20,6 +20,8 @@ import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.compose.ui.util.fastForEachIndexed
+import androidx.compose.ui.util.fastForEachReversed
 import com.sbajt.matscounter.R
 import com.sbajt.matscounter.ui.models.ItemBuildPathUiState
 import com.sbajt.matscounter.ui.theme.MatsCounterTheme
@@ -53,33 +55,23 @@ fun ItemBuildPathScreen(
         }
 
         if (uiState.buildPathList.isNotEmpty()) {
-            uiState.buildPathList.forEach { buildMaterialList ->
-                item("arrow_${buildMaterialList.groupType}") {
-                    Box(
-                        modifier = Modifier
-                            .fillMaxWidth(),
-                        contentAlignment = Alignment.Center
-                    ) {
-                        Image(
-                            modifier = Modifier
-                                .padding(4.dp)
-                                .size(28.dp),
-                            painter = painterResource(id = R.drawable.ic_arrow),
-                            contentDescription = "Arrow icon",
-                        )
-                    }
+            uiState.buildPathList.fastForEachIndexed { index, buildMaterialList ->
+                item("arrow_${index}_${buildMaterialList.groupType}") {
+                    Arrow()
                 }
-                item("group_type_${buildMaterialList.groupType}_name") {
+                item("group_${index}_${buildMaterialList.groupType}_name") {
                     Text(
                         modifier = Modifier.padding(bottom = 8.dp),
                         fontFamily = FontFamily.SansSerif,
                         color = MaterialTheme.colorScheme.onSurface,
                         fontSize = 14.sp,
-                        text = remember { buildMaterialList.titleText ?: "" },
+                        text = buildMaterialList.titleText?.let {
+                            remember { it }
+                        } ?: "",
                     )
                 }
                 buildMaterialList.buildMaterialsList.forEach { buildMaterial ->
-                    item("item_${buildMaterial.name}_${buildMaterialList.groupType}") {
+                    item("group_${index}_item_${buildMaterial.name}_${buildMaterialList.groupType}") {
                         BuildMaterialView(
                             uiState = buildMaterial,
                             selectedItemAmount = uiState.selectedItemAmount,
@@ -88,6 +80,23 @@ fun ItemBuildPathScreen(
                 }
             }
         }
+    }
+}
+
+@Composable
+fun Arrow(modifier: Modifier = Modifier) {
+    Box(
+        modifier = modifier
+            .fillMaxWidth(),
+        contentAlignment = Alignment.Center
+    ) {
+        Image(
+            modifier = Modifier
+                .padding(4.dp)
+                .size(28.dp),
+            painter = painterResource(id = R.drawable.ic_arrow),
+            contentDescription = "Arrow icon",
+        )
     }
 }
 

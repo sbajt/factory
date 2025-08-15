@@ -1,7 +1,8 @@
 package com.sbajt.matscounter.ui.composables
 
 import androidx.compose.ui.tooling.preview.PreviewParameterProvider
-import com.sbajt.matscounter.ui.mappers.getItmGroupTypeList
+import com.sbajt.matscounter.ui.mappers.getItemGroupTypeList
+import com.sbajt.matscounter.ui.models.BuildMaterialListWrapper
 import com.sbajt.matscounter.ui.models.BuildMaterialUiState
 import com.sbajt.matscounter.ui.models.ItemGroupType
 import com.sbajt.matscounter.ui.models.ItemUiState
@@ -35,13 +36,30 @@ class ItemUiStateProvider : PreviewParameterProvider<ItemUiState> {
         val tier1ItemUiState = ItemUiState(
             name = "Material",
             imageName = "ic_box",
-            groupType = ItemGroupType.TIER1
+            groupType = ItemGroupType.TIER1,
+            buildMaterialListWrapper = mockBuildMaterialWrapper(
+                groupType = ItemGroupType.TIER1,
+                buildMaterialsCount = 2,
+            ),
         )
 
         val tier2ItemUiState = ItemUiState(
             name = "Material",
             imageName = "ic_box",
-            groupType = ItemGroupType.TIER2
+            groupType = ItemGroupType.TIER2,
+            buildMaterialListWrapper = mockBuildMaterialWrapper(
+                groupType = ItemGroupType.TIER2,
+                buildMaterialsCount = 2,
+            ),
+        )
+
+        fun mockBuildMaterialWrapper(
+            groupType: ItemGroupType,
+            buildMaterialsCount: Int = 2,
+        ) = BuildMaterialListWrapper(
+            titleText = groupType.name,
+            groupType = groupType,
+            buildMaterialsList = mockBuildMaterials(buildMaterialsCount)
         )
 
         fun mockBuildMaterials(
@@ -59,7 +77,7 @@ class ItemUiStateProvider : PreviewParameterProvider<ItemUiState> {
             ItemUiState(
                 name = "Item $it",
                 imageName = "ic_item_$it",
-                groupType = getItmGroupTypeList()[it % getItmGroupTypeList().size]
+                groupType = getItemGroupTypeList()[it % getItemGroupTypeList().size]
             )
         }.toPersistentList()
     }

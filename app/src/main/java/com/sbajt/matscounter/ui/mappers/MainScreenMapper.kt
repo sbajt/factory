@@ -187,7 +187,7 @@ fun ItemGroupType.toLowerGroupsList(): List<ItemGroupType> = when (this) {
     else -> emptyList()
 }
 
-fun getItmGroupTypeList(): List<ItemGroupType> = listOf(
+fun getItemGroupTypeList(): List<ItemGroupType> = listOf(
     ItemGroupType.BASIC_MATERIAL,
     ItemGroupType.TIER1,
     ItemGroupType.TIER2,
