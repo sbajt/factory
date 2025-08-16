@@ -1,5 +1,7 @@
 package com.sbajt.matscounter.ui.composables
 
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.lazy.grid.GridCells
@@ -19,6 +21,7 @@ import com.sbajt.matscounter.ui.mappers.getName
 import com.sbajt.matscounter.ui.models.ItemGroupType
 import com.sbajt.matscounter.ui.models.ItemUiState
 import com.sbajt.matscounter.ui.theme.MatsCounterTheme
+import com.sbajt.matscounter.ui.theme.size
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.coroutines.launch
 
@@ -42,6 +45,8 @@ fun ItemListScreen(
                     onClick = { scope.launch { pagerState.animateScrollToPage(index) } },
                     text = {
                         Text(
+                            style = MatsCounterTheme.typography.bodyTextNormal,
+                            color = MatsCounterTheme.colors.primary,
                             maxLines = 1,
                             text = text,
                         )
@@ -52,7 +57,8 @@ fun ItemListScreen(
         HorizontalPager(state = pagerState) { page ->
             LazyVerticalGrid(
                 columns = GridCells.Adaptive(minSize = 100.dp),
-                contentPadding = PaddingValues(vertical = 18.dp)
+                contentPadding = PaddingValues(vertical = 18.dp),
+                verticalArrangement = Arrangement.spacedBy(size.medium),
             ) {
                 val groupType = groupTypeList[page]
                 val itemUiStatePage = uiState.filter {
@@ -75,6 +81,7 @@ fun ItemListScreen(
 fun GridSectionPreview(@PreviewParameter(ItemListUiStateProvider::class) uiState: ImmutableList<ItemUiState>) {
     MatsCounterTheme {
         ItemListScreen(
+            modifier = Modifier.background(MatsCounterTheme.colors.background),
             uiState = uiState,
             onItemSelected = { _, _ -> },
         )

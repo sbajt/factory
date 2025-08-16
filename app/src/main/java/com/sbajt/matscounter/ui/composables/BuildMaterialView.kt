@@ -1,20 +1,19 @@
 package com.sbajt.matscounter.ui.composables
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import com.sbajt.matscounter.ui.models.BuildMaterialUiState
+import com.sbajt.matscounter.ui.theme.MatsCounterTheme
 
 @Composable
 fun BuildMaterialView(
@@ -25,21 +24,19 @@ fun BuildMaterialView(
     Row(
         modifier = modifier
             .fillMaxWidth()
-            .padding(vertical = 4.dp, horizontal = 8.dp),
+            .padding(all = MatsCounterTheme.size.paddingSmall),
     ) {
         Text(
-            fontFamily = FontFamily.SansSerif,
-            fontSize = 12.sp,
-            color = MaterialTheme.colorScheme.onSurfaceVariant,
+            style = MatsCounterTheme.typography.bodyTextNormal,
+            color = MatsCounterTheme.colors.primary,
             text = remember { uiState.name ?: "" }
         )
         if (uiState.amount > 0) {
             Text(
                 modifier = Modifier.weight(1f),
                 textAlign = TextAlign.End,
-                fontFamily = FontFamily.SansSerif,
-                fontSize = 12.sp,
-                color = MaterialTheme.colorScheme.onSurfaceVariant,
+                style = MatsCounterTheme.typography.bodyTextNormal,
+                color = MatsCounterTheme.colors.primary,
                 text = if (selectedItemAmount > 0) {
                     "x${uiState.amount * selectedItemAmount}"
                 } else {
@@ -53,8 +50,11 @@ fun BuildMaterialView(
 @PreviewLightDark
 @Composable
 fun previewBuildMaterialView(@PreviewParameter(BuildMaterialUiStateProvider::class) uiState: BuildMaterialUiState) {
-    BuildMaterialView(
-        uiState = uiState,
-        selectedItemAmount = 0,
-    )
+    MatsCounterTheme {
+        BuildMaterialView(
+            modifier = Modifier.background(MatsCounterTheme.colors.background),
+            uiState = uiState,
+            selectedItemAmount = 0,
+        )
+    }
 }

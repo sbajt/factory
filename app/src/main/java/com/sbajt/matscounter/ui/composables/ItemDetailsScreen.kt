@@ -1,5 +1,6 @@
 package com.sbajt.matscounter.ui.composables
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -31,7 +32,7 @@ fun ItemDetailsScreen(
     onCountChange: OnCountChange,
     modifier: Modifier = Modifier
 ) {
-    Column(modifier = modifier) {
+    Column(modifier = modifier.background(MatsCounterTheme.colors.background)) {
         Row(modifier = Modifier.padding(start = 8.dp, top = 8.dp)) {
             ItemView(
                 modifier = Modifier.padding(start = 8.dp, top = 8.dp),

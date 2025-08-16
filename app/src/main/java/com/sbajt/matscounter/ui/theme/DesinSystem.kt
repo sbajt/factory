@@ -34,6 +34,12 @@ data class SizeScheme(
     val small: Dp,
     val medium: Dp,
     val large: Dp,
+    val iconSmall: Dp,
+    val icon: Dp,
+    val contentPadding: Dp,
+    val paddingSmall: Dp,
+    val paddingMedium: Dp,
+    val paddingLarge: Dp,
 )
 
 data class ShapeScheme(
@@ -43,16 +49,16 @@ data class ShapeScheme(
 
 val localColorScheme = staticCompositionLocalOf {
     ColorScheme(
-        primary = Color(0xFF6200EE),
-        onPrimary = Color(0xFFFFFFFF),
-        secondary = Color(0xFF03DAC6),
-        onSecondary = Color(0xFF000000),
-        error = Color(0xFFB00020),
-        onError = Color(0xFFFFFFFF),
-        background = Color(0xFFFFFFFF),
-        onBackground = Color(0xFF000000),
-        surface = Color(0xFFFFFFFF),
-        onSurface = Color(0xFF000000)
+        primary = Color.Unspecified,
+        onPrimary = Color.Unspecified,
+        secondary = Color.Unspecified,
+        onSecondary = Color.Unspecified,
+        error = Color.Unspecified,
+        onError = Color.Unspecified,
+        background = Color.Unspecified,
+        onBackground = Color.Unspecified,
+        surface = Color.Unspecified,
+        onSurface =  Color.Unspecified,
     )
 }
 
@@ -71,7 +77,13 @@ val localSizeScheme = staticCompositionLocalOf {
     SizeScheme(
         small = Dp.Unspecified,
         medium = Dp.Unspecified,
-        large = Dp.Unspecified
+        large = Dp.Unspecified,
+        iconSmall = Dp.Unspecified,
+        icon = Dp.Unspecified,
+        contentPadding = Dp.Unspecified,
+        paddingSmall = Dp.Unspecified,
+        paddingMedium = Dp.Unspecified,
+        paddingLarge = Dp.Unspecified,
     )
 }
 

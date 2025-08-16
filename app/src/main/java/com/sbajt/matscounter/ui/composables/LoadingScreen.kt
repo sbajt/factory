@@ -1,26 +1,25 @@
 package com.sbajt.matscounter.ui.composables
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.size
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.PreviewLightDark
-import androidx.compose.ui.unit.dp
+import com.sbajt.matscounter.ui.theme.MatsCounterTheme
 
 @Composable
 fun LoadingScreen(modifier: Modifier = Modifier) {
     Box(
-        modifier =  modifier.fillMaxSize(),
+        modifier = modifier.fillMaxSize(),
         contentAlignment = Alignment.Center
     ) {
         CircularProgressIndicator(
-            modifier = Modifier.size(40.dp),
-            color = MaterialTheme.colorScheme.secondary,
+            modifier = Modifier.size(MatsCounterTheme.size.icon),
             trackColor = MaterialTheme.colorScheme.surfaceVariant,
         )
     }
@@ -29,12 +28,8 @@ fun LoadingScreen(modifier: Modifier = Modifier) {
 @PreviewLightDark
 @Composable
 private fun LoadingScreenPreview() {
-    MaterialTheme {
-        Surface(
-            color = MaterialTheme.colorScheme.background,
-        ) {
-            LoadingScreen()
-        }
+    MatsCounterTheme {
+        LoadingScreen(modifier = Modifier.background(MatsCounterTheme.colors.background))
     }
 }
 

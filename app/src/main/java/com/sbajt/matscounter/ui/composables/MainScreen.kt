@@ -1,5 +1,6 @@
 package com.sbajt.matscounter.ui.composables
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
@@ -105,6 +106,7 @@ inline fun <T> ShowContentOrEmpty(data: T?, crossinline content: @Composable (T)
 fun MainScreenPreview(@PreviewParameter(MainScreenPreviewProvider::class) uiState: MainScreenUiState) {
     MatsCounterTheme {
         MainScreen(
+            modifier = Modifier.background(MatsCounterTheme.colors.background),
             uiState = uiState,
             navController = rememberNavController(),
             onItemSelected = { _, _ -> },

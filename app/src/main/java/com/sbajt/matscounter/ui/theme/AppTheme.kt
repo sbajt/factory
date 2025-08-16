@@ -1,71 +1,71 @@
 package com.sbajt.matscounter.ui.theme
 
-import androidx.compose.foundation.LocalIndication
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.ripple.rememberRipple
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.unit.TextUnit
+import androidx.compose.ui.unit.TextUnitType
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 
 val darkColors = ColorScheme(
-    primary = Black1,
-    onPrimary = Black2,
-    secondary = Gray,
-    onSecondary = Gray1,
+    primary = White,
+    onPrimary = White1,
+    secondary = White1,
+    onSecondary = White2,
     error = Error,
     onError = Error1,
     background = Black,
-    onBackground = Black,
-    surface = Black,
-    onSurface = Black
+    onBackground = Black1,
+    surface = Black1,
+    onSurface = Black2
 )
 
 val lightColors = ColorScheme(
-    primary = White1,
-    onPrimary = White2,
-    secondary = Gray,
-    onSecondary = Gray1,
+    primary = Black,
+    onPrimary = Black1,
+    secondary = Black1,
+    onSecondary = Black2,
     error = Error,
     onError = Error1,
     background = White,
-    onBackground = White,
-    surface = White,
-    onSurface = White
+    onBackground = White1,
+    surface = White1,
+    onSurface = White2
 )
 
 val typography = TypographyScheme(
     titleTextNormal = TextStyle(
         fontFamily = MatsCounterFontFamily,
-        fontSize = 14.sp,
+        fontSize = TextUnit(16.sp.value, TextUnitType.Sp),
         fontWeight = FontWeight.Bold,
     ),
     titleTextLarge = TextStyle(
         fontFamily = MatsCounterFontFamily,
-        fontSize = 16.sp,
+        fontSize = TextUnit(18.sp.value, TextUnitType.Sp),
         fontWeight = FontWeight.Bold,
     ),
     subtitleTextNormal = TextStyle(
         fontFamily = MatsCounterFontFamily,
-        fontSize = 11.sp,
+        fontSize = TextUnit(12.sp.value, TextUnitType.Sp),
         fontWeight = FontWeight.Normal,
     ),
     subtitleTextLarge = TextStyle(
         fontFamily = MatsCounterFontFamily,
-        fontSize = 12.sp,
+        fontSize = TextUnit(14.sp.value, TextUnitType.Sp),
         fontWeight = FontWeight.Normal,
     ),
     bodyTextNormal = TextStyle(
         fontFamily = MatsCounterFontFamily,
-        fontSize = 12.sp,
+        fontSize = TextUnit(12.sp.value, TextUnitType.Sp),
         fontWeight = FontWeight.Normal,
     ),
     bodyTextLarge = TextStyle(
         fontFamily = MatsCounterFontFamily,
-        fontSize = 14.sp,
+        fontSize = TextUnit(14.sp.value, TextUnitType.Sp),
         fontWeight = FontWeight.Normal,
     )
 )
@@ -78,7 +78,13 @@ val shape = ShapeScheme(
 val size = SizeScheme(
     small = 8.dp,
     medium = 12.dp,
-    large = 16.dp
+    large = 16.dp,
+    iconSmall = 28.dp,
+    icon = 80.dp,
+    contentPadding = 16.dp,
+    paddingSmall = 4.dp,
+    paddingMedium = 8.dp,
+    paddingLarge = 16.dp,
 )
 
 @Composable
@@ -97,4 +103,18 @@ fun MatsCounterTheme(
         localSizeScheme provides size,
         content = content,
     )
+}
+
+object MatsCounterTheme {
+    val colors: ColorScheme
+        @Composable get() = localColorScheme.current
+
+    val typography: TypographyScheme
+        @Composable get() = localTypographyScheme.current
+
+    val shape: ShapeScheme
+        @Composable get() = localShapeScheme.current
+
+    val size: SizeScheme
+        @Composable get() = localSizeScheme.current
 }
