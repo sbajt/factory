@@ -8,16 +8,12 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.compose.ui.tooling.preview.PreviewParameter
-import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import com.sbajt.matscounter.ui.models.InputSectionUiState
@@ -62,13 +58,6 @@ fun ItemDetailsScreen(
                     color = MatsCounterTheme.colors.primary,
                     text = remember { this?.titleText ?: "" },
                 )
-                Text(
-                    modifier = Modifier.padding(top = 16.dp),
-                    fontFamily = FontFamily.SansSerif,
-                    color = MaterialTheme.colorScheme.onSurface,
-                    fontSize = 13.sp,
-                    text = remember { this?.subtitleText ?: "" },
-                )
                 if (this?.buildMaterialsList?.isNotEmpty() == true) {
                     buildMaterialsList.forEachIndexed { index, state ->
                         BuildMaterialView(
@@ -78,25 +67,28 @@ fun ItemDetailsScreen(
                     }
                 }
             }
-            Box(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(top = 24.dp)
-            ) {
-                Button(
-                    modifier = Modifier.padding(MatsCounterTheme.size.contentPadding),
-                    colors = ButtonDefaults.buttonColors(
-                        containerColor = MatsCounterTheme.colors.secondary
-                    ),
-                    shape = MatsCounterTheme.shape.button,
-                    onClick = {
-                        navController.navigate(ItemBuildComponents)
-                    }
+            if (uiState.selectedItem != null) {
+                Box(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(top = MatsCounterTheme.size.paddingLarge)
                 ) {
-                    Text(
-                        style = MatsCounterTheme.typography.subtitleTextNormal,
-                        color = MatsCounterTheme.colors.primary,
-                        text = "Show build path")
+                    Button(
+                        modifier = Modifier.padding(MatsCounterTheme.size.contentPadding),
+                        colors = ButtonDefaults.buttonColors(
+                            containerColor = MatsCounterTheme.colors.secondary
+                        ),
+                        shape = MatsCounterTheme.shape.button,
+                        onClick = {
+                            navController.navigate(ItemBuildComponents)
+                        }
+                    ) {
+                        Text(
+                            style = MatsCounterTheme.typography.subtitleTextNormal,
+                            color = MatsCounterTheme.colors.primary,
+                            text = "Show build path"
+                        )
+                    }
                 }
             }
         }

@@ -25,9 +25,6 @@ class MainScreenMapper {
                     selectedItemAmount = selectedItemAmount,
                     selectedItemBuildMaterialListWrapper = selectedItem.buildMaterialListWrapper?.copy(
                         titleText = "Build materials",
-                        subtitleText = selectedItem.mapToSubtitleText(
-                            itemUiStateList = itemUiStateList,
-                        )
                     )
                 )
             },
@@ -44,16 +41,6 @@ class MainScreenMapper {
             }
         )
     }
-
-    fun ItemUiState.mapToSubtitleText(itemUiStateList: List<ItemUiState>) = this
-        .buildMaterialListWrapper
-        ?.buildMaterialsList
-        ?.mapNotNull { material ->
-            itemUiStateList.firstOrNull { itemUiState -> itemUiState.name == material.name }?.groupType
-        }
-        ?.maxOfOrNull { it.ordinal }
-        ?.let { ItemGroupType.entries[it].getName() }
-        ?: ""
 
     private fun createBuildPathList(
         selectedItem: ItemUiState,
@@ -89,21 +76,20 @@ class MainScreenMapper {
         itemBuildMaterialList.map { material ->
             val materialItemUiState = itemUiStateList.firstOrNull { it.name == material.name }
             Log.d(TAG, "$groupType")
-                if (materialItemUiState?.groupType.isValid(groupType = groupType)) {
-                    finalBuildMaterialList.addToBuildMaterialList(
-                        material = material,
-                        multiplier = multiplier,
-                    )
-                }
-                else {
-                    processBuildMaterialList(
-                        groupType = materialItemUiState?.groupType ?: ItemGroupType.NONE,
-                        multiplier = multiplier * material.amount,
-                        finalBuildMaterialList = finalBuildMaterialList,
-                        itemBuildMaterialList = materialItemUiState?.buildMaterialListWrapper?.buildMaterialsList ?: emptyList(),
-                        itemUiStateList = itemUiStateList
-                    )
-                }
+            if (materialItemUiState?.groupType.isValid(groupType = groupType)) {
+                finalBuildMaterialList.addToBuildMaterialList(
+                    material = material,
+                    multiplier = multiplier,
+                )
+            } else {
+                processBuildMaterialList(
+                    groupType = materialItemUiState?.groupType ?: ItemGroupType.NONE,
+                    multiplier = multiplier * material.amount,
+                    finalBuildMaterialList = finalBuildMaterialList,
+                    itemBuildMaterialList = materialItemUiState?.buildMaterialListWrapper?.buildMaterialsList ?: emptyList(),
+                    itemUiStateList = itemUiStateList
+                )
+            }
         }
     }
 

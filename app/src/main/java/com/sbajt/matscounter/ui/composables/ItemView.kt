@@ -73,8 +73,7 @@ fun ItemView(
 @PreviewLightDark
 @Composable
 fun ItemViewPreview(@PreviewParameter(ItemUiStateProvider::class) uiState: ItemUiState) {
-    MatsCounterTheme(
-    ) {
+    MatsCounterTheme{
         ItemView(
             modifier = Modifier.background(MatsCounterTheme.colors.background),
             uiState = uiState,

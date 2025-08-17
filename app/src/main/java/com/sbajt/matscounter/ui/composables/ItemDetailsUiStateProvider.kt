@@ -20,7 +20,6 @@ class ItemDetailsUiStateProvider : PreviewParameterProvider<ItemDetailsScreenUiS
             selectedItemAmount = 1,
             selectedItemBuildMaterialListWrapper = BuildMaterialListWrapper(
                 titleText = "Build Materials",
-                subtitleText = "Basic materials",
                 buildMaterialsList = ItemUiStateProvider.mockBuildMaterials()
             )
         )
@@ -29,7 +28,6 @@ class ItemDetailsUiStateProvider : PreviewParameterProvider<ItemDetailsScreenUiS
             selectedItemAmount = 1,
             selectedItemBuildMaterialListWrapper = BuildMaterialListWrapper(
                 titleText = "Build materials",
-                subtitleText = "Tier 1",
                 buildMaterialsList = ItemUiStateProvider.mockBuildMaterials()
             )
         )

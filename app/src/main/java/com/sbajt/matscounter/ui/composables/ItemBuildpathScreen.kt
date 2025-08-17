@@ -28,7 +28,7 @@ fun ItemBuildPathScreen(
     uiState: ItemBuildPathUiState,
     modifier: Modifier = Modifier,
 ) {
-    LazyColumn(modifier = modifier) {
+    LazyColumn(modifier = modifier.padding(MatsCounterTheme.size.contentPadding),) {
         item {
             Row(
                 modifier = Modifier

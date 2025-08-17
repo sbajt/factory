@@ -20,7 +20,7 @@ fun LoadingScreen(modifier: Modifier = Modifier) {
     ) {
         CircularProgressIndicator(
             modifier = Modifier.size(MatsCounterTheme.size.icon),
-            trackColor = MatsCounterTheme.colors.secondary,
+            color = MatsCounterTheme.colors.primary,
         )
     }
 }
