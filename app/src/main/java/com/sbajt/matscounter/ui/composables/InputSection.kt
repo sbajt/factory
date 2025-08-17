@@ -38,6 +38,7 @@ fun InputSection(
         val itemCount = remember { mutableIntStateOf(uiState?.itemCount ?: 0) }
         NumberPicker(
             value = pickerValue.value,
+            textStyle = MatsCounterTheme.typography.bodyTextNormal,
             range = 1..itemCount.value,
             dividersColor = MatsCounterTheme.colors.secondary,
             onValueChange = {

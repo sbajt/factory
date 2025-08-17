@@ -1,5 +1,6 @@
 package com.sbajt.matscounter.ui.mappers
 
+import android.util.Log
 import com.sbajt.matscounter.domain.models.ItemDomain
 import com.sbajt.matscounter.ui.models.BuildMaterialListWrapper
 import com.sbajt.matscounter.ui.models.BuildMaterialUiState
@@ -12,6 +13,8 @@ import kotlinx.collections.immutable.toImmutableList
 import kotlinx.collections.immutable.toPersistentList
 
 class MainScreenMapper {
+
+    private val TAG = this::class.java.simpleName
 
     fun mapToUiState(inputData: InputData): MainScreenUiState = with(inputData) {
         MainScreenUiState.Content(
@@ -57,14 +60,13 @@ class MainScreenMapper {
         selectedItemAmount: Int,
         itemUiStateList: List<ItemUiState>,
     ): List<BuildMaterialListWrapper> {
-        val lowerItemGroupTypeList = selectedItem.groupType.toLowerGroupsList()
+        val lowerItemGroupTypeList = selectedItem.groupType.toLowerGroupsList().toMutableList()
         return lowerItemGroupTypeList.map { groupType ->
             val finalBuildMaterialList = mutableListOf<BuildMaterialUiState>()
             processBuildMaterialList(
                 groupType = groupType,
                 multiplier = selectedItemAmount,
                 finalBuildMaterialList = finalBuildMaterialList,
-                allowedItemGroupTypeList = lowerItemGroupTypeList,
                 itemBuildMaterialList = selectedItem.buildMaterialListWrapper?.buildMaterialsList ?: emptyList(),
                 itemUiStateList = itemUiStateList
             )
@@ -81,37 +83,31 @@ class MainScreenMapper {
         groupType: ItemGroupType,
         multiplier: Int,
         finalBuildMaterialList: MutableList<BuildMaterialUiState>,
-        allowedItemGroupTypeList: List<ItemGroupType>,
         itemBuildMaterialList: List<BuildMaterialUiState>,
         itemUiStateList: List<ItemUiState>,
     ) {
         itemBuildMaterialList.map { material ->
             val materialItemUiState = itemUiStateList.firstOrNull { it.name == material.name }
-            if (materialItemUiState?.groupType.isValid(allowedItemGroupTypeList)) {
-                finalBuildMaterialList.addToBuildMaterialList(
-                    material = material,
-                    multiplier = multiplier,
-                )
-            } else {
-                processBuildMaterialList(
-                    groupType = materialItemUiState?.groupType ?: ItemGroupType.NONE,
-                    multiplier = multiplier * material.amount,
-                    finalBuildMaterialList = finalBuildMaterialList,
-                    allowedItemGroupTypeList = allowedItemGroupTypeList - groupType,
-                    itemBuildMaterialList = materialItemUiState?.buildMaterialListWrapper?.buildMaterialsList ?: emptyList(),
-                    itemUiStateList = itemUiStateList
-                )
-            }
+            Log.d(TAG, "$groupType")
+                if (materialItemUiState?.groupType.isValid(groupType = groupType)) {
+                    finalBuildMaterialList.addToBuildMaterialList(
+                        material = material,
+                        multiplier = multiplier,
+                    )
+                }
+                else {
+                    processBuildMaterialList(
+                        groupType = materialItemUiState?.groupType ?: ItemGroupType.NONE,
+                        multiplier = multiplier * material.amount,
+                        finalBuildMaterialList = finalBuildMaterialList,
+                        itemBuildMaterialList = materialItemUiState?.buildMaterialListWrapper?.buildMaterialsList ?: emptyList(),
+                        itemUiStateList = itemUiStateList
+                    )
+                }
         }
     }
 
-    private fun ItemGroupType?.isValid(
-        allowedItemGroupTypeList: List<ItemGroupType>,
-    ) = if (this != null) {
-        allowedItemGroupTypeList.contains(this)
-    } else {
-        false
-    }
+    private fun ItemGroupType?.isValid(groupType: ItemGroupType) = this == groupType
 
     private fun MutableList<BuildMaterialUiState>.addToBuildMaterialList(
         material: BuildMaterialUiState,
