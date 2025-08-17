@@ -57,11 +57,8 @@ fun ItemBuildPathScreen(
                 }
                 item("group_${index}_${buildMaterialList.groupType}_name") {
                     Text(
-                        modifier = Modifier.padding(
-                            start = MatsCounterTheme.size.paddingMedium,
-                            bottom = MatsCounterTheme.size.paddingSmall
-                        ),
-                        style = MatsCounterTheme.typography.subtitleTextNormal,
+                        modifier = Modifier.padding(bottom = MatsCounterTheme.size.paddingSmall),
+                        style = MatsCounterTheme.typography.subtitleTextLarge,
                         color = MatsCounterTheme.colors.primary,
                         text = buildMaterialList.titleText?.let {
                             remember { it }
@@ -71,6 +68,7 @@ fun ItemBuildPathScreen(
                 buildMaterialList.buildMaterialsList.forEach { buildMaterial ->
                     item("group_${index}_item_${buildMaterial.name}_${buildMaterialList.groupType}") {
                         BuildMaterialView(
+                            modifier = Modifier.padding(start = MatsCounterTheme.size.paddingMedium),
                             uiState = buildMaterial,
                             selectedItemAmount = uiState.selectedItemAmount,
                         )
