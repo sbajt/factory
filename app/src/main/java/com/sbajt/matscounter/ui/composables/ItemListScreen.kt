@@ -4,6 +4,8 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.pager.HorizontalPager
@@ -34,14 +36,21 @@ fun ItemListScreen(
     val groupTypeList = uiState.distinctBy { it.groupType }.map { it.groupType } + ItemGroupType.ALL
     val scope = rememberCoroutineScope()
     val pagerState = rememberPagerState(pageCount = { groupTypeList.size })
-    Column(modifier = modifier) {
+    Column(modifier = modifier
+        .background(MatsCounterTheme.colors.background)
+        .padding(MatsCounterTheme.size.contentPadding),
+    ) {
         ScrollableTabRow(
+            modifier = Modifier.fillMaxWidth(),
+            containerColor = MatsCounterTheme.colors.background,
             selectedTabIndex = pagerState.currentPage,
         ) {
             (groupTypeList).forEachIndexed { index, itemGroupType ->
                 val text = itemGroupType.getName()
                 Tab(
                     selected = pagerState.currentPage == index,
+                    selectedContentColor = MatsCounterTheme.colors.onBackground,
+                    unselectedContentColor = MatsCounterTheme.colors.background,
                     onClick = { scope.launch { pagerState.animateScrollToPage(index) } },
                     text = {
                         Text(

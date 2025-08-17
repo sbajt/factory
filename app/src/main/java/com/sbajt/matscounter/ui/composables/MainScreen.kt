@@ -2,6 +2,7 @@ package com.sbajt.matscounter.ui.composables
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -57,7 +58,7 @@ fun ContentScreen(
 ) {
     Surface {
         NavHost(
-            modifier = modifier,
+            modifier = modifier.background(MatsCounterTheme.colors.background),
             navController = navController,
             startDestination = ItemList
         ) {

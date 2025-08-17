@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -32,16 +33,20 @@ fun ItemDetailsScreen(
     onCountChange: OnCountChange,
     modifier: Modifier = Modifier
 ) {
-    Column(modifier = modifier.background(MatsCounterTheme.colors.background)) {
-        Row(modifier = Modifier.padding(start = 8.dp, top = 8.dp)) {
+    Column(
+        modifier = modifier
+            .background(MatsCounterTheme.colors.background)
+            .padding(MatsCounterTheme.size.contentPadding)
+    ) {
+        Row(modifier = Modifier.padding(MatsCounterTheme.size.paddingMedium)) {
             ItemView(
-                modifier = Modifier.padding(start = 8.dp, top = 8.dp),
+                modifier = Modifier.padding(MatsCounterTheme.size.paddingMedium),
                 uiState = uiState.selectedItem,
                 onItemSelected = { _, _ -> },
             )
             if (uiState.selectedItem != null && uiState.selectedItemAmount > 0) {
                 InputSection(
-                    modifier = Modifier.padding(start = 8.dp, top = 8.dp),
+                    modifier = Modifier.padding(MatsCounterTheme.size.paddingMedium),
                     uiState = InputSectionUiState(
                         selectedItem = uiState.selectedItem,
                         itemCount = uiState.selectedItemAmount,
@@ -53,9 +58,8 @@ fun ItemDetailsScreen(
         if (uiState.selectedItem?.groupType != ItemGroupType.BASIC_MATERIAL) {
             with(uiState.selectedItemBuildMaterialListWrapper) {
                 Text(
-                    fontFamily = FontFamily.SansSerif,
-                    color = MaterialTheme.colorScheme.onSurface,
-                    fontSize = 14.sp,
+                    style = MatsCounterTheme.typography.subtitleTextNormal,
+                    color = MatsCounterTheme.colors.primary,
                     text = remember { this?.titleText ?: "" },
                 )
                 Text(
@@ -80,12 +84,19 @@ fun ItemDetailsScreen(
                     .padding(top = 24.dp)
             ) {
                 Button(
-                    modifier = Modifier.padding(16.dp),
+                    modifier = Modifier.padding(MatsCounterTheme.size.contentPadding),
+                    colors = ButtonDefaults.buttonColors(
+                        containerColor = MatsCounterTheme.colors.secondary
+                    ),
+                    shape = MatsCounterTheme.shape.button,
                     onClick = {
                         navController.navigate(ItemBuildComponents)
                     }
                 ) {
-                    Text(text = "Show build path")
+                    Text(
+                        style = MatsCounterTheme.typography.subtitleTextNormal,
+                        color = MatsCounterTheme.colors.primary,
+                        text = "Show build path")
                 }
             }
         }

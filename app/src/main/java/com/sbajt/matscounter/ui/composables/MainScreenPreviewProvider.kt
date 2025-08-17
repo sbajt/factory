@@ -2,7 +2,6 @@ package com.sbajt.matscounter.ui.composables
 
 import androidx.compose.ui.tooling.preview.PreviewParameterProvider
 import com.sbajt.matscounter.ui.models.MainScreenUiState
-import kotlinx.collections.immutable.persistentListOf
 
 class MainScreenPreviewProvider : PreviewParameterProvider<MainScreenUiState> {
 
@@ -10,8 +9,6 @@ class MainScreenPreviewProvider : PreviewParameterProvider<MainScreenUiState> {
         loading,
         empty,
         itemUiStateList,
-        itemDetails,
-        itemBuildPath
     )
 
     companion object {
@@ -22,13 +19,6 @@ class MainScreenPreviewProvider : PreviewParameterProvider<MainScreenUiState> {
 
         val itemUiStateList = MainScreenUiState.Content(
             itemUiStateList = ItemUiStateProvider.mockItemUiStateList()
-        )
-        val itemDetails = MainScreenUiState.Content(
-            itemUiStateList = persistentListOf(),
-            itemDetailsUiState = ItemDetailsUiStateProvider.tier2ItemDetailsScreenUiState
-        )
-        val itemBuildPath = MainScreenUiState.Content(
-            itemBuildPathUiState = ItemBuildPathUiStateProvider.defaultBuildPathUiState
         )
     }
 }

@@ -29,7 +29,9 @@ fun BuildMaterialView(
         Text(
             style = MatsCounterTheme.typography.bodyTextNormal,
             color = MatsCounterTheme.colors.primary,
-            text = remember { uiState.name ?: "" }
+            text = uiState.name?.let {
+                remember { it }
+            } ?: "Unknown Material",
         )
         if (uiState.amount > 0) {
             Text(
