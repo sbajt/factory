@@ -40,12 +40,12 @@ val lightColors = ColorScheme(
 val typography = TypographyScheme(
     titleTextNormal = TextStyle(
         fontFamily = MatsCounterFontFamily,
-        fontSize = TextUnit(16.sp.value, TextUnitType.Sp),
+        fontSize = TextUnit(14.sp.value, TextUnitType.Sp),
         fontWeight = FontWeight.Bold,
     ),
     titleTextLarge = TextStyle(
         fontFamily = MatsCounterFontFamily,
-        fontSize = TextUnit(18.sp.value, TextUnitType.Sp),
+        fontSize = TextUnit(16.sp.value, TextUnitType.Sp),
         fontWeight = FontWeight.Bold,
     ),
     subtitleTextNormal = TextStyle(
@@ -60,12 +60,12 @@ val typography = TypographyScheme(
     ),
     bodyTextNormal = TextStyle(
         fontFamily = MatsCounterFontFamily,
-        fontSize = TextUnit(12.sp.value, TextUnitType.Sp),
+        fontSize = TextUnit(10.sp.value, TextUnitType.Sp),
         fontWeight = FontWeight.Normal,
     ),
     bodyTextLarge = TextStyle(
         fontFamily = MatsCounterFontFamily,
-        fontSize = TextUnit(14.sp.value, TextUnitType.Sp),
+        fontSize = TextUnit(12.sp.value, TextUnitType.Sp),
         fontWeight = FontWeight.Normal,
     )
 )

@@ -12,12 +12,12 @@ class InputSectionUiStateProvider : PreviewParameterProvider<InputSectionUiState
 
     companion object {
         val defaultInputSectionUiState = InputSectionUiState(
-            selectedItem = ItemUiStateProvider.defaultItemUiState,
-            itemCount = 2,
+            selectedItem = ItemUiStateProvider.tier1ItemUiState,
+            itemCount = 1,
         )
 
         val multipleItemCountInputSectionUiState = InputSectionUiState(
-            selectedItem = ItemUiStateProvider.defaultItemUiState,
+            selectedItem = ItemUiStateProvider.tier1ItemUiState,
             itemCount = 5,
         )
     }

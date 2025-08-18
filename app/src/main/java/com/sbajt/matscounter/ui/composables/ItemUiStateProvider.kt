@@ -1,13 +1,14 @@
 package com.sbajt.matscounter.ui.composables
 
 import androidx.compose.ui.tooling.preview.PreviewParameterProvider
-import com.sbajt.matscounter.ui.mappers.getItemGroupTypeList
+import com.sbajt.matscounter.ui.mappers.getGroupTypeList
 import com.sbajt.matscounter.ui.models.BuildMaterialListWrapper
 import com.sbajt.matscounter.ui.models.BuildMaterialUiState
 import com.sbajt.matscounter.ui.models.ItemGroupType
 import com.sbajt.matscounter.ui.models.ItemUiState
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.toPersistentList
+import kotlin.random.Random
 
 class ItemUiStateProvider : PreviewParameterProvider<ItemUiState> {
 
@@ -39,7 +40,7 @@ class ItemUiStateProvider : PreviewParameterProvider<ItemUiState> {
             groupType = ItemGroupType.TIER1,
             buildMaterialListWrapper = mockBuildMaterialWrapper(
                 groupType = ItemGroupType.TIER1,
-                buildMaterialsCount = 2,
+                buildMaterialsCount = 5,
             ),
         )
 
@@ -49,13 +50,13 @@ class ItemUiStateProvider : PreviewParameterProvider<ItemUiState> {
             groupType = ItemGroupType.TIER2,
             buildMaterialListWrapper = mockBuildMaterialWrapper(
                 groupType = ItemGroupType.TIER2,
-                buildMaterialsCount = 2,
+                buildMaterialsCount = 5,
             ),
         )
 
         fun mockBuildMaterialWrapper(
             groupType: ItemGroupType,
-            buildMaterialsCount: Int = 2,
+            buildMaterialsCount: Int = 5,
         ) = BuildMaterialListWrapper(
             titleText = groupType.name,
             groupType = groupType,
@@ -63,11 +64,11 @@ class ItemUiStateProvider : PreviewParameterProvider<ItemUiState> {
         )
 
         fun mockBuildMaterials(
-            count: Int = 2,
+            count: Int = 4,
         ): ImmutableList<BuildMaterialUiState> = List(count) {
             BuildMaterialUiState(
                 name = "Material $it",
-                amount = 1,
+                amount = 5,
             )
         }.toPersistentList()
 
@@ -75,9 +76,9 @@ class ItemUiStateProvider : PreviewParameterProvider<ItemUiState> {
             count: Int = 10
         ): ImmutableList<ItemUiState> = List(count) {
             ItemUiState(
-                name = "Item $it",
-                imageName = "ic_item_$it",
-                groupType = getItemGroupTypeList()[it % getItemGroupTypeList().size]
+                name = "Item ${it +1}",
+                imageName = "ic_item_${it + 1}",
+                groupType = getGroupTypeList()[Random(count).nextInt() % getGroupTypeList().size],
             )
         }.toPersistentList()
     }

@@ -6,12 +6,13 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.compose.ui.tooling.preview.PreviewParameter
-import androidx.compose.ui.unit.dp
 import com.sbajt.matscounter.ui.models.BuildMaterialUiState
 import com.sbajt.matscounter.ui.theme.MatsCounterTheme
 
@@ -26,24 +27,25 @@ fun BuildMaterialView(
             .fillMaxWidth()
             .padding(all = MatsCounterTheme.size.paddingSmall),
     ) {
+        val materialName by remember { mutableStateOf(uiState.name ?: "") }
         Text(
             style = MatsCounterTheme.typography.bodyTextNormal,
             color = MatsCounterTheme.colors.primary,
-            text = uiState.name?.let {
-                remember { it }
-            } ?: "Unknown Material",
+            text = materialName
         )
         if (uiState.amount > 0) {
+            val amountText by remember { mutableStateOf(uiState.amount.toString()) }
+            if (uiState.amount > 1) {
+                "${uiState.amount}x"
+            } else {
+                "1x"
+            }
             Text(
                 modifier = Modifier.weight(1f),
                 textAlign = TextAlign.End,
                 style = MatsCounterTheme.typography.bodyTextNormal,
                 color = MatsCounterTheme.colors.primary,
-                text = if (selectedItemAmount > 0) {
-                    "x${uiState.amount * selectedItemAmount}"
-                } else {
-                    "x${uiState.amount}"
-                }
+                text = amountText
             )
         }
     }

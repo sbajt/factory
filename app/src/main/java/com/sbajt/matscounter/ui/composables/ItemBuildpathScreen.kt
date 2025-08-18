@@ -11,15 +11,15 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.compose.ui.tooling.preview.PreviewParameter
-import androidx.compose.ui.unit.dp
-import androidx.compose.ui.util.fastForEachIndexed
 import com.sbajt.matscounter.R
+import com.sbajt.matscounter.ui.mappers.getName
 import com.sbajt.matscounter.ui.models.ItemBuildPathUiState
 import com.sbajt.matscounter.ui.theme.MatsCounterTheme
 
@@ -28,7 +28,7 @@ fun ItemBuildPathScreen(
     uiState: ItemBuildPathUiState,
     modifier: Modifier = Modifier,
 ) {
-    LazyColumn(modifier = modifier.padding(MatsCounterTheme.size.contentPadding),) {
+    LazyColumn(modifier = modifier.padding(MatsCounterTheme.size.contentPadding)) {
         item {
             Row(
                 modifier = Modifier
@@ -51,24 +51,21 @@ fun ItemBuildPathScreen(
         }
 
         if (uiState.buildPathList.isNotEmpty()) {
-            uiState.buildPathList.fastForEachIndexed { index, buildMaterialList ->
-                item("arrow_${index}_${buildMaterialList.groupType}") {
+            uiState.buildPathList.forEach { buildMaterialListWrapper ->
+                item("arrow_${buildMaterialListWrapper.groupType}") {
                     Arrow()
                 }
-                item("group_${index}_${buildMaterialList.groupType}_name") {
+                item("group_${buildMaterialListWrapper.groupType}") {
                     Text(
                         modifier = Modifier.padding(bottom = MatsCounterTheme.size.paddingSmall),
                         style = MatsCounterTheme.typography.subtitleTextLarge,
                         color = MatsCounterTheme.colors.primary,
-                        text = buildMaterialList.titleText?.let {
-                            remember { it }
-                        } ?: "",
+                        text = remember { mutableStateOf(buildMaterialListWrapper.groupType?.getName() ?: "") }.value,
                     )
                 }
-                buildMaterialList.buildMaterialsList.forEach { buildMaterial ->
-                    item("group_${index}_item_${buildMaterial.name}_${buildMaterialList.groupType}") {
+                buildMaterialListWrapper.buildMaterialsList.forEach { buildMaterial ->
+                    item("group_${buildMaterialListWrapper.groupType}_item_${buildMaterial.name}") {
                         BuildMaterialView(
-                            modifier = Modifier.padding(start = MatsCounterTheme.size.paddingMedium),
                             uiState = buildMaterial,
                             selectedItemAmount = uiState.selectedItemAmount,
                         )

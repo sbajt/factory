@@ -10,6 +10,8 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -35,16 +37,18 @@ fun EmptyScreen(modifier: Modifier = Modifier) {
                     .padding(start = 16.dp, top = 16.dp, end = 16.dp, bottom = 8.dp)
                     .size(128.dp)
             )
+            val title by remember { mutableStateOf("Empty Screen") }
             Text(
                 modifier = Modifier.padding(bottom = MatsCounterTheme.size.paddingSmall),
                 style = MatsCounterTheme.typography.titleTextNormal,
                 color = MatsCounterTheme.colors.primary,
-                text = remember { "Empty Screen" }
+                text = title
             )
+            val subTitle by remember { mutableStateOf("Error loading content data") }
             Text(
                 style = MatsCounterTheme.typography.subtitleTextLarge,
                 color = MatsCounterTheme.colors.secondary,
-                text = remember { "Error loading content data" }
+                text = subTitle
             )
         }
     }

@@ -1,14 +1,10 @@
 package com.sbajt.matscounter.ui.composables
 
-import android.R
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.mutableIntStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.PreviewLightDark
@@ -35,15 +31,12 @@ fun InputSection(
             style = MatsCounterTheme.typography.bodyTextLarge,
             color = MatsCounterTheme.colors.primary,
         )
-        val pickerValue = remember { mutableIntStateOf(1) }
-        val itemCount = remember { mutableIntStateOf(uiState?.itemCount ?: 0) }
         NumberPicker(
-            value = pickerValue.intValue,
+            value = uiState?.itemCount ?: 1,
+            range = 1..20,
             textStyle = MatsCounterTheme.typography.bodyTextNormal.copy(color = MatsCounterTheme.colors.primary),
-            range = 1..itemCount.intValue,
             dividersColor = MatsCounterTheme.colors.primary,
             onValueChange = {
-                pickerValue.intValue = it
                 onCountChange.invoke(it)
             }
         )
