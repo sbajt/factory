@@ -60,7 +60,7 @@ class MainActivity : ComponentActivity() {
                         selectedItemName = selectedItemName,
                         selectedItemGroupType = selectedItemGroupType
                     ) { isFinished ->
-                        if (isFinished) {
+                        if (isFinished && navController.currentDestination?.route != ItemDetails.ROUTE) {
                             navController.navigate(ItemDetails)
                         }
                     }

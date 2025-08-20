@@ -59,9 +59,9 @@ fun ItemDetailsScreen(
                     text = remember { this?.titleText ?: "" },
                 )
                 if (this?.buildMaterialsList?.isNotEmpty() == true) {
-                    buildMaterialsList.forEachIndexed { index, state ->
+                    buildMaterialsList.forEach { state ->
                         BuildMaterialView(
-                            uiState = buildMaterialsList[index],
+                            uiState = state,
                             selectedItemAmount = uiState.selectedItemAmount,
                         )
                     }

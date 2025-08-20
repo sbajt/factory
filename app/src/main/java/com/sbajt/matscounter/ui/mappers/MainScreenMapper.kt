@@ -25,14 +25,14 @@ class MainScreenMapper {
                     )
                 )
             },
-            itemBuildPathUiState = inputData.selectedItem?.let {
+            itemBuildPathUiState = selectedItem?.let {
                 ItemBuildPathUiState(
                     selectedItem = it,
-                    selectedItemAmount = inputData.selectedItemAmount,
+                    selectedItemAmount = selectedItemAmount,
                     buildPathList = createBuildPathList(
                         selectedItem = it,
-                        selectedItemAmount = inputData.selectedItemAmount,
-                        itemUiStateList = inputData.itemUiStateList
+                        selectedItemAmount = selectedItemAmount,
+                        itemUiStateList = itemUiStateList
                     )
                 )
             }
