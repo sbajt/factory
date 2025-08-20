@@ -7,7 +7,8 @@ class InputSectionUiStateProvider : PreviewParameterProvider<InputSectionUiState
 
     override val values: Sequence<InputSectionUiState> = sequenceOf(
         defaultInputSectionUiState,
-        multipleItemCountInputSectionUiState,
+        inputSectionUiState5ItemCount,
+        inputSectionUiState10ItemCount,
     )
 
     companion object {
@@ -16,9 +17,14 @@ class InputSectionUiStateProvider : PreviewParameterProvider<InputSectionUiState
             itemCount = 1,
         )
 
-        val multipleItemCountInputSectionUiState = InputSectionUiState(
+        val inputSectionUiState5ItemCount = InputSectionUiState(
             selectedItem = ItemUiStateProvider.tier1ItemUiState,
             itemCount = 5,
+        )
+
+        val inputSectionUiState10ItemCount = InputSectionUiState(
+            selectedItem = ItemUiStateProvider.tier1ItemUiState,
+            itemCount = 10,
         )
     }
 }

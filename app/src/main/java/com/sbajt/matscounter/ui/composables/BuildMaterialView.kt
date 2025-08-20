@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
@@ -33,21 +34,14 @@ fun BuildMaterialView(
             color = MatsCounterTheme.colors.primary,
             text = materialName
         )
-        if (uiState.amount > 0) {
-            val amountText by remember { mutableStateOf(uiState.amount.toString()) }
-            if (uiState.amount > 1) {
-                "${uiState.amount}x"
-            } else {
-                "1x"
-            }
-            Text(
-                modifier = Modifier.weight(1f),
-                textAlign = TextAlign.End,
-                style = MatsCounterTheme.typography.bodyTextNormal,
-                color = MatsCounterTheme.colors.primary,
-                text = amountText
-            )
-        }
+        val amount by remember { mutableIntStateOf(uiState.amount) }
+        Text(
+            modifier = Modifier.weight(1f),
+            textAlign = TextAlign.End,
+            style = MatsCounterTheme.typography.bodyTextNormal,
+            color = MatsCounterTheme.colors.primary,
+            text = (amount * selectedItemAmount).toString()
+        )
     }
 }
 
@@ -58,7 +52,7 @@ fun previewBuildMaterialView(@PreviewParameter(BuildMaterialUiStateProvider::cla
         BuildMaterialView(
             modifier = Modifier.background(MatsCounterTheme.colors.background),
             uiState = uiState,
-            selectedItemAmount = 0,
+            selectedItemAmount = 1,
         )
     }
 }
