@@ -44,24 +44,15 @@ class MainScreenMapper {
         selectedItemAmount: Int,
         itemUiStateList: List<ItemUiState>,
     ): List<BuildMaterialListWrapper> {
-        val lowerItemGroupTypeList = selectedItem.groupType.toLowerGroupsList().toMutableList()
-        val currentBuildMaterialList = mutableListOf<BuildMaterialUiState>()
-        return lowerItemGroupTypeList.mapIndexed { index, groupType ->
-            val groupBuildMaterialList = mutableListOf<BuildMaterialUiState>()
-            processBuildMaterialList(
-                validGroupTypeList = lowerItemGroupTypeList - groupType,
-                multiplier = selectedItemAmount,
-                groupBuildMaterialList = groupBuildMaterialList,
-                itemBuildMaterialList = if (index == 0) {
-                    selectedItem.buildMaterialListWrapper?.buildMaterialsList ?: emptyList()
-                } else {
-                    currentBuildMaterialList
-                },
+        val lowerGroupTypesForSelectedItem = selectedItem.groupType.toLowerGroupsList()
+
+        return lowerGroupTypesForSelectedItem.map { groupType ->
+            val groupBuildMaterialList = collectMaterialsForSpecificGroup(
+                itemToBuild = selectedItem,
+                amountToBuild = selectedItemAmount,
+                targetGroupType = groupType,
                 itemUiStateList = itemUiStateList
             )
-            groupBuildMaterialList.forEach { material ->
-                currentBuildMaterialList.addToBuildMaterialList(material = material, multiplier = material.amount)
-            }
             BuildMaterialListWrapper(
                 titleText = groupType.getName(),
                 groupType = groupType,
@@ -70,22 +61,43 @@ class MainScreenMapper {
         }
     }
 
-    private fun processBuildMaterialList(
-        validGroupTypeList: List<ItemGroupType>,
-        multiplier: Int,
-        groupBuildMaterialList: MutableList<BuildMaterialUiState>,
-        itemBuildMaterialList: List<BuildMaterialUiState>,
-        itemUiStateList: List<ItemUiState>,
-    ) {
-        itemBuildMaterialList.map { material ->
-            val materialItemUiState = itemUiStateList.firstOrNull { it.name == material.name }
-            if (materialItemUiState?.groupType.isValid(validGroupTypeList = validGroupTypeList)) {
-                groupBuildMaterialList.addToBuildMaterialList(
-                    material = material,
-                    multiplier = multiplier,
-                )
+    private fun collectMaterialsForSpecificGroup(
+        itemToBuild: ItemUiState,
+        amountToBuild: Int,
+        targetGroupType: ItemGroupType,
+        itemUiStateList: List<ItemUiState>
+    ): List<BuildMaterialUiState> {
+        val collectedMaterials = mutableListOf<BuildMaterialUiState>()
+
+        fun findRecursive(currentItem: ItemUiState, currentAmountNeeded: Int) {
+            currentItem.buildMaterialListWrapper?.buildMaterialsList?.forEach { materialRequirement ->
+                val subItemName = materialRequirement.name
+                val subItemAmountPerParent = materialRequirement.amount
+                val totalSubItemAmountNeeded = subItemAmountPerParent * currentAmountNeeded
+
+                val subItem = itemUiStateList.find { it.name == subItemName }
+
+                if (subItem != null) {
+                    if (subItem.groupType == targetGroupType) {
+                        // This sub-item is of the target group type. Add it to the collection.
+                        // We use the materialRequirement's amount (amount per parent) and multiply by how many parents are needed.
+                        collectedMaterials.addToBuildMaterialList(
+                            material = BuildMaterialUiState(name = subItem.name, amount = subItemAmountPerParent),
+                            multiplier = currentAmountNeeded
+                        )
+                    } else if (subItem.groupType.toLowerGroupsList().contains(targetGroupType)) {
+                        // This sub-item is of a higher tier that could contain the targetGroupType materials.
+                        // Recurse to find materials for this sub-item.
+                        findRecursive(subItem, totalSubItemAmountNeeded)
+                    }
+                    // If subItem.groupType is lower than targetGroupType or cannot produce it, we stop down this path.
+                }
             }
         }
+
+        // Start the recursion with the main item to build.
+        findRecursive(itemToBuild, amountToBuild)
+        return collectedMaterials
     }
 
     private fun ItemGroupType?.isValid(validGroupTypeList: List<ItemGroupType>) = validGroupTypeList.contains(this)
@@ -95,10 +107,8 @@ class MainScreenMapper {
         multiplier: Int,
     ) {
         val existingMaterial = this.find { it.name == material.name }
-        if (existingMaterial != null) {
-            val index = indexOf(existingMaterial)
-            this[index] = existingMaterial.copy(amount = existingMaterial.amount + (material.amount * multiplier))
-        } else {
+        val newAmount = (existingMaterial?.amount ?: 0) + (material.amount * multiplier)
+        existingMaterial?.let { this[indexOf(it)] = it.copy(amount = newAmount) } ?: run {
             add(material.copy(amount = material.amount * multiplier))
         }
     }
