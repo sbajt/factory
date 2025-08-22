@@ -10,20 +10,22 @@ class ItemListUiStateProvider : PreviewParameterProvider<ImmutableList<ItemUiSta
 
     override val values: Sequence<ImmutableList<ItemUiState>> = sequenceOf(
         defaultGridSectionUiState,
-        multipleGroupTypeGridSectionUiState
+        basicMaterialsGridSectionUiState,
+        tier1GridSectionUiState,
     )
 
     companion object {
 
         val defaultGridSectionUiState: ImmutableList<ItemUiState> = ItemUiStateProvider.mockItemUiStateList()
 
-        val multipleGroupTypeGridSectionUiState: ImmutableList<ItemUiState> = ItemUiStateProvider.mockItemUiStateList(50)
-            .mapIndexed { index, item ->
-                if (item.groupType == ItemUiStateProvider.defaultItemUiState.groupType) {
-                    item.copy(groupType = ItemGroupType.entries[index % 5])
-                } else {
-                    item
-                }
+        val basicMaterialsGridSectionUiState: ImmutableList<ItemUiState> = ItemUiStateProvider.mockItemUiStateList(6)
+            .map {
+                it.copy(groupType = ItemGroupType.BASIC_MATERIAL)
+            }.toPersistentList()
+
+        val tier1GridSectionUiState: ImmutableList<ItemUiState> = ItemUiStateProvider.mockItemUiStateList(12)
+            .map {
+                it.copy(groupType = ItemGroupType.TIER1)
             }.toPersistentList()
     }
 }

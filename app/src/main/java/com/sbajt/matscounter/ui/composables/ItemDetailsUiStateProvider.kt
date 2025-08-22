@@ -7,14 +7,11 @@ import com.sbajt.matscounter.ui.models.ItemDetailsScreenUiState
 class ItemDetailsUiStateProvider : PreviewParameterProvider<ItemDetailsScreenUiState> {
 
     override val values: Sequence<ItemDetailsScreenUiState> = sequenceOf(
-        emptyItemDetailsScreenUiState,
         tier1ItemDetailsScreenUiState,
         tier2ItemDetailsScreenUiState,
     )
 
     companion object {
-        val emptyItemDetailsScreenUiState = ItemDetailsScreenUiState()
-
         val tier1ItemDetailsScreenUiState = ItemDetailsScreenUiState(
             selectedItem = ItemUiStateProvider.tier2ItemUiState,
             selectedItemAmount = 1,

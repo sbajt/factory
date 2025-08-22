@@ -6,29 +6,34 @@ import com.sbajt.matscounter.ui.models.BuildMaterialUiState
 class BuildMaterialUiStateProvider : PreviewParameterProvider<BuildMaterialUiState> {
 
     override val values: Sequence<BuildMaterialUiState> = sequenceOf(
-        emptyBuildMaterialUiState,
-        defaultBuildMaterialUiState,
         basicMaterialUiState,
-        basicMaterial2UiState
+        materialTier1UiState,
+        materialTier2UiState,
+        materialTier3UiState,
+        materialTier4UiState,
+
     )
 
     companion object {
-        val emptyBuildMaterialUiState = BuildMaterialUiState(
-            name = null,
-            amount = 0,
-        )
-
-        val defaultBuildMaterialUiState = BuildMaterialUiState(
-            name = "Default Material",
-            amount = 1,
-        )
 
         val basicMaterialUiState = BuildMaterialUiState(
             name = "Basic Material",
             amount = 5,
         )
-        val basicMaterial2UiState = BuildMaterialUiState(
-            name = "Basic Material",
+        val materialTier1UiState = BuildMaterialUiState(
+            name = "Material Tier 1",
+            amount = 5,
+        )
+        val materialTier2UiState = BuildMaterialUiState(
+            name = "Material Tier 2",
+            amount = 5,
+        )
+        val materialTier3UiState = BuildMaterialUiState(
+            name = "Material Tier 3",
+            amount = 5,
+        )
+        val materialTier4UiState = BuildMaterialUiState(
+            name = "Material Tier 4",
             amount = 5,
         )
     }

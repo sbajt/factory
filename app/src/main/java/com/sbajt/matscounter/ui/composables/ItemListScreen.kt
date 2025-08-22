@@ -36,9 +36,10 @@ fun ItemListScreen(
     val groupTypeList = uiState.distinctBy { it.groupType }.map { it.groupType } + ItemGroupType.ALL
     val scope = rememberCoroutineScope()
     val pagerState = rememberPagerState(pageCount = { groupTypeList.size })
-    Column(modifier = modifier
-        .background(MatsCounterTheme.colors.background)
-        .padding(MatsCounterTheme.size.contentPadding),
+    Column(
+        modifier = modifier
+            .background(MatsCounterTheme.colors.background)
+            .padding(MatsCounterTheme.size.contentPadding),
     ) {
         ScrollableTabRow(
             modifier = Modifier.fillMaxWidth(),
@@ -77,7 +78,11 @@ fun ItemListScreen(
                 items(count = itemUiStatePage.size, key = { index -> index }) { index ->
                     ItemView(
                         uiState = itemUiStatePage[index],
-                        onItemSelected = onItemSelected,
+                        onItemSelected = if (groupType != ItemGroupType.BASIC_MATERIAL) {
+                            onItemSelected
+                        } else {
+                            { _, _ -> }
+                        },
                     )
                 }
             }

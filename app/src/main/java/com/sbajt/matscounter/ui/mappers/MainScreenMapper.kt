@@ -134,7 +134,7 @@ fun ItemDomain?.toItemUiState(): ItemUiState? = if (this != null) {
             groupType = lowerGroupType,
             buildMaterialsList = buildMaterials.map {
                 BuildMaterialUiState(
-                    name = it.name,
+                    name = it.name ?: "",
                     amount = it.count,
                 )
             }.toPersistentList(),

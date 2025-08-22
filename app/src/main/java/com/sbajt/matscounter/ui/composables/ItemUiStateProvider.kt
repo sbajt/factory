@@ -13,43 +13,35 @@ import kotlin.random.Random
 class ItemUiStateProvider : PreviewParameterProvider<ItemUiState> {
 
     override val values: Sequence<ItemUiState> = sequenceOf(
-        emptyItemUiState,
-        defaultItemUiState,
         basicMaterialItemUiState,
         tier1ItemUiState,
         tier2ItemUiState,
     )
 
     companion object {
-        val emptyItemUiState = ItemUiState()
-
-        val defaultItemUiState = ItemUiState(
-            name = "Item Name",
-            groupType = ItemGroupType.BASIC_MATERIAL
-        )
-
         val basicMaterialItemUiState = ItemUiState(
-            name = "Basic Material",
-            imageName = "ic_cardboard",
-            groupType = ItemGroupType.BASIC_MATERIAL
+            name = "Item Basic",
+            imageName = null,
+            groupType = ItemGroupType.BASIC_MATERIAL,
+            buildMaterialListWrapper = null
         )
 
         val tier1ItemUiState = ItemUiState(
-            name = "Material",
-            imageName = "ic_box",
+            name = "Item Tier 1",
+            imageName = null,
             groupType = ItemGroupType.TIER1,
             buildMaterialListWrapper = mockBuildMaterialWrapper(
-                groupType = ItemGroupType.TIER1,
+                groupType = ItemGroupType.BASIC_MATERIAL,
                 buildMaterialsCount = 5,
             ),
         )
 
         val tier2ItemUiState = ItemUiState(
-            name = "Material",
-            imageName = "ic_box",
+            name = "Item Tier 2",
+            imageName = null,
             groupType = ItemGroupType.TIER2,
             buildMaterialListWrapper = mockBuildMaterialWrapper(
-                groupType = ItemGroupType.TIER2,
+                groupType = ItemGroupType.TIER1,
                 buildMaterialsCount = 5,
             ),
         )
@@ -75,10 +67,15 @@ class ItemUiStateProvider : PreviewParameterProvider<ItemUiState> {
         fun mockItemUiStateList(
             count: Int = 10
         ): ImmutableList<ItemUiState> = List(count) {
+            val groupType = getGroupTypeList().random()
             ItemUiState(
-                name = "Item ${it +1}",
-                imageName = "ic_item_${it + 1}",
-                groupType = getGroupTypeList()[Random(count).nextInt() % getGroupTypeList().size],
+                name = "Item ${it + 1}",
+                imageName = null,
+                groupType = groupType,
+                buildMaterialListWrapper = mockBuildMaterialWrapper(
+                    groupType = groupType,
+                    buildMaterialsCount = Random.nextInt(1, 6)
+                )
             )
         }.toPersistentList()
     }
