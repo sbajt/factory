@@ -8,12 +8,12 @@ plugins {
 
 android {
     namespace = "com.sbajt.matscounter"
-    compileSdk = 35
+    compileSdk = 36
 
     defaultConfig {
         applicationId = "com.sbajt.matscounter"
         minSdk = 24
-        targetSdk = 35
+        targetSdk = android.compileSdk
         versionCode = 1
         versionName = "1.0"
     }
@@ -58,6 +58,4 @@ dependencies {
     implementation(libs.koin.android)
     implementation(libs.koin.androidx.compose)
     implementation(libs.numberPicker)
-    implementation(libs.accompanist.pager)
-    implementation(libs.accompanist.pager.indicators)
 }
