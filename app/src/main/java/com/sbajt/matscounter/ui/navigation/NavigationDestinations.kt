@@ -8,7 +8,7 @@ object ItemList
 
 @Serializable
 object ItemDetails {
-    val ROUTE: String = ItemDetails::class.getFullName()
+    val ROUTE: String = ItemDetails::class.getFullName() // ROUTE is used for onBackPressed navigation
 }
 
 @Serializable

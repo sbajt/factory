@@ -23,7 +23,6 @@ import com.sbajt.matscounter.ui.mappers.getName
 import com.sbajt.matscounter.ui.models.ItemGroupType
 import com.sbajt.matscounter.ui.models.ItemUiState
 import com.sbajt.matscounter.ui.theme.MatsCounterTheme
-import com.sbajt.matscounter.ui.theme.size
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.coroutines.launch
 
@@ -50,8 +49,6 @@ fun ItemListScreen(
                 val text = itemGroupType.getName()
                 Tab(
                     selected = pagerState.currentPage == index,
-                    selectedContentColor = MatsCounterTheme.colors.onBackground,
-                    unselectedContentColor = MatsCounterTheme.colors.background,
                     onClick = { scope.launch { pagerState.animateScrollToPage(index) } },
                     text = {
                         Text(
@@ -68,12 +65,11 @@ fun ItemListScreen(
             LazyVerticalGrid(
                 columns = GridCells.Adaptive(minSize = 100.dp),
                 contentPadding = PaddingValues(vertical = 18.dp),
-                verticalArrangement = Arrangement.spacedBy(size.medium),
+                verticalArrangement = Arrangement.spacedBy(MatsCounterTheme.size.medium),
             ) {
                 val groupType = groupTypeList[page]
                 val itemUiStatePage = uiState.filter {
-                    it.groupType == groupType
-                        || groupType == ItemGroupType.ALL
+                    it.groupType == groupType || groupType == ItemGroupType.ALL
                 }
                 items(count = itemUiStatePage.size, key = { index -> index }) { index ->
                     ItemView(
