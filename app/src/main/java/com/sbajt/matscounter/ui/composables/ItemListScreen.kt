@@ -4,6 +4,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.grid.GridCells
@@ -66,6 +67,7 @@ fun ItemListScreen(
                 columns = GridCells.Adaptive(minSize = 100.dp),
                 contentPadding = PaddingValues(vertical = 18.dp),
                 verticalArrangement = Arrangement.spacedBy(MatsCounterTheme.size.medium),
+                modifier = Modifier.fillMaxSize()
             ) {
                 val groupType = groupTypeList[page]
                 val itemUiStatePage = uiState.filter {
