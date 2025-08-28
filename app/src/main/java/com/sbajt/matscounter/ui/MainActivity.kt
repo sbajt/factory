@@ -80,7 +80,7 @@ class MainActivity : ComponentActivity() {
                 viewModel.removeSelectedItem()
             }
         }
-        super.onBackPressedDispatcher
+        super.onBackPressed()
     }
 }
 
