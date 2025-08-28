@@ -51,8 +51,8 @@ fun ItemListScreen(
             indicator = { tabPositions ->
                 TabRowDefaults.SecondaryIndicator(
                     modifier = Modifier.tabIndicatorOffset(tabPositions[pagerState.currentPage]),
-                    height = 2.dp, // Change the height of the indicator
-                    color = MatsCounterTheme.colors.accent // Change the color of the indicator
+                    height = MatsCounterTheme.size.tab,
+                    color = MatsCounterTheme.colors.accent
                 )
             }
         ) {
