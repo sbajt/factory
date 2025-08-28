@@ -18,6 +18,7 @@ import androidx.compose.material3.TabRowDefaults.tabIndicatorOffset
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.compose.ui.tooling.preview.PreviewParameter
@@ -71,12 +72,15 @@ fun ItemListScreen(
                 )
             }
         }
-        HorizontalPager(state = pagerState) { page ->
+        HorizontalPager(
+            verticalAlignment = Alignment.Top,
+            state = pagerState
+        ) { page ->
             LazyVerticalGrid(
+                modifier = Modifier.fillMaxSize(),
                 columns = GridCells.Adaptive(minSize = 100.dp),
                 contentPadding = PaddingValues(vertical = 18.dp),
                 verticalArrangement = Arrangement.spacedBy(MatsCounterTheme.size.medium),
-                modifier = Modifier.fillMaxSize()
             ) {
                 val groupType = groupTypeList[page]
                 val itemUiStatePage = uiState.filter {

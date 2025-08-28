@@ -32,7 +32,7 @@ fun InputSection(
     ) {
         Text(
             modifier = Modifier.padding(MatsCounterTheme.size.paddingMedium),
-            text = "Selected item count:",
+            text = "Item count:",
             style = MatsCounterTheme.typography.bodyTextLarge,
             color = MatsCounterTheme.colors.primary,
         )
