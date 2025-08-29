@@ -15,7 +15,7 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import com.chargemap.compose.numberpicker.NumberPicker
-import com.sbajt.matscounter.ui.models.InputSectionUiState
+import com.sbajt.matscounter.ui.models.views.InputSectionUiState
 import com.sbajt.matscounter.ui.theme.MatsCounterTheme
 
 @Composable

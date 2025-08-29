@@ -1,7 +1,11 @@
-package com.sbajt.matscounter.ui.composables
+package com.sbajt.matscounter.ui.composables.previewProviders
 
 import androidx.compose.ui.tooling.preview.PreviewParameterProvider
-import com.sbajt.matscounter.ui.models.BuildMaterialUiState
+import com.sbajt.matscounter.ui.models.ItemGroupType
+import com.sbajt.matscounter.ui.models.views.BuildMaterialListWrapper
+import com.sbajt.matscounter.ui.models.views.BuildMaterialUiState
+import kotlinx.collections.immutable.ImmutableList
+import kotlinx.collections.immutable.toPersistentList
 
 class BuildMaterialUiStateProvider : PreviewParameterProvider<BuildMaterialUiState> {
 
@@ -12,7 +16,7 @@ class BuildMaterialUiStateProvider : PreviewParameterProvider<BuildMaterialUiSta
         materialTier3UiState,
         materialTier4UiState,
 
-    )
+        )
 
     companion object {
 
@@ -36,5 +40,23 @@ class BuildMaterialUiStateProvider : PreviewParameterProvider<BuildMaterialUiSta
             name = "Material Tier 4",
             amount = 5,
         )
+
+        fun mockBuildMaterialWrapper(
+            groupType: ItemGroupType,
+            buildMaterialsCount: Int = 5,
+        ) = BuildMaterialListWrapper(
+            titleText = groupType.name,
+            groupType = groupType,
+            buildMaterialsList = mockBuildMaterials(buildMaterialsCount)
+        )
+
+        fun mockBuildMaterials(
+            count: Int = 4,
+        ): ImmutableList<BuildMaterialUiState> = List(count) {
+            BuildMaterialUiState(
+                name = "Material $it",
+                amount = 5,
+            )
+        }.toPersistentList()
     }
 }

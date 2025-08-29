@@ -1,7 +1,7 @@
 package com.sbajt.matscounter.ui.composables
 
 import androidx.compose.ui.tooling.preview.PreviewParameterProvider
-import com.sbajt.matscounter.ui.models.InputSectionUiState
+import com.sbajt.matscounter.ui.models.views.InputSectionUiState
 
 class InputSectionUiStateProvider : PreviewParameterProvider<InputSectionUiState> {
 

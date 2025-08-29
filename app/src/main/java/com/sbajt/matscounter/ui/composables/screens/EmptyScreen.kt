@@ -1,5 +1,6 @@
-package com.sbajt.matscounter.ui.composables
+package com.sbajt.matscounter.ui.composables.screens
 
+import android.R
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
@@ -31,7 +32,7 @@ fun EmptyScreen(modifier: Modifier = Modifier) {
             horizontalAlignment = Alignment.CenterHorizontally,
         ) {
             Image(
-                painter = painterResource(id = android.R.drawable.ic_delete),
+                painter = painterResource(id = R.drawable.ic_delete),
                 contentDescription = "empty_screen_illustration",
                 modifier = Modifier
                     .padding(start = 16.dp, top = 16.dp, end = 16.dp, bottom = 8.dp)

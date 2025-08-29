@@ -2,7 +2,7 @@ package com.sbajt.matscounter.ui.composables
 
 import androidx.compose.ui.tooling.preview.PreviewParameterProvider
 import com.sbajt.matscounter.ui.models.ItemGroupType
-import com.sbajt.matscounter.ui.models.ItemUiState
+import com.sbajt.matscounter.ui.models.views.ItemUiState
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.toPersistentList
 

@@ -2,6 +2,7 @@ package com.sbajt.matscounter.ui
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity
+import androidx.activity.OnBackPressedCallback
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.asPaddingValues
@@ -9,23 +10,20 @@ import androidx.compose.foundation.layout.navigationBars
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.statusBars
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.lifecycle.Lifecycle
-import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
-import com.sbajt.matscounter.ui.composables.MainScreen
+import com.sbajt.matscounter.ui.composables.screens.MainScreen
 import com.sbajt.matscounter.ui.navigation.ItemDetails
 import com.sbajt.matscounter.ui.theme.MatsCounterTheme
+import com.sbajt.matscounter.ui.viewModels.ItemUiStateListViewModel
 import kotlinx.coroutines.launch
-import org.koin.android.ext.android.inject
 
 class MainActivity : ComponentActivity() {
 
-    private val viewModel: MainScreenViewModel by inject()
     private lateinit var navController: NavHostController
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -37,6 +35,23 @@ class MainActivity : ComponentActivity() {
                 }
             }
         }
+
+        onBackPressedDispatcher.addCallback(onBackPressedCallback = onBackPressedCallback)
+    }
+
+    private val onBackPressedCallback = object : OnBackPressedCallback(true) {
+
+        override fun handleOnBackPressed() {
+            lifecycleScope.launch {
+                if (::navController.isInitialized) {
+                    val destination = navController.currentBackStackEntry?.destination
+                    if (destination?.route == ItemDetails.ROUTE) {
+                        ItemUiStateListViewModel().removeSelectedItem()
+                    }
+                }
+                this@MainActivity.onBackPressedDispatcher.onBackPressed()
+            }
+        }
     }
 
     @Composable
@@ -44,43 +59,16 @@ class MainActivity : ComponentActivity() {
         modifier: Modifier = Modifier
     ) {
         MatsCounterTheme {
-            val mainUiState by viewModel.uiState.collectAsStateWithLifecycle()
             val topPadding = WindowInsets.statusBars.asPaddingValues()
             val bottomPadding = WindowInsets.navigationBars.asPaddingValues()
             navController = rememberNavController()
             MainScreen(
-                modifier = modifier.padding(
-                    top = topPadding.calculateTopPadding(),
-                    bottom = bottomPadding.calculateBottomPadding()
-                ),
-                uiState = mainUiState,
+                modifier = modifier.padding(top = topPadding.calculateTopPadding(), bottom = bottomPadding.calculateBottomPadding()),
+                onCountChange = {},
+                onItemSelected = { item, groupType -> },
                 navController = navController,
-                onItemSelected = { selectedItemName, selectedItemGroupType ->
-                    viewModel.updateSelectedItem(
-                        selectedItemName = selectedItemName,
-                        selectedItemGroupType = selectedItemGroupType
-                    ) { isFinished ->
-                        if (isFinished && navController.currentDestination?.route != ItemDetails.ROUTE) {
-                            navController.navigate(ItemDetails)
-                        }
-                    }
-                },
-                onCountChange = { newItemAmount ->
-                    viewModel.updateSelectedItemAmount(newItemAmount)
-                }
             )
         }
-    }
-
-    @Deprecated("Deprecated in Java")
-    override fun onBackPressed() {
-        if (::navController.isInitialized) {
-            val destination = navController.currentBackStackEntry?.destination
-            if (destination?.route == ItemDetails.ROUTE) {
-                viewModel.removeSelectedItem()
-            }
-        }
-        super.onBackPressed()
     }
 }
 

@@ -1,42 +1,28 @@
 package com.sbajt.matscounter.ui.mappers
 
-import com.sbajt.matscounter.domain.models.ItemDomain
-import com.sbajt.matscounter.ui.models.BuildMaterialListWrapper
-import com.sbajt.matscounter.ui.models.BuildMaterialUiState
-import com.sbajt.matscounter.ui.models.ItemBuildPathUiState
-import com.sbajt.matscounter.ui.models.ItemDetailsScreenUiState
 import com.sbajt.matscounter.ui.models.ItemGroupType
-import com.sbajt.matscounter.ui.models.ItemUiState
-import com.sbajt.matscounter.ui.models.MainScreenUiState
-import kotlinx.collections.immutable.toImmutableList
+import com.sbajt.matscounter.ui.models.screens.ItemBuildPathScreenUiState
+import com.sbajt.matscounter.ui.models.views.BuildMaterialListWrapper
+import com.sbajt.matscounter.ui.models.views.BuildMaterialUiState
+import com.sbajt.matscounter.ui.models.views.ItemUiState
 import kotlinx.collections.immutable.toPersistentList
 
-class MainScreenMapper {
+class ItemBuildPathScreenMapper {
 
-    fun mapToUiState(inputData: InputData): MainScreenUiState = with(inputData) {
-        MainScreenUiState.Content(
-            itemUiStateList = itemUiStateList.toImmutableList(),
-            itemDetailsUiState = selectedItem?.let { selectedItem ->
-                ItemDetailsScreenUiState(
-                    selectedItem = selectedItem,
-                    selectedItemAmount = selectedItemAmount,
-                    selectedItemBuildMaterialListWrapper = selectedItem.buildMaterialListWrapper?.copy(
-                        titleText = "Build materials",
-                    )
-                )
-            },
-            itemBuildPathUiState = selectedItem?.let {
-                ItemBuildPathUiState(
-                    selectedItem = it,
-                    selectedItemAmount = selectedItemAmount,
-                    buildPathList = createBuildPathList(
-                        selectedItem = it,
-                        selectedItemAmount = selectedItemAmount,
-                        itemUiStateList = itemUiStateList
-                    )
-                )
-            }
+    fun mapToUiState(inputData: InputData): ItemBuildPathScreenUiState = with(inputData) {
+        ItemBuildPathScreenUiState.Content(
+            selectedItem = selectedItem,
+            selectedItemAmount = selectedItemAmount,
+            selectedItemBuildMaterialListWrapperList = createBuildPathList(
+                selectedItem = selectedItem,
+                selectedItemAmount = selectedItemAmount,
+                itemUiStateList = itemUiStateList,
+            )
         )
+//                selectedItem.groupType.toLowerGroupsList().map { groupType ->
+//                BuildMaterialListWrapper(
+//                    titleText = "Build materials",
+//            }
     }
 
     private fun createBuildPathList(
@@ -100,8 +86,6 @@ class MainScreenMapper {
         return collectedMaterials
     }
 
-    private fun ItemGroupType?.isValid(validGroupTypeList: List<ItemGroupType>) = validGroupTypeList.contains(this)
-
     fun MutableList<BuildMaterialUiState>.addToBuildMaterialList(
         material: BuildMaterialUiState,
         multiplier: Int,
@@ -115,53 +99,20 @@ class MainScreenMapper {
 
     companion object {
         class InputData(
-            val selectedItem: ItemUiState?,
+            val selectedItem: ItemUiState,
             val selectedItemAmount: Int,
-            val itemUiStateList: List<ItemUiState>
+            val itemUiStateList: List<ItemUiState>,
         )
     }
 }
 
-fun ItemDomain?.toItemUiState(): ItemUiState? = if (this != null) {
-    val itemGroupType = groupType.toGroupType()
-    val lowerGroupType = itemGroupType.toLowerGroupType()
-    ItemUiState(
-        name = name ?: "",
-        imageName = imageName ?: "",
-        groupType = itemGroupType,
-        buildMaterialListWrapper = BuildMaterialListWrapper(
-            titleText = lowerGroupType.getName(),
-            groupType = lowerGroupType,
-            buildMaterialsList = buildMaterials.map {
-                BuildMaterialUiState(
-                    name = it.name ?: "",
-                    amount = it.count,
-                )
-            }.toPersistentList(),
-        )
-    )
-} else {
-    null
-}
-
-private fun ItemGroupType.toLowerGroupType(): ItemGroupType = when (this) {
+fun ItemGroupType.toLowerGroupType(): ItemGroupType = when (this) {
     ItemGroupType.TIER1 -> ItemGroupType.BASIC_MATERIAL
     ItemGroupType.TIER2 -> ItemGroupType.TIER1
     ItemGroupType.TIER3 -> ItemGroupType.TIER2
     ItemGroupType.TIER4 -> ItemGroupType.TIER3
     else -> this
 }
-
-fun Int?.toGroupType(): ItemGroupType = ItemGroupType.entries
-    .firstOrNull { it.ordinal == this } ?: ItemGroupType.NONE
-
-fun ItemGroupType?.getName() = this
-    ?.takeIf { it != ItemGroupType.NONE }
-    ?.name
-    ?.lowercase()
-    ?.replaceFirstChar { it.uppercase() }
-    ?.replace("_", " ")
-    ?: ""
 
 fun ItemGroupType.toLowerGroupsList(): List<ItemGroupType> = when (this) {
     ItemGroupType.TIER1 -> listOf(ItemGroupType.BASIC_MATERIAL)
@@ -178,4 +129,6 @@ fun getGroupTypeList(): List<ItemGroupType> = listOf(
     ItemGroupType.TIER3,
     ItemGroupType.TIER4
 )
+
+
 

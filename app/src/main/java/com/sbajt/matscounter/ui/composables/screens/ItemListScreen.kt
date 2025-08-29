@@ -1,4 +1,4 @@
-package com.sbajt.matscounter.ui.composables
+package com.sbajt.matscounter.ui.composables.screens
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -17,26 +17,49 @@ import androidx.compose.material3.TabRowDefaults
 import androidx.compose.material3.TabRowDefaults.tabIndicatorOffset
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.dp
+import com.sbajt.matscounter.ui.composables.ItemListUiStateProvider
+import com.sbajt.matscounter.ui.composables.ItemView
+import com.sbajt.matscounter.ui.composables.LoadingScreen
 import com.sbajt.matscounter.ui.mappers.getName
 import com.sbajt.matscounter.ui.models.ItemGroupType
-import com.sbajt.matscounter.ui.models.ItemUiState
+import com.sbajt.matscounter.ui.models.screens.ItemListScreenUiState
 import com.sbajt.matscounter.ui.theme.MatsCounterTheme
-import kotlinx.collections.immutable.ImmutableList
 import kotlinx.coroutines.launch
 
 @Composable
 fun ItemListScreen(
-    uiState: ImmutableList<ItemUiState>,
+    uiState: ItemListScreenUiState,
     onItemSelected: OnItemSelected,
     modifier: Modifier = Modifier
 ) {
-    val groupTypeList = uiState.distinctBy { it.groupType }.map { it.groupType } + ItemGroupType.ALL
+    when (uiState) {
+        ItemListScreenUiState.Empty -> EmptyScreen()
+        ItemListScreenUiState.Loading -> LoadingScreen()
+        is ItemListScreenUiState.Content -> ContentScreen(
+            modifier = modifier,
+            uiState = uiState,
+            onItemSelected = onItemSelected,
+        )
+
+    }
+}
+
+@Composable
+private fun ContentScreen(
+    uiState: ItemListScreenUiState.Content,
+    onItemSelected: OnItemSelected,
+    modifier: Modifier = Modifier,
+) {
+    val groupTypeList = uiState.itemUiStateList.distinctBy { it.groupType }.map { it.groupType } + ItemGroupType.ALL
     val scope = rememberCoroutineScope()
     val pagerState = rememberPagerState(pageCount = { groupTypeList.size })
     Column(
@@ -76,16 +99,16 @@ fun ItemListScreen(
             verticalAlignment = Alignment.Top,
             state = pagerState
         ) { page ->
+            val groupType = groupTypeList[page]
+            val itemUiStatePage by remember {
+                mutableStateOf(uiState.itemUiStateList.filter { it.groupType == groupType || groupType == ItemGroupType.ALL })
+            }
             LazyVerticalGrid(
                 modifier = Modifier.fillMaxSize(),
                 columns = GridCells.Adaptive(minSize = 100.dp),
                 contentPadding = PaddingValues(vertical = 18.dp),
                 verticalArrangement = Arrangement.spacedBy(MatsCounterTheme.size.medium),
             ) {
-                val groupType = groupTypeList[page]
-                val itemUiStatePage = uiState.filter {
-                    it.groupType == groupType || groupType == ItemGroupType.ALL
-                }
                 items(count = itemUiStatePage.size, key = { index -> index }) { index ->
                     ItemView(
                         uiState = itemUiStatePage[index],
@@ -103,7 +126,7 @@ fun ItemListScreen(
 
 @PreviewLightDark
 @Composable
-fun GridSectionPreview(@PreviewParameter(ItemListUiStateProvider::class) uiState: ImmutableList<ItemUiState>) {
+fun GridSectionPreview(@PreviewParameter(ItemListUiStateProvider::class) uiState: ItemListScreenUiState) {
     MatsCounterTheme {
         ItemListScreen(
             modifier = Modifier.background(MatsCounterTheme.colors.background),

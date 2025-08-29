@@ -14,7 +14,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.compose.ui.tooling.preview.PreviewParameter
-import com.sbajt.matscounter.ui.models.BuildMaterialUiState
+import com.sbajt.matscounter.ui.composables.previewProviders.BuildMaterialUiStateProvider
+import com.sbajt.matscounter.ui.models.views.BuildMaterialUiState
 import com.sbajt.matscounter.ui.theme.MatsCounterTheme
 
 @Composable
