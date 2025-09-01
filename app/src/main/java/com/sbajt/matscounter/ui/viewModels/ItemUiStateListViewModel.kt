@@ -9,10 +9,12 @@ import com.sbajt.matscounter.ui.models.screens.ItemListScreenUiState
 import com.sbajt.matscounter.ui.navigation.ItemDetails
 import com.sbajt.matscounter.ui.useCases.ItemUiStateListUseCase
 import kotlinx.collections.immutable.toPersistentList
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.firstOrNull
+import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
@@ -24,13 +26,18 @@ class ItemUiStateListViewModel : ViewModel(), KoinComponent {
 
     private val useCase: ItemUiStateListUseCase by inject()
 
-    val uiState = useCase()
-        .map {
-            ItemListScreenUiState.Content(
-                itemUiStateList = it.toPersistentList()
-            )
-        }
-        .catch { ItemListScreenUiState.Empty }
+    val uiState = flow {
+        emit(ItemListScreenUiState.Loading)
+        delay(1_000)
+        useCase()
+            .map {
+                ItemListScreenUiState.Content(
+                    itemUiStateList = it.toPersistentList()
+                )
+            }
+            .catch { ItemListScreenUiState.Empty }
+            .collect { emit(it) }
+    }
         .stateIn(
             scope = viewModelScope,
             started = SharingStarted.Companion.WhileSubscribed(5_000),
