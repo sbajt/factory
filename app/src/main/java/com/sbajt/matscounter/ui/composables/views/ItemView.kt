@@ -19,7 +19,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import coil3.compose.AsyncImage
-import com.sbajt.matscounter.ui.composables.ItemUiStateProvider
+import com.sbajt.matscounter.ui.composables.previewProviders.ItemUiStateProvider
 import com.sbajt.matscounter.ui.mappers.getName
 import com.sbajt.matscounter.ui.models.ItemGroupType
 import com.sbajt.matscounter.ui.models.views.ItemUiState

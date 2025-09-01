@@ -1,7 +1,6 @@
-package com.sbajt.matscounter.ui.composables
+package com.sbajt.matscounter.ui.composables.previewProviders
 
 import androidx.compose.ui.tooling.preview.PreviewParameterProvider
-import com.sbajt.matscounter.ui.composables.previewProviders.BuildMaterialUiStateProvider
 import com.sbajt.matscounter.ui.mappers.getName
 import com.sbajt.matscounter.ui.mappers.toLowerGroupsList
 import com.sbajt.matscounter.ui.models.ItemGroupType
@@ -17,10 +16,10 @@ class ItemBuildPathUiStateProvider : PreviewParameterProvider<ItemBuildPathScree
     companion object {
 
         val defaultBuildPathUiState: ItemBuildPathScreenUiState = ItemBuildPathScreenUiState.Content(
-            selectedItem = ItemUiStateProvider.tier1ItemUiState,
+            selectedItem = ItemUiStateProvider.Companion.tier1ItemUiState,
             selectedItemAmount = 1,
             selectedItemBuildMaterialListWrapperList = mockItemBuildMaterialListWrapperList(
-                selectedItemGroupType = ItemUiStateProvider.tier1ItemUiState.groupType
+                selectedItemGroupType = ItemUiStateProvider.Companion.tier1ItemUiState.groupType
             )
         )
 

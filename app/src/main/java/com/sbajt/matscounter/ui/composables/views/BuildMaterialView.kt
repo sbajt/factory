@@ -1,4 +1,4 @@
-package com.sbajt.matscounter.ui.composables
+package com.sbajt.matscounter.ui.composables.views
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Row

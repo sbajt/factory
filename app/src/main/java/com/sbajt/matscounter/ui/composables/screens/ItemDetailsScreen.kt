@@ -14,17 +14,13 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.compose.ui.tooling.preview.PreviewParameter
-import androidx.navigation.NavHostController
-import androidx.navigation.compose.rememberNavController
-import com.sbajt.matscounter.ui.composables.BuildMaterialView
-import com.sbajt.matscounter.ui.composables.InputSection
-import com.sbajt.matscounter.ui.composables.ItemDetailsUiStateProvider
+import com.sbajt.matscounter.ui.composables.views.BuildMaterialView
+import com.sbajt.matscounter.ui.composables.views.InputSection
+import com.sbajt.matscounter.ui.composables.previewProviders.ItemDetailsUiStateProvider
 import com.sbajt.matscounter.ui.composables.views.ItemView
-import com.sbajt.matscounter.ui.composables.LoadingScreen
 import com.sbajt.matscounter.ui.models.ItemGroupType
 import com.sbajt.matscounter.ui.models.screens.ItemDetailsScreenUiState
 import com.sbajt.matscounter.ui.models.views.InputSectionUiState
-import com.sbajt.matscounter.ui.navigation.ItemBuildComponents
 import com.sbajt.matscounter.ui.theme.MatsCounterTheme
 
 @Composable

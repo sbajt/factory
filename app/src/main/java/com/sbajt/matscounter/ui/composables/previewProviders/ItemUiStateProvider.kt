@@ -1,10 +1,7 @@
-package com.sbajt.matscounter.ui.composables
+package com.sbajt.matscounter.ui.composables.previewProviders
 
 import androidx.compose.ui.tooling.preview.PreviewParameterProvider
-import com.sbajt.matscounter.ui.composables.previewProviders.BuildMaterialUiStateProvider
 import com.sbajt.matscounter.ui.mappers.getGroupTypeList
-import com.sbajt.matscounter.ui.models.views.BuildMaterialListWrapper
-import com.sbajt.matscounter.ui.models.views.BuildMaterialUiState
 import com.sbajt.matscounter.ui.models.ItemGroupType
 import com.sbajt.matscounter.ui.models.views.ItemUiState
 import kotlinx.collections.immutable.ImmutableList

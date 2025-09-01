@@ -14,10 +14,9 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.compose.ui.tooling.preview.PreviewParameter
-import com.sbajt.matscounter.ui.composables.BuildMaterialView
-import com.sbajt.matscounter.ui.composables.ItemBuildPathUiStateProvider
+import com.sbajt.matscounter.ui.composables.views.BuildMaterialView
+import com.sbajt.matscounter.ui.composables.previewProviders.ItemBuildPathUiStateProvider
 import com.sbajt.matscounter.ui.composables.views.ItemView
-import com.sbajt.matscounter.ui.composables.LoadingScreen
 import com.sbajt.matscounter.ui.composables.views.Arrow
 import com.sbajt.matscounter.ui.mappers.getName
 import com.sbajt.matscounter.ui.models.screens.ItemBuildPathScreenUiState

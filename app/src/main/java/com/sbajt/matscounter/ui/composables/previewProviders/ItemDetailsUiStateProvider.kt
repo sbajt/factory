@@ -1,7 +1,6 @@
-package com.sbajt.matscounter.ui.composables
+package com.sbajt.matscounter.ui.composables.previewProviders
 
 import androidx.compose.ui.tooling.preview.PreviewParameterProvider
-import com.sbajt.matscounter.ui.composables.previewProviders.BuildMaterialUiStateProvider
 import com.sbajt.matscounter.ui.models.screens.ItemDetailsScreenUiState
 import com.sbajt.matscounter.ui.models.views.BuildMaterialListWrapper
 
@@ -14,7 +13,7 @@ class ItemDetailsUiStateProvider : PreviewParameterProvider<ItemDetailsScreenUiS
 
     companion object {
         val tier1ItemDetailsScreenUiState = ItemDetailsScreenUiState.Content(
-            selectedItem = ItemUiStateProvider.tier2ItemUiState,
+            selectedItem = ItemUiStateProvider.Companion.tier2ItemUiState,
             selectedItemAmount = 1,
             selectedItemBuildMaterialListWrapper = BuildMaterialListWrapper(
                 titleText = "Build Materials",
@@ -22,7 +21,7 @@ class ItemDetailsUiStateProvider : PreviewParameterProvider<ItemDetailsScreenUiS
             )
         )
         val tier2ItemDetailsScreenUiState = ItemDetailsScreenUiState.Content(
-            selectedItem = ItemUiStateProvider.tier2ItemUiState,
+            selectedItem = ItemUiStateProvider.Companion.tier2ItemUiState,
             selectedItemAmount = 1,
             selectedItemBuildMaterialListWrapper = BuildMaterialListWrapper(
                 titleText = "Build materials",

@@ -1,4 +1,4 @@
-package com.sbajt.matscounter.ui.composables
+package com.sbajt.matscounter.ui.composables.previewProviders
 
 import androidx.compose.ui.tooling.preview.PreviewParameterProvider
 import com.sbajt.matscounter.ui.models.views.InputSectionUiState
@@ -13,17 +13,17 @@ class InputSectionUiStateProvider : PreviewParameterProvider<InputSectionUiState
 
     companion object {
         val defaultInputSectionUiState = InputSectionUiState(
-            selectedItem = ItemUiStateProvider.tier1ItemUiState,
+            selectedItem = ItemUiStateProvider.Companion.tier1ItemUiState,
             itemCount = 1,
         )
 
         val inputSectionUiState5ItemCount = InputSectionUiState(
-            selectedItem = ItemUiStateProvider.tier1ItemUiState,
+            selectedItem = ItemUiStateProvider.Companion.tier1ItemUiState,
             itemCount = 5,
         )
 
         val inputSectionUiState10ItemCount = InputSectionUiState(
-            selectedItem = ItemUiStateProvider.tier1ItemUiState,
+            selectedItem = ItemUiStateProvider.Companion.tier1ItemUiState,
             itemCount = 10,
         )
     }

@@ -19,10 +19,6 @@ class ItemBuildPathScreenMapper {
                 itemUiStateList = itemUiStateList,
             )
         )
-//                selectedItem.groupType.toLowerGroupsList().map { groupType ->
-//                BuildMaterialListWrapper(
-//                    titleText = "Build materials",
-//            }
     }
 
     private fun createBuildPathList(

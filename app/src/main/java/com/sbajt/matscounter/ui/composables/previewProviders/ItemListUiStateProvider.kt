@@ -1,4 +1,4 @@
-package com.sbajt.matscounter.ui.composables
+package com.sbajt.matscounter.ui.composables.previewProviders
 
 import androidx.compose.ui.tooling.preview.PreviewParameterProvider
 import com.sbajt.matscounter.ui.models.ItemGroupType
@@ -16,14 +16,14 @@ class ItemListUiStateProvider : PreviewParameterProvider<ImmutableList<ItemUiSta
 
     companion object {
 
-        val defaultGridSectionUiState: ImmutableList<ItemUiState> = ItemUiStateProvider.mockItemUiStateList()
+        val defaultGridSectionUiState: ImmutableList<ItemUiState> = ItemUiStateProvider.Companion.mockItemUiStateList()
 
-        val basicMaterialsGridSectionUiState: ImmutableList<ItemUiState> = ItemUiStateProvider.mockItemUiStateList(6)
+        val basicMaterialsGridSectionUiState: ImmutableList<ItemUiState> = ItemUiStateProvider.Companion.mockItemUiStateList(6)
             .map {
                 it.copy(groupType = ItemGroupType.BASIC_MATERIAL)
             }.toPersistentList()
 
-        val tier1GridSectionUiState: ImmutableList<ItemUiState> = ItemUiStateProvider.mockItemUiStateList(12)
+        val tier1GridSectionUiState: ImmutableList<ItemUiState> = ItemUiStateProvider.Companion.mockItemUiStateList(12)
             .map {
                 it.copy(groupType = ItemGroupType.TIER1)
             }.toPersistentList()

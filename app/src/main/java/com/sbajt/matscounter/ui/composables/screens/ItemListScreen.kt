@@ -26,9 +26,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.dp
-import com.sbajt.matscounter.ui.composables.ItemListUiStateProvider
+import com.sbajt.matscounter.ui.composables.previewProviders.ItemListUiStateProvider
 import com.sbajt.matscounter.ui.composables.views.ItemView
-import com.sbajt.matscounter.ui.composables.LoadingScreen
 import com.sbajt.matscounter.ui.mappers.getName
 import com.sbajt.matscounter.ui.models.ItemGroupType
 import com.sbajt.matscounter.ui.models.screens.ItemListScreenUiState
