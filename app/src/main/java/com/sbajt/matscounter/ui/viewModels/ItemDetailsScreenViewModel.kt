@@ -18,7 +18,7 @@ class ItemDetailsScreenViewModel : ViewModel(), KoinComponent {
 
     private val mapper: ItemDetailsScreenMapper by inject()
 
-    val uiState = stateSubject
+    val uiState = ItemUiStateListViewModel.stateSubject
         .map { state ->
             mapper.mapToUiState(
                 ItemDetailsScreenMapper.Companion.InputData(
@@ -35,13 +35,8 @@ class ItemDetailsScreenViewModel : ViewModel(), KoinComponent {
         )
 
     fun updateSelectedItemAmount(newItemCount: Int) {
-        stateSubject.update { uiState ->
+        ItemUiStateListViewModel.stateSubject.update { uiState ->
             uiState.copy(selectedItemAmount = newItemCount)
         }
-    }
-
-    companion object {
-
-        val stateSubject = MutableStateFlow(AppState())
     }
 }

@@ -1,4 +1,4 @@
-package com.sbajt.matscounter.ui.composables
+package com.sbajt.matscounter.ui.composables.views
 
 import android.R
 import androidx.compose.foundation.background
@@ -19,6 +19,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import coil3.compose.AsyncImage
+import com.sbajt.matscounter.ui.composables.ItemUiStateProvider
 import com.sbajt.matscounter.ui.mappers.getName
 import com.sbajt.matscounter.ui.models.ItemGroupType
 import com.sbajt.matscounter.ui.models.views.ItemUiState
@@ -36,7 +37,8 @@ fun ItemView(
         modifier = modifier
             .clickable(
                 onClick = { onItemSelected(uiState?.name, uiState?.groupType) }
-            ).padding(MatsCounterTheme.size.paddingMedium),
+            )
+            .padding(MatsCounterTheme.size.paddingMedium),
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.SpaceBetween
     ) {
@@ -73,7 +75,7 @@ fun ItemView(
 @PreviewLightDark
 @Composable
 fun ItemViewPreview(@PreviewParameter(ItemUiStateProvider::class) uiState: ItemUiState) {
-    MatsCounterTheme{
+    MatsCounterTheme {
         ItemView(
             modifier = Modifier.background(MatsCounterTheme.colors.background),
             uiState = uiState,

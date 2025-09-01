@@ -4,17 +4,12 @@ import androidx.compose.foundation.background
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.PreviewLightDark
-import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
-import androidx.navigation.compose.rememberNavController
-import com.sbajt.matscounter.ui.composables.previewProviders.MainScreenPreviewProvider
 import com.sbajt.matscounter.ui.models.ItemGroupType
-import com.sbajt.matscounter.ui.models.screens.ItemListScreenUiState
 import com.sbajt.matscounter.ui.navigation.ItemBuildComponents
 import com.sbajt.matscounter.ui.navigation.ItemDetails
 import com.sbajt.matscounter.ui.navigation.ItemList
@@ -29,8 +24,6 @@ typealias OnCountChange = (Int) -> Unit
 @Composable
 fun MainScreen(
     navController: NavHostController,
-    onItemSelected: OnItemSelected,
-    onCountChange: OnCountChange,
     modifier: Modifier = Modifier
 ) {
     Surface {
@@ -41,18 +34,22 @@ fun MainScreen(
         ) {
 
             composable<ItemList> {
-                val uiState = viewModel<ItemUiStateListViewModel>().uiState.collectAsStateWithLifecycle().value
+                val viewModel = viewModel<ItemUiStateListViewModel>()
+                val uiState = viewModel.uiState.collectAsStateWithLifecycle().value
                 ItemListScreen(
                     uiState = uiState,
-                    onItemSelected = onItemSelected,
+                    onItemSelected = { itemName, itemGroupType ->
+                        viewModel.updateSelectedItem(navController = navController, selectedItemName = itemName, selectedItemGroupType = itemGroupType)
+                    }
                 )
             }
             composable<ItemDetails> {
-                val uiState = viewModel<ItemDetailsScreenViewModel>().uiState.collectAsStateWithLifecycle().value
+                val viewModel = viewModel<ItemDetailsScreenViewModel>()
+                val uiState = viewModel.uiState.collectAsStateWithLifecycle().value
                 ItemDetailsScreen(
                     uiState = uiState,
                     navController = navController,
-                    onCountChange = onCountChange,
+                    onCountChange = viewModel::updateSelectedItemAmount,
                 )
             }
             composable<ItemBuildComponents> {
@@ -62,18 +59,5 @@ fun MainScreen(
                 )
             }
         }
-    }
-}
-
-@PreviewLightDark
-@Composable
-fun MainScreenPreview(@PreviewParameter(MainScreenPreviewProvider::class) uiState: ItemListScreenUiState) {
-    MatsCounterTheme {
-        MainScreen(
-            modifier = Modifier.background(MatsCounterTheme.colors.background),
-            navController = rememberNavController(),
-            onItemSelected = { _, _ -> },
-            onCountChange = {}
-        )
     }
 }

@@ -27,7 +27,7 @@ import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.dp
 import com.sbajt.matscounter.ui.composables.ItemListUiStateProvider
-import com.sbajt.matscounter.ui.composables.ItemView
+import com.sbajt.matscounter.ui.composables.views.ItemView
 import com.sbajt.matscounter.ui.composables.LoadingScreen
 import com.sbajt.matscounter.ui.mappers.getName
 import com.sbajt.matscounter.ui.models.ItemGroupType
@@ -38,6 +38,7 @@ import kotlinx.coroutines.launch
 @Composable
 fun ItemListScreen(
     uiState: ItemListScreenUiState,
+
     onItemSelected: OnItemSelected,
     modifier: Modifier = Modifier
 ) {
@@ -112,11 +113,7 @@ private fun ContentScreen(
                 items(count = itemUiStatePage.size, key = { index -> index }) { index ->
                     ItemView(
                         uiState = itemUiStatePage[index],
-                        onItemSelected = if (groupType != ItemGroupType.BASIC_MATERIAL) {
-                            onItemSelected
-                        } else {
-                            { _, _ -> }
-                        },
+                        onItemSelected = onItemSelected,
                     )
                 }
             }

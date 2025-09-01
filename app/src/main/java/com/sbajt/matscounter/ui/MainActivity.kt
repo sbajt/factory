@@ -64,8 +64,6 @@ class MainActivity : ComponentActivity() {
             navController = rememberNavController()
             MainScreen(
                 modifier = modifier.padding(top = topPadding.calculateTopPadding(), bottom = bottomPadding.calculateBottomPadding()),
-                onCountChange = {},
-                onItemSelected = { item, groupType -> },
                 navController = navController,
             )
         }

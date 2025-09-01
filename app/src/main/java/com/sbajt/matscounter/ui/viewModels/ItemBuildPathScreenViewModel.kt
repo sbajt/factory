@@ -18,7 +18,7 @@ class ItemBuildPathScreenViewModel : ViewModel(), KoinComponent {
     private val useCase: ItemUiStateListUseCase by inject()
 
     val uiState = combine(
-        ItemDetailsScreenViewModel.Companion.stateSubject,
+        ItemUiStateListViewModel.stateSubject,
         useCase()
     ) { state, itemUiStateList ->
         if (state.selectedItem == null) {

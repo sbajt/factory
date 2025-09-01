@@ -19,7 +19,7 @@ import androidx.navigation.compose.rememberNavController
 import com.sbajt.matscounter.ui.composables.BuildMaterialView
 import com.sbajt.matscounter.ui.composables.InputSection
 import com.sbajt.matscounter.ui.composables.ItemDetailsUiStateProvider
-import com.sbajt.matscounter.ui.composables.ItemView
+import com.sbajt.matscounter.ui.composables.views.ItemView
 import com.sbajt.matscounter.ui.composables.LoadingScreen
 import com.sbajt.matscounter.ui.models.ItemGroupType
 import com.sbajt.matscounter.ui.models.screens.ItemDetailsScreenUiState
