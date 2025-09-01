@@ -118,6 +118,6 @@ object MatsCounterTheme {
     val shape: ShapeScheme
         @Composable get() = localShapeScheme.current
 
-    val size: SizeScheme
+    val dimensions: SizeScheme
         @Composable get() = localSizeScheme.current
 }

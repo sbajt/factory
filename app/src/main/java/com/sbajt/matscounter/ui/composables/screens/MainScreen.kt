@@ -51,7 +51,7 @@ fun MainScreen(
                     uiState = uiState,
                     onCountChange = viewModel::updateSelectedItemAmount,
                     onNavigate = {
-                        viewModel.naviGateToBuildPath(navController = navController)
+                        viewModel.navigateToBuildPath(navController = navController)
                     }
                 )
             }

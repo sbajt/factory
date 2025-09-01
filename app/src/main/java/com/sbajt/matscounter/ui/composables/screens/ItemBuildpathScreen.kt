@@ -3,6 +3,7 @@ package com.sbajt.matscounter.ui.composables.screens
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
@@ -14,10 +15,10 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.compose.ui.tooling.preview.PreviewParameter
-import com.sbajt.matscounter.ui.composables.views.BuildMaterialView
 import com.sbajt.matscounter.ui.composables.previewProviders.ItemBuildPathUiStateProvider
-import com.sbajt.matscounter.ui.composables.views.ItemView
 import com.sbajt.matscounter.ui.composables.views.Arrow
+import com.sbajt.matscounter.ui.composables.views.BuildMaterialView
+import com.sbajt.matscounter.ui.composables.views.ItemView
 import com.sbajt.matscounter.ui.mappers.getName
 import com.sbajt.matscounter.ui.models.screens.ItemBuildPathScreenUiState
 import com.sbajt.matscounter.ui.theme.MatsCounterTheme
@@ -43,18 +44,21 @@ fun ContentScreen(
     uiState: ItemBuildPathScreenUiState.Content,
     modifier: Modifier,
 ) = LazyColumn(
-    modifier = Modifier.padding(MatsCounterTheme.size.contentPadding)
+    modifier = Modifier
+        .fillMaxSize()
+        .background(MatsCounterTheme.colors.background)
+        .padding(MatsCounterTheme.dimensions.contentPadding)
 ) {
     item {
         Row(
             modifier = modifier
                 .background(MatsCounterTheme.colors.background)
                 .fillMaxWidth(),
-            horizontalArrangement = Arrangement.spacedBy(MatsCounterTheme.size.paddingMedium, Alignment.CenterHorizontally),
+            horizontalArrangement = Arrangement.spacedBy(MatsCounterTheme.dimensions.paddingMedium, Alignment.CenterHorizontally),
             verticalAlignment = Alignment.CenterVertically
         ) {
             ItemView(
-                modifier = Modifier.padding(vertical = MatsCounterTheme.size.paddingMedium),
+                modifier = Modifier.padding(vertical = MatsCounterTheme.dimensions.paddingMedium),
                 uiState = uiState.selectedItem,
                 onItemSelected = { _, _ -> },
             )
@@ -73,7 +77,7 @@ fun ContentScreen(
             }
             item("group_${buildMaterialListWrapper.groupType}") {
                 Text(
-                    modifier = Modifier.padding(bottom = MatsCounterTheme.size.paddingSmall),
+                    modifier = Modifier.padding(bottom = MatsCounterTheme.dimensions.paddingSmall),
                     style = MatsCounterTheme.typography.subtitleTextLarge,
                     color = MatsCounterTheme.colors.primary,
                     text = remember { mutableStateOf(buildMaterialListWrapper.groupType?.getName() ?: "") }.value,
@@ -82,6 +86,7 @@ fun ContentScreen(
             buildMaterialListWrapper.buildMaterialsList.forEach { buildMaterial ->
                 item("group_${buildMaterialListWrapper.groupType}_item_${buildMaterial.name}") {
                     BuildMaterialView(
+                        modifier = Modifier.padding(bottom = MatsCounterTheme.dimensions.paddingMedium),
                         uiState = buildMaterial,
                         selectedItemAmount = uiState.selectedItemAmount,
                     )

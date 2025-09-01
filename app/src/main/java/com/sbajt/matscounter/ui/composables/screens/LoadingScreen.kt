@@ -8,18 +8,21 @@ import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.PreviewLightDark
 import com.sbajt.matscounter.ui.theme.MatsCounterTheme
 
 @Composable
 fun LoadingScreen(modifier: Modifier = Modifier) {
     Box(
-        modifier = modifier.fillMaxSize(),
+        modifier = modifier
+            .fillMaxSize()
+            .background(MatsCounterTheme.colors.background),
         contentAlignment = Alignment.Center
     ) {
         CircularProgressIndicator(
-            modifier = Modifier.size(MatsCounterTheme.size.icon),
-            color = MatsCounterTheme.colors.primary,
+            modifier = Modifier.size(MatsCounterTheme.dimensions.icon),
+            color = Color.Green
         )
     }
 }
@@ -28,7 +31,7 @@ fun LoadingScreen(modifier: Modifier = Modifier) {
 @Composable
 private fun LoadingScreenPreview() {
     MatsCounterTheme {
-        LoadingScreen(modifier = Modifier.background(MatsCounterTheme.colors.background))
+        LoadingScreen()
     }
 }
 

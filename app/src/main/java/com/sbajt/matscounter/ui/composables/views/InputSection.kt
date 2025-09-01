@@ -28,11 +28,11 @@ fun InputSection(
     Row(
         modifier = modifier
             .background(MatsCounterTheme.colors.background)
-            .padding(MatsCounterTheme.size.contentPadding),
+            .padding(MatsCounterTheme.dimensions.contentPadding),
         verticalAlignment = Alignment.CenterVertically
     ) {
         Text(
-            modifier = Modifier.padding(MatsCounterTheme.size.paddingMedium),
+            modifier = Modifier.padding(MatsCounterTheme.dimensions.paddingMedium),
             text = "Item count:",
             style = MatsCounterTheme.typography.bodyTextLarge,
             color = MatsCounterTheme.colors.primary,

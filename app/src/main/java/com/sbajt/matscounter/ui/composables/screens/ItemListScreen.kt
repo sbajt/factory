@@ -65,7 +65,7 @@ private fun ContentScreen(
     Column(
         modifier = modifier
             .background(MatsCounterTheme.colors.background)
-            .padding(MatsCounterTheme.size.contentPadding),
+            .padding(MatsCounterTheme.dimensions.contentPadding),
     ) {
         ScrollableTabRow(
             modifier = Modifier.fillMaxWidth(),
@@ -74,7 +74,7 @@ private fun ContentScreen(
             indicator = { tabPositions ->
                 TabRowDefaults.SecondaryIndicator(
                     modifier = Modifier.tabIndicatorOffset(tabPositions[pagerState.currentPage]),
-                    height = MatsCounterTheme.size.tab,
+                    height = MatsCounterTheme.dimensions.tab,
                     color = MatsCounterTheme.colors.accent
                 )
             }
@@ -107,9 +107,9 @@ private fun ContentScreen(
                 modifier = Modifier.fillMaxSize(),
                 columns = GridCells.Adaptive(minSize = 100.dp),
                 contentPadding = PaddingValues(vertical = 18.dp),
-                verticalArrangement = Arrangement.spacedBy(MatsCounterTheme.size.medium),
+                verticalArrangement = Arrangement.spacedBy(MatsCounterTheme.dimensions.medium),
             ) {
-                items(count = itemUiStatePage.size, key = { index -> index }) { index ->
+                items(count = itemUiStatePage.size, key = { index -> "item_$index" }) { index ->
                     ItemView(
                         uiState = itemUiStatePage[index],
                         onItemSelected = onItemSelected,

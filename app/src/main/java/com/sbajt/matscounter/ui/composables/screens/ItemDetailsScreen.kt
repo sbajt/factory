@@ -52,17 +52,17 @@ private fun ContentScreen(
 ) = Column(
     modifier = modifier
         .background(MatsCounterTheme.colors.background)
-        .padding(MatsCounterTheme.size.contentPadding)
+        .padding(MatsCounterTheme.dimensions.contentPadding)
 ) {
-    Row(modifier = Modifier.padding(MatsCounterTheme.size.paddingMedium)) {
+    Row(modifier = Modifier.padding(MatsCounterTheme.dimensions.paddingMedium)) {
         ItemView(
-            modifier = Modifier.padding(MatsCounterTheme.size.paddingMedium),
+            modifier = Modifier.padding(MatsCounterTheme.dimensions.paddingMedium),
             uiState = uiState.selectedItem,
             onItemSelected = { _, _ -> },
         )
         if (uiState.selectedItem != null && uiState.selectedItemAmount > 0) {
             InputSection(
-                modifier = Modifier.padding(MatsCounterTheme.size.paddingMedium),
+                modifier = Modifier.padding(MatsCounterTheme.dimensions.paddingMedium),
                 uiState = InputSectionUiState(
                     selectedItem = uiState.selectedItem,
                     itemCount = uiState.selectedItemAmount,
@@ -91,10 +91,10 @@ private fun ContentScreen(
             Box(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(top = MatsCounterTheme.size.paddingLarge)
+                    .padding(top = MatsCounterTheme.dimensions.paddingLarge)
             ) {
                 Button(
-                    modifier = Modifier.padding(MatsCounterTheme.size.contentPadding),
+                    modifier = Modifier.padding(MatsCounterTheme.dimensions.contentPadding),
                     colors = ButtonDefaults.buttonColors(
                         containerColor = MatsCounterTheme.colors.secondary
                     ),

@@ -40,7 +40,7 @@ fun EmptyScreen(modifier: Modifier = Modifier) {
             )
             val title by remember { mutableStateOf("Empty Screen") }
             Text(
-                modifier = Modifier.padding(bottom = MatsCounterTheme.size.paddingSmall),
+                modifier = Modifier.padding(bottom = MatsCounterTheme.dimensions.paddingSmall),
                 style = MatsCounterTheme.typography.titleTextNormal,
                 color = MatsCounterTheme.colors.primary,
                 text = title

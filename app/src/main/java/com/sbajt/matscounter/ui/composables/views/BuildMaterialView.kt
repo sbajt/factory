@@ -27,9 +27,10 @@ fun BuildMaterialView(
     Row(
         modifier = modifier
             .fillMaxWidth()
-            .padding(all = MatsCounterTheme.size.paddingSmall),
+            .background(MatsCounterTheme.colors.background)
+            .padding(all = MatsCounterTheme.dimensions.paddingSmall),
     ) {
-        val materialName by remember { mutableStateOf(uiState.name ?: "") }
+        val materialName by remember { mutableStateOf(uiState.name) }
         Text(
             style = MatsCounterTheme.typography.bodyTextNormal,
             color = MatsCounterTheme.colors.primary,
@@ -51,7 +52,6 @@ fun BuildMaterialView(
 fun previewBuildMaterialView(@PreviewParameter(BuildMaterialUiStateProvider::class) uiState: BuildMaterialUiState) {
     MatsCounterTheme {
         BuildMaterialView(
-            modifier = Modifier.background(MatsCounterTheme.colors.background),
             uiState = uiState,
             selectedItemAmount = 1,
         )

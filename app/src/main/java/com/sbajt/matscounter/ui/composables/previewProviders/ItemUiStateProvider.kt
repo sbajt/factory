@@ -17,6 +17,7 @@ class ItemUiStateProvider : PreviewParameterProvider<ItemUiState> {
     )
 
     companion object {
+
         val basicMaterialItemUiState = ItemUiState(
             name = "Item Basic",
             imageName = null,
@@ -43,7 +44,6 @@ class ItemUiStateProvider : PreviewParameterProvider<ItemUiState> {
                 buildMaterialsCount = 5,
             ),
         )
-
 
         fun mockItemUiStateList(
             count: Int = 10

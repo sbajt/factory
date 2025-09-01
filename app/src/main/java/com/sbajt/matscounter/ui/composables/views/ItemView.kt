@@ -38,7 +38,7 @@ fun ItemView(
             .clickable(
                 onClick = { onItemSelected(uiState?.name, uiState?.groupType) }
             )
-            .padding(MatsCounterTheme.size.paddingMedium),
+            .padding(MatsCounterTheme.dimensions.paddingMedium),
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.SpaceBetween
     ) {
