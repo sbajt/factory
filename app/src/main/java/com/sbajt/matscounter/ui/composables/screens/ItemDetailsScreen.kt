@@ -30,17 +30,17 @@ import com.sbajt.matscounter.ui.theme.MatsCounterTheme
 @Composable
 fun ItemDetailsScreen(
     uiState: ItemDetailsScreenUiState,
-    navController: NavHostController,
     onCountChange: OnCountChange,
-    modifier: Modifier = Modifier
+    onNavigate: OnNavigate,
+    modifier: Modifier = Modifier,
 ) {
     when (uiState) {
         ItemDetailsScreenUiState.Empty -> EmptyScreen()
         ItemDetailsScreenUiState.Loading -> LoadingScreen()
         is ItemDetailsScreenUiState.Content -> ContentScreen(
             modifier = modifier,
-            navController = navController,
             onCountChange = onCountChange,
+            onNavigate = onNavigate,
             uiState = uiState,
         )
 
@@ -50,8 +50,8 @@ fun ItemDetailsScreen(
 @Composable
 private fun ContentScreen(
     uiState: ItemDetailsScreenUiState.Content,
-    navController: NavHostController,
     onCountChange: OnCountChange,
+    onNavigate: OnNavigate,
     modifier: Modifier
 ) = Column(
     modifier = modifier
@@ -104,7 +104,7 @@ private fun ContentScreen(
                     ),
                     shape = MatsCounterTheme.shape.button,
                     onClick = {
-                        navController.navigate(ItemBuildComponents)
+                        onNavigate.invoke()
                     }
                 ) {
                     Text(
@@ -124,8 +124,8 @@ fun DescriptionSectionPreview(@PreviewParameter(ItemDetailsUiStateProvider::clas
     MatsCounterTheme {
         ItemDetailsScreen(
             uiState = uiState,
-            navController = rememberNavController(),
-            onCountChange = {}
+            onCountChange = {},
+            onNavigate = {},
         )
     }
 }

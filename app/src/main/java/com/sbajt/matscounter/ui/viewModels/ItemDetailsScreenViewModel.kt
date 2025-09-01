@@ -2,9 +2,11 @@ package com.sbajt.matscounter.ui.viewModels
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import androidx.navigation.NavHostController
 import com.sbajt.matscounter.ui.mappers.ItemDetailsScreenMapper
 import com.sbajt.matscounter.ui.models.AppState
 import com.sbajt.matscounter.ui.models.screens.ItemDetailsScreenUiState
+import com.sbajt.matscounter.ui.navigation.ItemBuildComponents
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.catch
@@ -38,5 +40,9 @@ class ItemDetailsScreenViewModel : ViewModel(), KoinComponent {
         ItemUiStateListViewModel.stateSubject.update { uiState ->
             uiState.copy(selectedItemAmount = newItemCount)
         }
+    }
+
+    fun naviGateToBuildPath(navController: NavHostController) {
+        navController.navigate(ItemBuildComponents)
     }
 }
