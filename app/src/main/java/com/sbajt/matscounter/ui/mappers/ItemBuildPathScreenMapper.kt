@@ -94,6 +94,7 @@ class ItemBuildPathScreenMapper {
     }
 
     companion object {
+
         class InputData(
             val selectedItem: ItemUiState,
             val selectedItemAmount: Int,

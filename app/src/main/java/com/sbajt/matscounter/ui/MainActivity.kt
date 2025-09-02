@@ -2,7 +2,6 @@ package com.sbajt.matscounter.ui
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity
-import androidx.activity.OnBackPressedCallback
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.asPaddingValues
@@ -19,7 +18,7 @@ import androidx.navigation.compose.rememberNavController
 import com.sbajt.matscounter.ui.composables.screens.MainScreen
 import com.sbajt.matscounter.ui.navigation.ItemDetails
 import com.sbajt.matscounter.ui.theme.MatsCounterTheme
-import com.sbajt.matscounter.ui.viewModels.ItemUiStateListViewModel
+import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
 class MainActivity : ComponentActivity() {
@@ -35,23 +34,23 @@ class MainActivity : ComponentActivity() {
                 }
             }
         }
-
-        onBackPressedDispatcher.addCallback(onBackPressedCallback = onBackPressedCallback)
     }
 
-    private val onBackPressedCallback = object : OnBackPressedCallback(true) {
-
-        override fun handleOnBackPressed() {
-            lifecycleScope.launch {
-                if (::navController.isInitialized) {
-                    val destination = navController.currentBackStackEntry?.destination
-                    if (destination?.route == ItemDetails.ROUTE) {
-                        ItemUiStateListViewModel().removeSelectedItem()
+    override fun onBackPressed() {
+        lifecycleScope.launch {
+            if (::navController.isInitialized) {
+                val destination = navController.currentBackStackEntry?.destination
+                if (destination?.route == ItemDetails.ROUTE) {
+                    stateSubject.update {
+                        it.copy(
+                            selectedItem = null,
+                            selectedItemAmount = 0,
+                        )
                     }
                 }
-                this@MainActivity.onBackPressedDispatcher.onBackPressed()
             }
         }
+        super.onBackPressed()
     }
 
     @Composable

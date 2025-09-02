@@ -6,6 +6,7 @@ import androidx.navigation.NavHostController
 import com.sbajt.matscounter.ui.mappers.ItemDetailsScreenMapper
 import com.sbajt.matscounter.ui.models.screens.ItemDetailsScreenUiState
 import com.sbajt.matscounter.ui.navigation.ItemBuildComponents
+import com.sbajt.matscounter.ui.stateSubject
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.map
@@ -18,7 +19,7 @@ class ItemDetailsScreenViewModel : ViewModel(), KoinComponent {
 
     private val mapper: ItemDetailsScreenMapper by inject()
 
-    val uiState = ItemUiStateListViewModel.stateSubject
+    val uiState = stateSubject
         .map { state ->
             mapper.mapToUiState(
                 ItemDetailsScreenMapper.Companion.InputData(
@@ -35,7 +36,7 @@ class ItemDetailsScreenViewModel : ViewModel(), KoinComponent {
         )
 
     fun updateSelectedItemAmount(newItemCount: Int) {
-        ItemUiStateListViewModel.stateSubject.update { uiState ->
+        stateSubject.update { uiState ->
             uiState.copy(selectedItemAmount = newItemCount)
         }
     }

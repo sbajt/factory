@@ -4,6 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.sbajt.matscounter.ui.mappers.ItemBuildPathScreenMapper
 import com.sbajt.matscounter.ui.models.screens.ItemBuildPathScreenUiState
+import com.sbajt.matscounter.ui.stateSubject
 import com.sbajt.matscounter.ui.useCases.ItemUiStateListUseCase
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.catch
@@ -18,7 +19,7 @@ class ItemBuildPathScreenViewModel : ViewModel(), KoinComponent {
     private val useCase: ItemUiStateListUseCase by inject()
 
     val uiState = combine(
-        ItemUiStateListViewModel.stateSubject,
+        stateSubject,
         useCase()
     ) { state, itemUiStateList ->
         if (state.selectedItem == null) {

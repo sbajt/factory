@@ -3,18 +3,14 @@ package com.sbajt.matscounter.ui.viewModels
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.navigation.NavHostController
-import com.sbajt.matscounter.ui.models.AppState
 import com.sbajt.matscounter.ui.models.ItemGroupType
 import com.sbajt.matscounter.ui.models.screens.ItemListScreenUiState
 import com.sbajt.matscounter.ui.navigation.ItemDetails
+import com.sbajt.matscounter.ui.stateSubject
 import com.sbajt.matscounter.ui.useCases.ItemUiStateListUseCase
 import kotlinx.collections.immutable.toPersistentList
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.SharingStarted
-import kotlinx.coroutines.flow.catch
+import kotlinx.coroutines.flow.SharingStarted.Companion.WhileSubscribed
 import kotlinx.coroutines.flow.firstOrNull
-import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
@@ -26,23 +22,15 @@ class ItemUiStateListViewModel : ViewModel(), KoinComponent {
 
     private val useCase: ItemUiStateListUseCase by inject()
 
-    val uiState = flow {
-        emit(ItemListScreenUiState.Loading)
-        delay(1_000)
-        useCase()
-            .map {
-                ItemListScreenUiState.Content(
-                    itemUiStateList = it.toPersistentList()
-                )
+    val uiState = useCase()
+        .map {
+            if (it.isEmpty()) {
+                ItemListScreenUiState.Empty
+            } else {
+                ItemListScreenUiState.Content(itemUiStateList = it.toPersistentList())
             }
-            .catch { ItemListScreenUiState.Empty }
-            .collect { emit(it) }
-    }
-        .stateIn(
-            scope = viewModelScope,
-            started = SharingStarted.Companion.WhileSubscribed(5_000),
-            initialValue = ItemListScreenUiState.Loading,
-        )
+        }
+        .stateIn(viewModelScope, WhileSubscribed(5_000), ItemListScreenUiState.Loading)
 
     fun updateSelectedItem(
         selectedItemName: String?,
@@ -74,10 +62,5 @@ class ItemUiStateListViewModel : ViewModel(), KoinComponent {
                 selectedItemAmount = 0,
             )
         }
-    }
-
-    companion object {
-
-        val stateSubject = MutableStateFlow(AppState())
     }
 }
