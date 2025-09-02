@@ -1,5 +1,6 @@
 package com.sbajt.matscounter.ui.viewModels
 
+import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.navigation.NavHostController
@@ -9,7 +10,9 @@ import com.sbajt.matscounter.ui.navigation.ItemDetails
 import com.sbajt.matscounter.ui.stateSubject
 import com.sbajt.matscounter.ui.useCases.ItemUiStateListUseCase
 import kotlinx.collections.immutable.toPersistentList
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.SharingStarted.Companion.WhileSubscribed
+import kotlinx.coroutines.flow.delayEach
 import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
@@ -18,12 +21,13 @@ import kotlinx.coroutines.launch
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 
-class ItemUiStateListViewModel : ViewModel(), KoinComponent {
+class ItemListViewModel : ViewModel(), KoinComponent {
 
     private val useCase: ItemUiStateListUseCase by inject()
 
     val uiState = useCase()
         .map {
+            delay(1_000)
             if (it.isEmpty()) {
                 ItemListScreenUiState.Empty
             } else {
@@ -52,15 +56,6 @@ class ItemUiStateListViewModel : ViewModel(), KoinComponent {
                     navController?.navigate(ItemDetails)
                 }
             }
-        }
-    }
-
-    fun removeSelectedItem() {
-        stateSubject.update { uiState ->
-            uiState.copy(
-                selectedItem = null,
-                selectedItemAmount = 0,
-            )
         }
     }
 }

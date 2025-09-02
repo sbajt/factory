@@ -60,7 +60,7 @@ class ItemBuildPathScreenMapper {
                 val subItem = itemUiStateList.find { it.name == subItemName }
 
                 if (subItem != null) {
-                    if (subItem.groupType == targetGroupType) {
+                    if (subItem.groupType == targetGroupType || subItem.groupType.toLowerGroupsList().contains(subItem.groupType)) {
                         // This sub-item is of the target group type. Add it to the collection.
                         // We use the materialRequirement's amount (amount per parent) and multiply by how many parents are needed.
                         collectedMaterials.addToBuildMaterialList(

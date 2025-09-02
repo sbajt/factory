@@ -16,7 +16,7 @@ import com.sbajt.matscounter.ui.navigation.ItemList
 import com.sbajt.matscounter.ui.theme.MatsCounterTheme
 import com.sbajt.matscounter.ui.viewModels.ItemBuildPathScreenViewModel
 import com.sbajt.matscounter.ui.viewModels.ItemDetailsScreenViewModel
-import com.sbajt.matscounter.ui.viewModels.ItemUiStateListViewModel
+import com.sbajt.matscounter.ui.viewModels.ItemListViewModel
 
 typealias OnItemSelected = (String?, ItemGroupType?) -> Unit
 typealias OnCountChange = (Int) -> Unit
@@ -35,7 +35,7 @@ fun MainScreen(
         ) {
 
             composable<ItemList> {
-                val viewModel = viewModel<ItemUiStateListViewModel>()
+                val viewModel = viewModel<ItemListViewModel>()
                 val uiState = viewModel.uiState.collectAsStateWithLifecycle().value
                 ItemListScreen(
                     uiState = uiState,
