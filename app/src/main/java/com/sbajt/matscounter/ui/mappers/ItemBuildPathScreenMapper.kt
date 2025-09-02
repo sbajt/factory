@@ -5,7 +5,6 @@ import com.sbajt.matscounter.ui.models.screens.ItemBuildPathScreenUiState
 import com.sbajt.matscounter.ui.models.views.BuildMaterialListWrapper
 import com.sbajt.matscounter.ui.models.views.BuildMaterialUiState
 import com.sbajt.matscounter.ui.models.views.ItemUiState
-import kotlinx.collections.immutable.toPersistentList
 
 class ItemBuildPathScreenMapper {
 
@@ -26,21 +25,10 @@ class ItemBuildPathScreenMapper {
         selectedItemAmount: Int,
         itemUiStateList: List<ItemUiState>,
     ): List<BuildMaterialListWrapper> {
-        val lowerGroupTypesForSelectedItem = selectedItem.groupType.toLowerGroupsList()
+        val groupTypesForSelectedItem = listOf(selectedItem.groupType) + selectedItem.groupType.toLowerGroupsList()
+        val finalBuildMaterialListWrapperList = mutableListOf(selectedItem.buildMaterialListWrapper?.copy(titleText = "Build materials")).filterNotNull()
 
-        return lowerGroupTypesForSelectedItem.map { groupType ->
-            val groupBuildMaterialList = collectMaterialsForSpecificGroup(
-                itemToBuild = selectedItem,
-                amountToBuild = selectedItemAmount,
-                targetGroupType = groupType,
-                itemUiStateList = itemUiStateList
-            )
-            BuildMaterialListWrapper(
-                titleText = groupType.getName(),
-                groupType = groupType,
-                buildMaterialsList = groupBuildMaterialList.toPersistentList(),
-            )
-        }
+        return finalBuildMaterialListWrapperList
     }
 
     private fun collectMaterialsForSpecificGroup(

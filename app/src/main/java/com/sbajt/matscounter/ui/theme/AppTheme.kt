@@ -42,22 +42,22 @@ val lightColors = ColorScheme(
 val typography = TypographyScheme(
     titleTextNormal = TextStyle(
         fontFamily = MatsCounterFontFamily,
-        fontSize = TextUnit(14.sp.value, TextUnitType.Sp),
+        fontSize = TextUnit(13.sp.value, TextUnitType.Sp),
         fontWeight = FontWeight.Bold,
     ),
     titleTextLarge = TextStyle(
         fontFamily = MatsCounterFontFamily,
-        fontSize = TextUnit(16.sp.value, TextUnitType.Sp),
+        fontSize = TextUnit(15.sp.value, TextUnitType.Sp),
         fontWeight = FontWeight.Bold,
     ),
     subtitleTextNormal = TextStyle(
         fontFamily = MatsCounterFontFamily,
-        fontSize = TextUnit(12.sp.value, TextUnitType.Sp),
+        fontSize = TextUnit(11.sp.value, TextUnitType.Sp),
         fontWeight = FontWeight.Normal,
     ),
     subtitleTextLarge = TextStyle(
         fontFamily = MatsCounterFontFamily,
-        fontSize = TextUnit(14.sp.value, TextUnitType.Sp),
+        fontSize = TextUnit(13.sp.value, TextUnitType.Sp),
         fontWeight = FontWeight.Normal,
     ),
     bodyTextNormal = TextStyle(

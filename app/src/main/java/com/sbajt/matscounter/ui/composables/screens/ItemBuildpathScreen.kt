@@ -78,7 +78,7 @@ fun ContentScreen(
             item("group_${buildMaterialListWrapper.groupType}") {
                 Text(
                     modifier = Modifier.padding(bottom = MatsCounterTheme.dimensions.paddingSmall),
-                    style = MatsCounterTheme.typography.subtitleTextLarge,
+                    style = MatsCounterTheme.typography.titleTextNormal,
                     color = MatsCounterTheme.colors.primary,
                     text = remember { mutableStateOf(buildMaterialListWrapper.groupType?.getName() ?: "") }.value,
                 )
@@ -86,7 +86,7 @@ fun ContentScreen(
             buildMaterialListWrapper.buildMaterialsList.forEach { buildMaterial ->
                 item("group_${buildMaterialListWrapper.groupType}_item_${buildMaterial.name}") {
                     BuildMaterialView(
-                        modifier = Modifier.padding(bottom = MatsCounterTheme.dimensions.paddingMedium),
+                        modifier = Modifier.padding(start = MatsCounterTheme.dimensions.paddingMedium),
                         uiState = buildMaterial,
                         selectedItemAmount = uiState.selectedItemAmount,
                     )

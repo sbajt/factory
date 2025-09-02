@@ -7,5 +7,5 @@ import kotlinx.collections.immutable.persistentListOf
 data class BuildMaterialListWrapper(
     val titleText: String? = null,
     val groupType: ItemGroupType? = null,
-    val buildMaterialsList: ImmutableList<BuildMaterialUiState> = persistentListOf(),
+    val buildMaterialsList: List<BuildMaterialUiState> = persistentListOf(),
 )

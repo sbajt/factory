@@ -11,13 +11,15 @@ import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.compose.ui.tooling.preview.PreviewParameter
+import com.sbajt.matscounter.ui.composables.previewProviders.ItemDetailsUiStateProvider
 import com.sbajt.matscounter.ui.composables.views.BuildMaterialView
 import com.sbajt.matscounter.ui.composables.views.InputSection
-import com.sbajt.matscounter.ui.composables.previewProviders.ItemDetailsUiStateProvider
 import com.sbajt.matscounter.ui.composables.views.ItemView
 import com.sbajt.matscounter.ui.models.ItemGroupType
 import com.sbajt.matscounter.ui.models.screens.ItemDetailsScreenUiState
@@ -76,9 +78,10 @@ private fun ContentScreen(
     if (uiState.selectedItem?.groupType != ItemGroupType.BASIC_MATERIAL) {
         with(uiState.selectedItemBuildMaterialListWrapper) {
             Text(
-                style = MatsCounterTheme.typography.subtitleTextNormal,
+                modifier = Modifier.padding(bottom = MatsCounterTheme.dimensions.paddingSmall),
+                style = MatsCounterTheme.typography.titleTextNormal,
                 color = MatsCounterTheme.colors.primary,
-                text = remember { this?.titleText ?: "" },
+                text = remember { mutableStateOf(this?.titleText ?:"") }.value,
             )
             if (this?.buildMaterialsList?.isNotEmpty() == true) {
                 buildMaterialsList.forEach { state ->
