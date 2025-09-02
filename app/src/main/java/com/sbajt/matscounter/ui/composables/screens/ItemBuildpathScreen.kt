@@ -72,7 +72,7 @@ fun ContentScreen(
 
     if (uiState.selectedItemBuildMaterialListWrapperList.isNotEmpty()) {
         uiState.selectedItemBuildMaterialListWrapperList.forEach { buildMaterialListWrapper ->
-            item("arrow_${buildMaterialListWrapper.groupType}") {
+            item("arrow_${buildMaterialListWrapper.groupType.getName()}") {
                 Arrow()
             }
             item("group_${buildMaterialListWrapper.groupType}") {
