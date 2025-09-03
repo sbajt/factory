@@ -83,8 +83,8 @@ fun ContentScreen(
                     text = remember { mutableStateOf(buildMaterialListWrapper.groupType?.getName() ?: "") }.value,
                 )
             }
-            buildMaterialListWrapper.buildMaterialsList.forEach { buildMaterial ->
-                item("group_${buildMaterialListWrapper.groupType}_item_${buildMaterial.name}") {
+            buildMaterialListWrapper.buildMaterialsList.forEachIndexed { index, buildMaterial ->
+                item("group_${index}_item_${buildMaterial.name}") {
                     BuildMaterialView(
                         modifier = Modifier.padding(start = MatsCounterTheme.dimensions.paddingMedium),
                         uiState = buildMaterial,

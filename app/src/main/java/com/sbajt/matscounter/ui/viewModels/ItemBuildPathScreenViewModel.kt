@@ -1,5 +1,6 @@
 package com.sbajt.matscounter.ui.viewModels
 
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.sbajt.matscounter.ui.mappers.ItemBuildPathScreenMapper
@@ -33,7 +34,10 @@ class ItemBuildPathScreenViewModel : ViewModel(), KoinComponent {
             )
         )
     }
-        .catch { ItemBuildPathScreenUiState.Empty }
+        .catch {
+            Log.e(ItemBuildPathScreenViewModel::class.java.name,"${it.stackTrace}")
+            ItemBuildPathScreenUiState.Empty
+        }
         .stateIn(
             scope = viewModelScope,
             started = SharingStarted.Companion.WhileSubscribed(5_000),
