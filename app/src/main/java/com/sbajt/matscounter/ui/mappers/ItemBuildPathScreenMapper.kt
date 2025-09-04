@@ -3,7 +3,6 @@ package com.sbajt.matscounter.ui.mappers
 import com.sbajt.matscounter.ui.models.ItemGroupType
 import com.sbajt.matscounter.ui.models.screens.ItemBuildPathScreenUiState
 import com.sbajt.matscounter.ui.models.views.BuildMaterialListWrapper
-import com.sbajt.matscounter.ui.models.views.BuildMaterialUiState
 import com.sbajt.matscounter.ui.models.views.ItemUiState
 
 class ItemBuildPathScreenMapper {
@@ -15,85 +14,86 @@ class ItemBuildPathScreenMapper {
             selectedItemBuildMaterialListWrapperList = createBuildPathList(
                 selectedItem = selectedItem,
                 selectedItemAmount = selectedItemAmount,
-                allItemList = itemUiStateList,
+                itemList = itemUiStateList,
             )
         )
     }
 
+    /**
+     * Creates a list of [BuildMaterialListWrapper] representing the build path for a selected item.
+     *
+     * This function calculates the materials needed at each tier to build the [selectedItem].
+     * It starts by checking if the [selectedItem] itself has a pre-defined build material list
+     * where at least one material is of the same [ItemGroupType] as the [selectedItem].
+     * If so, this list (with amounts adjusted by [selectedItemAmount]) becomes the first element
+     * in the build path.
+     *
+     * Then, for each lower [ItemGroupType] (e.g., if [selectedItem] is TIER3, it will process TIER2, TIER1, BASIC_MATERIAL),
+     * it calls [getBuildMaterialsListForGroup] to determine the materials required for that specific tier.
+     * The results from [getBuildMaterialsListForGroup] are then added as a new [BuildMaterialListWrapper]
+     * to the overall build path.
+     *
+     * @param selectedItem The [ItemUiState] for which the build path is being calculated.
+     * @param selectedItemAmount The quantity of the [selectedItem] to be built.
+     * @param itemList The complete list of available [ItemUiState]s, used to look up material details.
+     * @return A list of [BuildMaterialListWrapper] where each wrapper represents a tier of materials
+     *         needed to build the [selectedItem]. The list is ordered from the highest tier
+     *         (or the item's direct build materials if applicable) down to the basic materials.
+     */
     private fun createBuildPathList(
         selectedItem: ItemUiState,
         selectedItemAmount: Int,
-        allItemList: List<ItemUiState>,
+        itemList: List<ItemUiState>,
     ): List<BuildMaterialListWrapper> {
-        val lowerGroupTypeList = selectedItem.groupType.toLowerGroupsList()
+        val buildMaterialWrapperList = createInitialBuildMaterialWrapperList(
+            selectedItem = selectedItem,
+            selectedItemAmount = selectedItemAmount,
+            itemList = itemList,
+        )
 
-        val finalBuildMaterialWrapperList: MutableList<BuildMaterialListWrapper> = if (selectedItem.buildMaterialListWrapper != null
-            && selectedItem.buildMaterialListWrapper.buildMaterialsList.any { buildMaterial ->
-                allItemList.find { it.name == buildMaterial.name }?.groupType == selectedItem.groupType
-            }
-        ) {
-            mutableListOf(
-                selectedItem.buildMaterialListWrapper.copy(
-                    titleText = "Item build materials",
-                    groupType = selectedItem.groupType,
-                    buildMaterialsList = selectedItem.buildMaterialListWrapper.buildMaterialsList.map {
-                        it.copy(amount = it.amount * selectedItemAmount)
-                    }
-                )
-            )
-        } else {
-            mutableListOf()
-        }
-        lowerGroupTypeList.forEach { groupType ->
-            val buildingMaterialGroupList = getBuildMaterialsListForGroup(
-                groupType = groupType,
-                previousBuildingMaterialList = if(finalBuildMaterialWrapperList.isEmpty()) {
-                    emptyList()
-                } else {
-                    finalBuildMaterialWrapperList.last().buildMaterialsList
-                }
-            )
-            finalBuildMaterialWrapperList.add(
+        selectedItem.groupType.toLowerGroupsList().forEachIndexed { index, groupType ->
+//            processBuildMaterialGroup(
+//                groupType = groupType,
+//                selectedItem = selectedItem,
+//                selectedItemAmount = selectedItemAmount,
+//                itemList = itemList,
+//                buildMaterialWrapperLisl = buildMaterialWrapperLisl,
+//            )
+            buildMaterialWrapperList.add(
                 BuildMaterialListWrapper(
-                    titleText = groupType.getName(),
-                    buildMaterialsList = buildingMaterialGroupList,
+                    titleText = if (buildMaterialWrapperList.isEmpty()) {
+                        "${groupType.getName()} materials"
+                    } else {
+                        "Item build materials"
+                    },
+                    groupType = groupType,
+                    buildMaterialsList = emptyList()
                 )
             )
-
         }
-        return finalBuildMaterialWrapperList.toList()
+        return buildMaterialWrapperList.toList()
     }
 
-    private fun getBuildMaterialsListForGroup(
-        groupType: ItemGroupType,
-        previousBuildingMaterialList : List<BuildMaterialUiState>,
-    ): List<BuildMaterialUiState> {
-        val groupBuildMaterialList = emptyList<BuildMaterialUiState>()
-        //            mutableBuildMaterialsList.forEach { buildMaterial ->
-//                val item = allItemList.find { item -> item.name == buildMaterial.name }
-//                when (item?.groupType?.compareTo(groupType)) {
-//                    -1 -> {
-//                        mutableBuildMaterialsList.remove(buildMaterial)
-//                        item.buildMaterialListWrapper?.buildMaterialsList?.forEach {
-//                            mutableBuildMaterialsList.add(it.copy(amount = it.amount * buildMaterial.amount))
-//                        }
-//                    }
-//                    0, 1 -> {
-//                        val existingBuildMaterial = mutableBuildMaterialsList.find { it.name == item.name }
-//                        if(existingBuildMaterial == null) {
-//                            buildingMaterialGroupList.add(buildMaterial)
-//                            mutableBuildMaterialsList.remove(buildMaterial)
-//                            val copy = buildMaterial.copy(amount = buildMaterial.amount * selectedItemAmount)
-//                            mutableBuildMaterialsList.add(copy)
-//                        } else {
-//
-//                            existingBuildMaterial.copy(amount = existingBuildMaterial.amount * buildMaterial.amount)
-//                        }
-//                    }
-//                }
-//            }
-//
-        return groupBuildMaterialList
+    private fun createInitialBuildMaterialWrapperList(
+        selectedItem: ItemUiState,
+        selectedItemAmount: Int,
+        itemList: List<ItemUiState>,
+    ): MutableList<BuildMaterialListWrapper> = if (selectedItem.buildMaterialListWrapper != null
+        && selectedItem.buildMaterialListWrapper.buildMaterialsList.any { buildMaterial ->
+            itemList.find { it.name == buildMaterial.name }?.groupType == selectedItem.groupType
+        }
+    ) {
+        mutableListOf(
+            selectedItem.buildMaterialListWrapper.copy(
+                titleText = "Item build materials",
+                groupType = selectedItem.groupType,
+                buildMaterialsList = selectedItem.buildMaterialListWrapper.buildMaterialsList.map {
+                    it.copy(amount = it.amount * selectedItemAmount)
+                }
+            )
+        )
+    } else {
+        mutableListOf()
     }
 
     companion object {
