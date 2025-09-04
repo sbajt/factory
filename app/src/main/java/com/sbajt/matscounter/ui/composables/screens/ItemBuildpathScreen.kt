@@ -71,19 +71,19 @@ fun ContentScreen(
     }
 
     if (uiState.selectedItemBuildMaterialListWrapperList.isNotEmpty()) {
-        uiState.selectedItemBuildMaterialListWrapperList.forEach { buildMaterialListWrapper ->
-            item("arrow_${buildMaterialListWrapper.groupType.getName()}") {
+        uiState.selectedItemBuildMaterialListWrapperList.forEachIndexed { index, buildMaterialListWrapper ->
+            item("arrow_$index") {
                 Arrow()
             }
-            item("group_${buildMaterialListWrapper.groupType}") {
+            item("group_$index") {
                 Text(
                     modifier = Modifier.padding(bottom = MatsCounterTheme.dimensions.paddingSmall),
                     style = MatsCounterTheme.typography.titleTextNormal,
                     color = MatsCounterTheme.colors.primary,
-                    text = remember { mutableStateOf(buildMaterialListWrapper.groupType?.getName() ?: "") }.value,
+                    text = remember { mutableStateOf(buildMaterialListWrapper.titleText ?: "") }.value,
                 )
             }
-            buildMaterialListWrapper.buildMaterialsList.forEachIndexed { index, buildMaterial ->
+            buildMaterialListWrapper.buildMaterialsList.forEach { buildMaterial ->
                 item("group_${index}_item_${buildMaterial.name}") {
                     BuildMaterialView(
                         modifier = Modifier.padding(start = MatsCounterTheme.dimensions.paddingMedium),

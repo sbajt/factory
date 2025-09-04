@@ -26,37 +26,33 @@ class ItemBuildPathScreenMapper {
         allItemList: List<ItemUiState>,
     ): List<BuildMaterialListWrapper> {
         val lowerGroupTypeList = selectedItem.groupType.toLowerGroupsList()
-        val mutableBuildMaterialsList = mutableListOf<BuildMaterialUiState>()
-        mutableBuildMaterialsList.addAll(selectedItem.buildMaterialListWrapper?.buildMaterialsList?.map { it.copy(amount = it.amount * selectedItemAmount) } ?: emptyList())
-        val finalBuildMaterialWrapperList = listOfNotNull(selectedItem.buildMaterialListWrapper?.copy(titleText = "Primary build materials")).toMutableList()
-        lowerGroupTypeList.forEach { groupType ->
-            val buildingMaterialGroupList = mutableListOf<BuildMaterialUiState>()
 
-
-            mutableBuildMaterialsList.forEach { buildMaterial ->
-                val item = allItemList.find { item -> item.name == buildMaterial.name }
-                when (item?.groupType?.compareTo(groupType)) {
-                    -1 -> {
-                        mutableBuildMaterialsList.remove(buildMaterial)
-                        item.buildMaterialListWrapper?.buildMaterialsList?.forEach {
-                            mutableBuildMaterialsList.add(it.copy(amount = it.amount * buildMaterial.amount))
-                        }
-                    }
-                    0, 1 -> {
-                        val existingBuildMaterial = mutableBuildMaterialsList.find { it.name == item.name }
-                        if(existingBuildMaterial == null) {
-                            buildingMaterialGroupList.add(buildMaterial)
-                            mutableBuildMaterialsList.remove(buildMaterial)
-                            val copy = buildMaterial.copy(amount = buildMaterial.amount * selectedItemAmount)
-                            mutableBuildMaterialsList.add(copy)
-                        } else {
-
-                            existingBuildMaterial.copy(amount = existingBuildMaterial.amount * buildMaterial.amount)
-                        }
-                    }
-                }
+        val finalBuildMaterialWrapperList: MutableList<BuildMaterialListWrapper> = if (selectedItem.buildMaterialListWrapper != null
+            && selectedItem.buildMaterialListWrapper.buildMaterialsList.any { buildMaterial ->
+                allItemList.find { it.name == buildMaterial.name }?.groupType == selectedItem.groupType
             }
-
+        ) {
+            mutableListOf(
+                selectedItem.buildMaterialListWrapper.copy(
+                    titleText = "Item build materials",
+                    groupType = selectedItem.groupType,
+                    buildMaterialsList = selectedItem.buildMaterialListWrapper.buildMaterialsList.map {
+                        it.copy(amount = it.amount * selectedItemAmount)
+                    }
+                )
+            )
+        } else {
+            mutableListOf()
+        }
+        lowerGroupTypeList.forEach { groupType ->
+            val buildingMaterialGroupList = getBuildMaterialsListForGroup(
+                groupType = groupType,
+                previousBuildingMaterialList = if(finalBuildMaterialWrapperList.isEmpty()) {
+                    emptyList()
+                } else {
+                    finalBuildMaterialWrapperList.last().buildMaterialsList
+                }
+            )
             finalBuildMaterialWrapperList.add(
                 BuildMaterialListWrapper(
                     titleText = groupType.getName(),
@@ -65,7 +61,39 @@ class ItemBuildPathScreenMapper {
             )
 
         }
-        return finalBuildMaterialWrapperList
+        return finalBuildMaterialWrapperList.toList()
+    }
+
+    private fun getBuildMaterialsListForGroup(
+        groupType: ItemGroupType,
+        previousBuildingMaterialList : List<BuildMaterialUiState>,
+    ): List<BuildMaterialUiState> {
+        val groupBuildMaterialList = emptyList<BuildMaterialUiState>()
+        //            mutableBuildMaterialsList.forEach { buildMaterial ->
+//                val item = allItemList.find { item -> item.name == buildMaterial.name }
+//                when (item?.groupType?.compareTo(groupType)) {
+//                    -1 -> {
+//                        mutableBuildMaterialsList.remove(buildMaterial)
+//                        item.buildMaterialListWrapper?.buildMaterialsList?.forEach {
+//                            mutableBuildMaterialsList.add(it.copy(amount = it.amount * buildMaterial.amount))
+//                        }
+//                    }
+//                    0, 1 -> {
+//                        val existingBuildMaterial = mutableBuildMaterialsList.find { it.name == item.name }
+//                        if(existingBuildMaterial == null) {
+//                            buildingMaterialGroupList.add(buildMaterial)
+//                            mutableBuildMaterialsList.remove(buildMaterial)
+//                            val copy = buildMaterial.copy(amount = buildMaterial.amount * selectedItemAmount)
+//                            mutableBuildMaterialsList.add(copy)
+//                        } else {
+//
+//                            existingBuildMaterial.copy(amount = existingBuildMaterial.amount * buildMaterial.amount)
+//                        }
+//                    }
+//                }
+//            }
+//
+        return groupBuildMaterialList
     }
 
     companion object {

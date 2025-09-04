@@ -25,7 +25,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.compose.ui.tooling.preview.PreviewParameter
-import androidx.compose.ui.unit.dp
 import com.sbajt.matscounter.ui.composables.previewProviders.ItemListUiStateProvider
 import com.sbajt.matscounter.ui.composables.views.ItemView
 import com.sbajt.matscounter.ui.mappers.getName
@@ -105,8 +104,8 @@ private fun ContentScreen(
             }
             LazyVerticalGrid(
                 modifier = Modifier.fillMaxSize(),
-                columns = GridCells.Adaptive(minSize = 100.dp),
-                contentPadding = PaddingValues(vertical = 18.dp),
+                columns = GridCells.Adaptive(minSize = MatsCounterTheme.dimensions.gridCell),
+                contentPadding = PaddingValues(vertical = MatsCounterTheme.dimensions.paddingLarge),
                 verticalArrangement = Arrangement.spacedBy(MatsCounterTheme.dimensions.medium),
             ) {
                 items(count = itemUiStatePage.size, key = { index -> "item_$index" }) { index ->
