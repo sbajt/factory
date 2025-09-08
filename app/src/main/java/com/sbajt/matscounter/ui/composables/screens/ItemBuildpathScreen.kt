@@ -19,7 +19,6 @@ import com.sbajt.matscounter.ui.composables.previewProviders.ItemBuildPathUiStat
 import com.sbajt.matscounter.ui.composables.views.Arrow
 import com.sbajt.matscounter.ui.composables.views.BuildMaterialView
 import com.sbajt.matscounter.ui.composables.views.ItemView
-import com.sbajt.matscounter.ui.mappers.getName
 import com.sbajt.matscounter.ui.models.screens.ItemBuildPathScreenUiState
 import com.sbajt.matscounter.ui.theme.MatsCounterTheme
 
@@ -88,7 +87,6 @@ fun ContentScreen(
                     BuildMaterialView(
                         modifier = Modifier.padding(start = MatsCounterTheme.dimensions.paddingMedium),
                         uiState = buildMaterial,
-                        selectedItemAmount = uiState.selectedItemAmount,
                     )
                 }
             }

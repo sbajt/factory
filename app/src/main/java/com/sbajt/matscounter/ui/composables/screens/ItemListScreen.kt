@@ -27,8 +27,8 @@ import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import com.sbajt.matscounter.ui.composables.previewProviders.ItemListUiStateProvider
 import com.sbajt.matscounter.ui.composables.views.ItemView
-import com.sbajt.matscounter.ui.mappers.getName
 import com.sbajt.matscounter.ui.models.ItemGroupType
+import com.sbajt.matscounter.ui.models.getName
 import com.sbajt.matscounter.ui.models.screens.ItemListScreenUiState
 import com.sbajt.matscounter.ui.theme.MatsCounterTheme
 import kotlinx.coroutines.launch
@@ -58,7 +58,8 @@ private fun ContentScreen(
     onItemSelected: OnItemSelected,
     modifier: Modifier = Modifier,
 ) {
-    val groupTypeList = uiState.itemUiStateList.distinctBy { it.groupType }.map { it.groupType } + ItemGroupType.ALL
+    val groupTypeList =
+        uiState.itemUiStateList.distinctBy { it.groupType }.map { it.groupType } + ItemGroupType.ALL
     val scope = rememberCoroutineScope()
     val pagerState = rememberPagerState(pageCount = { groupTypeList.size })
     Column(

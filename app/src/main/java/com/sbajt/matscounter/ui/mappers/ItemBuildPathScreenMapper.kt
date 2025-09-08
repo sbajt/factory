@@ -1,7 +1,9 @@
 package com.sbajt.matscounter.ui.mappers
 
 import com.sbajt.matscounter.ui.models.ItemGroupType
+import com.sbajt.matscounter.ui.models.getName
 import com.sbajt.matscounter.ui.models.screens.ItemBuildPathScreenUiState
+import com.sbajt.matscounter.ui.models.toLowerGroupsList
 import com.sbajt.matscounter.ui.models.views.BuildMaterialListWrapper
 import com.sbajt.matscounter.ui.models.views.BuildMaterialUiState
 import com.sbajt.matscounter.ui.models.views.ItemUiState
@@ -12,7 +14,7 @@ class ItemBuildPathScreenMapper {
         ItemBuildPathScreenUiState.Content(
             selectedItem = selectedItem,
             selectedItemAmount = selectedItemAmount,
-            selectedItemBuildMaterialListWrapperList = createBuildPathList(
+            selectedItemBuildMaterialListWrapperList = createBuildPathWrapperList(
                 selectedItem = selectedItem,
                 selectedItemAmount = selectedItemAmount,
                 itemList = itemUiStateList,
@@ -20,42 +22,40 @@ class ItemBuildPathScreenMapper {
         )
     }
 
-    private fun createBuildPathList(
+    private fun createBuildPathWrapperList(
         selectedItem: ItemUiState,
         selectedItemAmount: Int,
         itemList: List<ItemUiState>,
     ): List<BuildMaterialListWrapper> {
-        val buildMaterialWrapperList = createInitialBuildMaterialWrapperList(
+        val buildMaterialWrapperList = mutableListOf<BuildMaterialListWrapper>()
+
+        selectedItem.groupType.toLowerGroupsList()
+            .forEach { groupType ->
+                buildMaterialWrapperList.add(
+                    createBuildMaterialListWrapper(
+                        groupType = groupType,
+                        selectedItemAmount = selectedItemAmount,
+                        buildMaterialList = selectedItem.buildMaterialListWrapper?.buildMaterialsList
+                            ?: emptyList()
+                    )
+                )
+            }
+
+        return createInitialBuildMaterialWrapperList(
             selectedItem = selectedItem,
             selectedItemAmount = selectedItemAmount,
-            itemList = itemList,
-        )
-        selectedItem.groupType.toLowerGroupsList().forEach { groupType ->
-            updateBuildMaterialWrapperList(
-                buildMaterialWrapperList = buildMaterialWrapperList,
-                groupType = groupType,
-                multiplier = selectedItemAmount,
-                itemList = itemList
-            )
-        }
-
-        return buildMaterialWrapperList.toList()
+        ) + buildMaterialWrapperList
     }
 
     private fun createInitialBuildMaterialWrapperList(
         selectedItem: ItemUiState,
         selectedItemAmount: Int,
-        itemList: List<ItemUiState>,
-    ): MutableList<BuildMaterialListWrapper> = if (
-        selectedItem.buildMaterialListWrapper != null
-        && selectedItem.buildMaterialListWrapper.buildMaterialsList.any { buildMaterial ->
-            itemList.find { it.name == buildMaterial.name }?.groupType == selectedItem.groupType
-        }
-    ) {
+    ): MutableList<BuildMaterialListWrapper> = if (selectedItem.buildMaterialListWrapper != null) {
+        val selectedItemGroupType = selectedItem.groupType
         mutableListOf(
             selectedItem.buildMaterialListWrapper.copy(
-                titleText = "Item build materials",
-                groupType = selectedItem.groupType,
+                titleText = "${selectedItem.name} build materials",
+                groupType = selectedItemGroupType,
                 buildMaterialsList = selectedItem.buildMaterialListWrapper.buildMaterialsList.map {
                     it.copy(amount = it.amount * selectedItemAmount)
                 }
@@ -65,58 +65,53 @@ class ItemBuildPathScreenMapper {
         mutableListOf()
     }
 
-    private fun updateBuildMaterialWrapperList(
-        buildMaterialWrapperList: MutableList<BuildMaterialListWrapper>,
+    private fun createBuildMaterialListWrapper(
         groupType: ItemGroupType,
-        multiplier: Int,
-        itemList: List<ItemUiState>,
-    ) {
-        val previousBuildMaterialList = if (buildMaterialWrapperList.isNotEmpty()) {
-            buildMaterialWrapperList.last().buildMaterialsList
-        } else {
-            emptyList()
-        }
-        val buildMaterialsGroup = mutableListOf<BuildMaterialUiState>()
+        selectedItemAmount: Int,
+        buildMaterialList: List<BuildMaterialUiState>,
+    ) = BuildMaterialListWrapper(
+        titleText = groupType.getName(),
+        groupType = groupType,
+        buildMaterialsList = buildMaterialList.map { it.copy(amount = it.amount * selectedItemAmount) }
+    )
 
-        previousBuildMaterialList.forEach { buildMaterial ->
-            val buildMaterialItem = itemList.find { it.name == buildMaterial.name }
-            if (buildMaterialItem?.groupType == groupType) {
-                buildMaterial.copy(amount = buildMaterial.amount * multiplier)
-            } else {
-                buildMaterialsGroup.remove(buildMaterial)
-                buildMaterialsGroup.addAll(
-                    splitBuildMaterial(
-                        buildMaterial = buildMaterial,
-                        itemList = itemList,
-                        multiplier = multiplier,
-                    )
-                )
+
+    private fun MutableList<BuildMaterialUiState>.updateBuildMaterial(
+        buildMaterial: BuildMaterialUiState?,
+        multiplier: Int,
+    ) {
+        if (buildMaterial != null) {
+            val index = indexOf(buildMaterial)
+            if (index != -1) {
+                this[index] = buildMaterial.copy(amount = buildMaterial.amount * multiplier)
             }
         }
-
-        buildMaterialWrapperList.add(
-            BuildMaterialListWrapper(
-                titleText = groupType.getName(),
-                groupType = groupType,
-                buildMaterialsList = buildMaterialsGroup
-            )
-        )
     }
 
-    private fun splitBuildMaterial(
+    private fun MutableList<BuildMaterialUiState>.splitBuildMaterial(
         buildMaterial: BuildMaterialUiState,
-        itemList: List<ItemUiState>,
+        buildMaterialItem: ItemUiState?,
         multiplier: Int,
-    ): List<BuildMaterialUiState> {
-        val item = itemList.find { it.name == buildMaterial.name }
-        return item?.buildMaterialListWrapper?.buildMaterialsList?.map { buildMaterial ->
-            buildMaterial.copy(amount = buildMaterial.amount * multiplier)
+    ) {
+        if (buildMaterialItem != null) {
+            this.remove(buildMaterial)
+            buildMaterialItem.buildMaterialListWrapper?.buildMaterialsList?.forEach { newBuildMaterial ->
+                val existingMaterial = this.find { it.name == newBuildMaterial.name }
+                if (existingMaterial != null) {
+                    val index = indexOf(existingMaterial)
+                    if (index != -1) {
+                        this[index] = existingMaterial.copy(
+                            amount = newBuildMaterial.amount * multiplier + existingMaterial.amount
+                        )
+                    } else {
+                        this.add(newBuildMaterial.copy(amount = newBuildMaterial.amount * multiplier))
+                    }
+                }
+            }
         }
-            ?: emptyList()
     }
 
     companion object {
-
         class InputData(
             val selectedItem: ItemUiState,
             val selectedItemAmount: Int,
@@ -124,27 +119,3 @@ class ItemBuildPathScreenMapper {
         )
     }
 }
-
-fun ItemGroupType.toLowerGroupType(): ItemGroupType = when (this) {
-    ItemGroupType.TIER1 -> ItemGroupType.BASIC_MATERIAL
-    ItemGroupType.TIER2 -> ItemGroupType.TIER1
-    ItemGroupType.TIER3 -> ItemGroupType.TIER2
-    ItemGroupType.TIER4 -> ItemGroupType.TIER3
-    else -> this
-}
-
-fun ItemGroupType.toLowerGroupsList(): List<ItemGroupType> = when (this) {
-    ItemGroupType.TIER1 -> listOf(ItemGroupType.BASIC_MATERIAL)
-    ItemGroupType.TIER2 -> listOf(ItemGroupType.TIER1, ItemGroupType.BASIC_MATERIAL)
-    ItemGroupType.TIER3 -> listOf(ItemGroupType.TIER2, ItemGroupType.TIER1, ItemGroupType.BASIC_MATERIAL)
-    ItemGroupType.TIER4 -> listOf(ItemGroupType.TIER3, ItemGroupType.TIER2, ItemGroupType.TIER1, ItemGroupType.BASIC_MATERIAL)
-    else -> emptyList()
-}
-
-fun getGroupTypeList(): List<ItemGroupType> = listOf(
-    ItemGroupType.BASIC_MATERIAL,
-    ItemGroupType.TIER1,
-    ItemGroupType.TIER2,
-    ItemGroupType.TIER3,
-    ItemGroupType.TIER4
-)

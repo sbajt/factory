@@ -1,8 +1,8 @@
 package com.sbajt.matscounter.ui.composables.previewProviders
 
 import androidx.compose.ui.tooling.preview.PreviewParameterProvider
-import com.sbajt.matscounter.ui.mappers.getGroupTypeList
 import com.sbajt.matscounter.ui.models.ItemGroupType
+import com.sbajt.matscounter.ui.models.getBuildGroupTypeList
 import com.sbajt.matscounter.ui.models.views.ItemUiState
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.toPersistentList
@@ -48,7 +48,7 @@ class ItemUiStateProvider : PreviewParameterProvider<ItemUiState> {
         fun mockItemUiStateList(
             count: Int = 10
         ): ImmutableList<ItemUiState> = List(count) {
-            val groupType = getGroupTypeList().random()
+            val groupType = getBuildGroupTypeList().random()
             ItemUiState(
                 name = "Item ${it + 1}",
                 imageName = null,

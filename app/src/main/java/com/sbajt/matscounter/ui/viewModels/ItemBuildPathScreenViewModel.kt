@@ -16,6 +16,7 @@ import org.koin.core.component.inject
 
 class ItemBuildPathScreenViewModel : ViewModel(), KoinComponent {
 
+    private val TAG = this::class.java.name
     private val mapper: ItemBuildPathScreenMapper by inject()
     private val useCase: ItemUiStateListUseCase by inject()
 
@@ -35,7 +36,7 @@ class ItemBuildPathScreenViewModel : ViewModel(), KoinComponent {
         )
     }
         .catch {
-            Log.e(ItemBuildPathScreenViewModel::class.java.name,"${it.stackTrace}")
+            it.stackTrace.forEach { Log.e(TAG, it.toString(),) }
             ItemBuildPathScreenUiState.Empty
         }
         .stateIn(

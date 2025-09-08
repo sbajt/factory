@@ -2,9 +2,9 @@ package com.sbajt.matscounter.ui.useCases
 
 import com.sbajt.matscounter.domain.models.ItemDomain
 import com.sbajt.matscounter.domain.repositories.ItemsRepository
-import com.sbajt.matscounter.ui.mappers.getName
 import com.sbajt.matscounter.ui.mappers.toGroupType
-import com.sbajt.matscounter.ui.mappers.toLowerGroupType
+import com.sbajt.matscounter.ui.models.getName
+import com.sbajt.matscounter.ui.models.toLowerGroupType
 import com.sbajt.matscounter.ui.models.views.BuildMaterialListWrapper
 import com.sbajt.matscounter.ui.models.views.BuildMaterialUiState
 import com.sbajt.matscounter.ui.models.views.ItemUiState

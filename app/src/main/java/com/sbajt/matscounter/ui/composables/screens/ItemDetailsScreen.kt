@@ -14,7 +14,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import com.sbajt.matscounter.ui.composables.previewProviders.ItemDetailsUiStateProvider
@@ -81,14 +80,11 @@ private fun ContentScreen(
                 modifier = Modifier.padding(bottom = MatsCounterTheme.dimensions.paddingSmall),
                 style = MatsCounterTheme.typography.titleTextNormal,
                 color = MatsCounterTheme.colors.primary,
-                text = remember { mutableStateOf(this?.titleText ?:"") }.value,
+                text = remember { mutableStateOf(this?.titleText ?: "") }.value,
             )
             if (this?.buildMaterialsList?.isNotEmpty() == true) {
-                buildMaterialsList.forEach { state ->
-                    BuildMaterialView(
-                        uiState = state,
-                        selectedItemAmount = uiState.selectedItemAmount,
-                    )
+                buildMaterialsList.forEach {
+                    BuildMaterialView(uiState = it)
                 }
             }
         }

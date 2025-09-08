@@ -10,8 +10,11 @@ class ItemDetailsScreenMapper {
         ItemDetailsScreenUiState.Content(
             selectedItem = selectedItem,
             selectedItemAmount = selectedItemAmount,
-            selectedItemBuildMaterialListWrapper = inputData.selectedItem?.buildMaterialListWrapper?.copy(
+            selectedItemBuildMaterialListWrapper = selectedItem?.buildMaterialListWrapper?.copy(
                 titleText = "Build materials",
+                buildMaterialsList = selectedItem.buildMaterialListWrapper.buildMaterialsList.map {
+                    it.copy(amount = it.amount * selectedItemAmount)
+                }
             )
         )
     }
@@ -26,14 +29,6 @@ class ItemDetailsScreenMapper {
 
 fun Int?.toGroupType(): ItemGroupType = ItemGroupType.entries
     .firstOrNull { it.ordinal == this } ?: ItemGroupType.NONE
-
-fun ItemGroupType?.getName() = this
-    ?.takeIf { it != ItemGroupType.NONE }
-    ?.name
-    ?.lowercase()
-    ?.replaceFirstChar { it.uppercase() }
-    ?.replace("_", " ")
-    ?: ""
 
 
 

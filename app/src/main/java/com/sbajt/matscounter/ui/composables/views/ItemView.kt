@@ -20,8 +20,8 @@ import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import coil3.compose.AsyncImage
 import com.sbajt.matscounter.ui.composables.previewProviders.ItemUiStateProvider
-import com.sbajt.matscounter.ui.mappers.getName
 import com.sbajt.matscounter.ui.models.ItemGroupType
+import com.sbajt.matscounter.ui.models.getName
 import com.sbajt.matscounter.ui.models.views.ItemUiState
 import com.sbajt.matscounter.ui.theme.MatsCounterTheme
 import com.sbajt.matscounter.ui.theme.shape

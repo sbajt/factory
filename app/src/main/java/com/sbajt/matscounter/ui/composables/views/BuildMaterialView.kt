@@ -21,7 +21,6 @@ import com.sbajt.matscounter.ui.theme.MatsCounterTheme
 @Composable
 fun BuildMaterialView(
     uiState: BuildMaterialUiState,
-    selectedItemAmount: Int,
     modifier: Modifier = Modifier
 ) {
     Row(
@@ -30,19 +29,18 @@ fun BuildMaterialView(
             .background(MatsCounterTheme.colors.background)
             .padding(all = MatsCounterTheme.dimensions.paddingSmall),
     ) {
-        val materialName by remember { mutableStateOf(uiState.name) }
+        val name by remember { mutableStateOf(uiState.name) }
         Text(
             style = MatsCounterTheme.typography.bodyTextNormal,
             color = MatsCounterTheme.colors.primary,
-            text = materialName
+            text = name
         )
-        val amount by remember { mutableIntStateOf(uiState.amount) }
         Text(
             modifier = Modifier.weight(1f),
             textAlign = TextAlign.End,
             style = MatsCounterTheme.typography.bodyTextNormal,
             color = MatsCounterTheme.colors.primary,
-            text = (amount * selectedItemAmount).toString()
+            text = uiState.amount.toString()
         )
     }
 }
@@ -53,7 +51,6 @@ fun previewBuildMaterialView(@PreviewParameter(BuildMaterialUiStateProvider::cla
     MatsCounterTheme {
         BuildMaterialView(
             uiState = uiState,
-            selectedItemAmount = 1,
         )
     }
 }
