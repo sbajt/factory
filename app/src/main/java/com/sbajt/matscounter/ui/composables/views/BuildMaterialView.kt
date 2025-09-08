@@ -29,7 +29,7 @@ fun BuildMaterialView(
             .background(MatsCounterTheme.colors.background)
             .padding(all = MatsCounterTheme.dimensions.paddingSmall),
     ) {
-        val name by remember { mutableStateOf(uiState.name) }
+        val name by remember { mutableStateOf(uiState.name ?: "") }
         Text(
             style = MatsCounterTheme.typography.bodyTextNormal,
             color = MatsCounterTheme.colors.primary,

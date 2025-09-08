@@ -36,15 +36,15 @@ fun ItemGroupType?.isGreater(other: ItemGroupType) = when (this) {
     else -> false
 }
 
-fun ItemGroupType.toLowerGroupType(): ItemGroupType = when (this) {
+fun ItemGroupType?.toLowerGroupType(): ItemGroupType = when (this) {
     ItemGroupType.TIER1 -> ItemGroupType.BASIC_MATERIAL
     ItemGroupType.TIER2 -> ItemGroupType.TIER1
     ItemGroupType.TIER3 -> ItemGroupType.TIER2
     ItemGroupType.TIER4 -> ItemGroupType.TIER3
-    else -> this
+    else -> ItemGroupType.NONE
 }
 
-fun ItemGroupType.toLowerGroupsList(): List<ItemGroupType> = when (this) {
+fun ItemGroupType?.toLowerGroupsList(): List<ItemGroupType> = when (this) {
     ItemGroupType.TIER1 -> listOf(ItemGroupType.BASIC_MATERIAL)
     ItemGroupType.TIER2 -> listOf(ItemGroupType.TIER1, ItemGroupType.BASIC_MATERIAL)
     ItemGroupType.TIER3 -> listOf(

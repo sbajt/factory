@@ -53,7 +53,10 @@ fun ContentScreen(
             modifier = modifier
                 .background(MatsCounterTheme.colors.background)
                 .fillMaxWidth(),
-            horizontalArrangement = Arrangement.spacedBy(MatsCounterTheme.dimensions.paddingMedium, Alignment.CenterHorizontally),
+            horizontalArrangement = Arrangement.spacedBy(
+                MatsCounterTheme.dimensions.paddingMedium,
+                Alignment.CenterHorizontally
+            ),
             verticalAlignment = Alignment.CenterVertically
         ) {
             ItemView(
@@ -71,7 +74,7 @@ fun ContentScreen(
 
     if (uiState.selectedItemBuildMaterialListWrapperList.isNotEmpty()) {
         uiState.selectedItemBuildMaterialListWrapperList.forEachIndexed { index, buildMaterialListWrapper ->
-            item("arrow_$index") {
+            item {
                 Arrow()
             }
             item("group_$index") {
@@ -79,7 +82,7 @@ fun ContentScreen(
                     modifier = Modifier.padding(bottom = MatsCounterTheme.dimensions.paddingSmall),
                     style = MatsCounterTheme.typography.titleTextNormal,
                     color = MatsCounterTheme.colors.primary,
-                    text = remember { mutableStateOf(buildMaterialListWrapper.titleText ?: "") }.value,
+                    text = buildMaterialListWrapper.titleText ?: ""
                 )
             }
             buildMaterialListWrapper.buildMaterialsList.forEach { buildMaterial ->
