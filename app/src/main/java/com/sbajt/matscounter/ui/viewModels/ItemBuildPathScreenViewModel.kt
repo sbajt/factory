@@ -23,7 +23,7 @@ class ItemBuildPathScreenViewModel : ViewModel(), KoinComponent {
     val uiState = combine(
         stateSubject,
         useCase()
-    ) { state, itemUiStateList ->
+    ) { state, itemList ->
         if (state.selectedItem == null) {
             throw IllegalStateException("Selected item is null")
         }
@@ -31,12 +31,12 @@ class ItemBuildPathScreenViewModel : ViewModel(), KoinComponent {
             ItemBuildPathScreenMapper.Companion.InputData(
                 selectedItem = state.selectedItem,
                 selectedItemAmount = state.selectedItemAmount,
-                itemUiStateList = itemUiStateList,
+                itemList = itemList,
             )
         )
     }
         .catch {
-            it.stackTrace.forEach { Log.e(TAG, it.toString(),) }
+            it.stackTrace.forEach { Log.e(TAG, it.toString()) }
             ItemBuildPathScreenUiState.Empty
         }
         .stateIn(
