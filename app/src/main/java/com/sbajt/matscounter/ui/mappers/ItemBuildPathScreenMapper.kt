@@ -10,7 +10,7 @@ import com.sbajt.matscounter.ui.models.views.ItemUiState
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 
-class ItemBuildPathScreenMapper: KoinComponent {
+class ItemBuildPathScreenMapper : KoinComponent {
 
     private val matsWrapperMapper: BuildMaterialListWrapperMapper by inject()
 
@@ -21,7 +21,6 @@ class ItemBuildPathScreenMapper: KoinComponent {
             selectedItemBuildMaterialListWrapperList = createBuildPathWrapperList(
                 selectedItem = selectedItem,
                 selectedItemAmount = selectedItemAmount,
-                itemList = itemUiStateList,
             )
         )
     }
@@ -29,17 +28,17 @@ class ItemBuildPathScreenMapper: KoinComponent {
     private fun createBuildPathWrapperList(
         selectedItem: ItemUiState,
         selectedItemAmount: Int,
-        itemList: List<ItemUiState>,
     ): List<BuildMaterialListWrapper> {
         val buildMaterialWrapperList = mutableListOf<BuildMaterialListWrapper>()
 
         selectedItem.groupType.toLowerGroupsList().forEach { groupType ->
             buildMaterialWrapperList.add(
-                createBuildMaterialListWrapper(
-                    groupType = groupType,
-                    selectedItemAmount = selectedItemAmount,
-                    initialBuildMaterialList = selectedItem.buildMaterialListWrapper?.buildMaterialsList
-                        ?: emptyList(),
+                matsWrapperMapper.mapToUiState(
+                    inputData = BuildMaterialListWrapperMapper.Companion.InputData(
+                        titleText = groupType.getName(),
+                        groupType = groupType,
+                        buildMaterialsList = buildMaterialWrapperList.flatMap { it.buildMaterialsList }
+                    )
                 )
             )
         }
@@ -54,34 +53,21 @@ class ItemBuildPathScreenMapper: KoinComponent {
         selectedItem: ItemUiState,
         selectedItemAmount: Int,
     ): MutableList<BuildMaterialListWrapper> = if (selectedItem.buildMaterialListWrapper != null) {
-        val selectedItemGroupType = selectedItem.groupType
+        val selectedItemGroup = selectedItem.groupType
         mutableListOf(
-            selectedItem.buildMaterialListWrapper.copy(
-                titleText = "${selectedItem.name} build materials",
-                groupType = selectedItemGroupType,
-                buildMaterialsList = selectedItem.buildMaterialListWrapper.buildMaterialsList.map {
-                    it.copy(amount = it.amount * selectedItemAmount)
-                }
+            matsWrapperMapper.mapToUiState(
+                inputData = BuildMaterialListWrapperMapper.Companion.InputData(
+                    titleText = "${selectedItem.name} build materials",
+                    groupType = selectedItemGroup,
+                    buildMaterialsList = selectedItem.buildMaterialListWrapper.buildMaterialsList.map {
+                        it.copy(amount = it.amount * selectedItemAmount)
+                    }
+                )
             )
         )
     } else {
         mutableListOf()
     }
-
-    private fun createBuildMaterialListWrapper(
-        groupType: ItemGroupType,
-        selectedItemAmount: Int,
-        initialBuildMaterialList: List<BuildMaterialUiState>,
-    ): BuildMaterialListWrapper {
-        return BuildMaterialListWrapper(
-            titleText = groupType.getName(),
-            groupType = groupType,
-            buildMaterialsList = initialBuildMaterialList.map { buildMaterial ->
-                buildMaterial.copy(amount = buildMaterial.amount * selectedItemAmount)
-            }
-        )
-    }
-
 
     private fun MutableList<BuildMaterialUiState>.updateBuildMaterial(
         buildMaterial: BuildMaterialUiState?,
