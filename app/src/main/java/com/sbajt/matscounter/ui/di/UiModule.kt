@@ -1,6 +1,7 @@
 package com.sbajt.matscounter.ui.di
 
 import com.sbajt.matscounter.domain.di.domainModule
+import com.sbajt.matscounter.ui.mappers.BuildMaterialListWrapperMapper
 import com.sbajt.matscounter.ui.mappers.ItemBuildPathScreenMapper
 import com.sbajt.matscounter.ui.mappers.ItemDetailsScreenMapper
 import com.sbajt.matscounter.ui.useCases.ItemUiStateListUseCase
@@ -23,6 +24,7 @@ val uiModule = module {
 
     factoryOf(::ItemDetailsScreenMapper)
     factoryOf(::ItemBuildPathScreenMapper)
+    factoryOf(::BuildMaterialListWrapperMapper)
 
     viewModel { ItemListViewModel() }
     viewModel { ItemDetailsScreenViewModel() }

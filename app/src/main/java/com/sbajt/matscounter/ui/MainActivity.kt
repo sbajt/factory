@@ -2,6 +2,7 @@ package com.sbajt.matscounter.ui
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity
+import androidx.activity.OnBackPressedCallback
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.asPaddingValues
@@ -27,6 +28,15 @@ class MainActivity : ComponentActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        onBackPressedDispatcher.addCallback(this, object : OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+                launchOnBackPressed()
+                if (isEnabled) {
+                    isEnabled = false
+                    onBackPressedDispatcher.onBackPressed()
+                }
+            }
+        })
         lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
                 setContent {
@@ -37,20 +47,21 @@ class MainActivity : ComponentActivity() {
     }
 
     override fun onBackPressed() {
+        launchOnBackPressed()
+        super.onBackPressed()
+    }
+
+    private fun launchOnBackPressed() {
         lifecycleScope.launch {
             if (::navController.isInitialized) {
                 val destination = navController.currentBackStackEntry?.destination
                 if (destination?.route == ItemDetails.ROUTE) {
                     stateSubject.update {
-                        it.copy(
-                            selectedItem = null,
-                            selectedItemAmount = 0,
-                        )
+                        it.copy(selectedItem = null, selectedItemAmount = 0)
                     }
                 }
             }
         }
-        super.onBackPressed()
     }
 
     @Composable

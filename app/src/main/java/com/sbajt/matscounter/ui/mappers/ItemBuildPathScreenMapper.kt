@@ -7,8 +7,12 @@ import com.sbajt.matscounter.ui.models.toLowerGroupsList
 import com.sbajt.matscounter.ui.models.views.BuildMaterialListWrapper
 import com.sbajt.matscounter.ui.models.views.BuildMaterialUiState
 import com.sbajt.matscounter.ui.models.views.ItemUiState
+import org.koin.core.component.KoinComponent
+import org.koin.core.component.inject
 
-class ItemBuildPathScreenMapper {
+class ItemBuildPathScreenMapper: KoinComponent {
+
+    private val matsWrapperMapper: BuildMaterialListWrapperMapper by inject()
 
     fun mapToUiState(inputData: InputData): ItemBuildPathScreenUiState = with(inputData) {
         ItemBuildPathScreenUiState.Content(
