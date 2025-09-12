@@ -8,7 +8,7 @@ import com.sbajt.matscounter.ui.models.views.ItemUiState
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 
-class ItemBuildPathScreenMapper() : KoinComponent {
+class BuildPathScreenMapper() : KoinComponent {
 
     private val matsWrapperMapper: BuildMaterialListWrapperMapper by inject()
 
@@ -36,9 +36,7 @@ class ItemBuildPathScreenMapper() : KoinComponent {
                     inputData = BuildMaterialListWrapperMapper.Companion.InputData(
                         titleText = "${selectedItem.name} build materials",
                         groupType = selectedItem.groupType,
-                        initialBuildMaterialsList = selectedItem.buildMaterialListWrapper.buildMaterialsList.map {
-                            it.copy(amount = it.amount * selectedItemAmount)
-                        },
+                        initialBuildMaterialSet = selectedItem.buildMaterialListWrapper.buildMaterialsList.toHashSet(),
                         itemList = itemList,
                         initialItemAmount = selectedItemAmount,
                     )
@@ -52,7 +50,7 @@ class ItemBuildPathScreenMapper() : KoinComponent {
                     inputData = BuildMaterialListWrapperMapper.Companion.InputData(
                         titleText = groupType.getName(),
                         groupType = groupType,
-                        initialBuildMaterialsList = selectedItem.buildMaterialListWrapper?.buildMaterialsList ?: listOf(),
+                        initialBuildMaterialSet = selectedItem.buildMaterialListWrapper?.buildMaterialsList?.toHashSet() ?: hashSetOf(),
                         itemList = itemList,
                         initialItemAmount = selectedItemAmount,
                     )

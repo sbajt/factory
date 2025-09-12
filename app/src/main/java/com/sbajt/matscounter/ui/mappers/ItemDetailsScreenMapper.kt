@@ -1,7 +1,6 @@
 package com.sbajt.matscounter.ui.mappers
 
 import com.sbajt.matscounter.ui.models.screens.ItemDetailsScreenUiState
-import com.sbajt.matscounter.ui.models.toLowerGroupType
 import com.sbajt.matscounter.ui.models.views.ItemUiState
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
@@ -19,7 +18,7 @@ class ItemDetailsScreenMapper : KoinComponent {
                     titleText = "Build materials",
                     groupType = selectedItem?.groupType,
                     initialItemAmount = selectedItemAmount,
-                    initialBuildMaterialsList = selectedItem?.buildMaterialListWrapper?.buildMaterialsList ?: emptyList(),
+                    initialBuildMaterialSet = selectedItem?.buildMaterialListWrapper?.buildMaterialsList?.toHashSet() ?: hashSetOf(),
                     itemList = inputData.itemList,
                 )
             )
