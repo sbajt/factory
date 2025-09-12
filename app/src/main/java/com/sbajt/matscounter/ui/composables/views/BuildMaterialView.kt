@@ -27,7 +27,7 @@ fun BuildMaterialView(
         modifier = modifier
             .fillMaxWidth()
             .background(MatsCounterTheme.colors.background)
-            .padding(all = MatsCounterTheme.dimensions.paddingSmall),
+            .padding(all = MatsCounterTheme.dimensions.small),
     ) {
         val name by remember { mutableStateOf(uiState.name ?: "") }
         Text(

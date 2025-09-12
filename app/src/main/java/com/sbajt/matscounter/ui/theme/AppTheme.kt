@@ -79,16 +79,13 @@ val shape = ShapeScheme(
 
 val size = SizeScheme(
     small = 8.dp,
-    medium = 12.dp,
+    medium = 8.dp,
     large = 16.dp,
     iconSmall = 28.dp,
     icon = 80.dp,
     tab = 2.dp,
-    gridCell = 100.dp,
+    gridCell = 90.dp,
     contentPadding = 16.dp,
-    paddingSmall = 4.dp,
-    paddingMedium = 8.dp,
-    paddingLarge = 16.dp,
 )
 
 @Composable

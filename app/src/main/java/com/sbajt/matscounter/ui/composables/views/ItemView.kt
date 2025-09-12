@@ -34,24 +34,21 @@ fun ItemView(
     modifier: Modifier = Modifier
 ) {
     Column(
-        modifier = modifier
-            .clickable(
-                onClick = { onItemSelected(uiState?.name, uiState?.groupType) }
-            )
-            .padding(MatsCounterTheme.dimensions.paddingMedium),
+        modifier = modifier.clickable(
+            onClick = { onItemSelected(uiState?.name, uiState?.groupType) }
+        ),
         horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.SpaceBetween
     ) {
         AsyncImage(
             modifier = Modifier
-                .padding(size.paddingSmall)
+                .padding(size.small)
                 .clip(shape = shape.container)
                 .size(size.icon),
             model = "file:///android_asset/images/${uiState?.imageName}.jpg",
             contentDescription = remember { uiState?.name ?: "Item unknown" },
             placeholder = painterResource(id = R.drawable.ic_menu_gallery),
             error = painterResource(id = R.drawable.ic_dialog_alert),
-            contentScale = ContentScale.FillHeight,
+            contentScale = ContentScale.FillHeight
         )
         Text(
             textAlign = TextAlign.Center,

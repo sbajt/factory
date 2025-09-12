@@ -106,8 +106,7 @@ private fun ContentScreen(
             LazyVerticalGrid(
                 modifier = Modifier.fillMaxSize(),
                 columns = GridCells.Adaptive(minSize = MatsCounterTheme.dimensions.gridCell),
-                contentPadding = PaddingValues(vertical = MatsCounterTheme.dimensions.paddingLarge),
-                verticalArrangement = Arrangement.spacedBy(MatsCounterTheme.dimensions.medium),
+                verticalArrangement = Arrangement.spacedBy(MatsCounterTheme.dimensions.small),
             ) {
                 items(count = itemUiStatePage.size, key = { index -> "item_$index" }) { index ->
                     ItemView(

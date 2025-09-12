@@ -53,13 +53,13 @@ fun ContentScreen(
                 .background(MatsCounterTheme.colors.background)
                 .fillMaxWidth(),
             horizontalArrangement = Arrangement.spacedBy(
-                MatsCounterTheme.dimensions.paddingMedium,
+                MatsCounterTheme.dimensions.medium,
                 Alignment.CenterHorizontally
             ),
             verticalAlignment = Alignment.CenterVertically
         ) {
             ItemView(
-                modifier = Modifier.padding(vertical = MatsCounterTheme.dimensions.paddingMedium),
+                modifier = Modifier.padding(vertical = MatsCounterTheme.dimensions.medium),
                 uiState = uiState.selectedItem,
                 onItemSelected = { _, _ -> },
             )
@@ -78,7 +78,7 @@ fun ContentScreen(
             }
             item("group_$index") {
                 Text(
-                    modifier = Modifier.padding(bottom = MatsCounterTheme.dimensions.paddingSmall),
+                    modifier = Modifier.padding(bottom = MatsCounterTheme.dimensions.small),
                     style = MatsCounterTheme.typography.titleTextNormal,
                     color = MatsCounterTheme.colors.primary,
                     text = buildMaterialListWrapper.titleText ?: ""
@@ -87,7 +87,7 @@ fun ContentScreen(
             buildMaterialListWrapper.buildMaterialsList.forEach { buildMaterial ->
                 item("group_${index}_item_${buildMaterial.name}") {
                     BuildMaterialView(
-                        modifier = Modifier.padding(start = MatsCounterTheme.dimensions.paddingMedium),
+                        modifier = Modifier.padding(start = MatsCounterTheme.dimensions.medium),
                         uiState = buildMaterial,
                     )
                 }
@@ -102,6 +102,6 @@ fun MainScreenPreview(
     @PreviewParameter(ItemBuildPathUiStateProvider::class) uiState: ItemBuildPathScreenUiState
 ) {
     MatsCounterTheme {
-        ItemBuildPathScreen(uiState = uiState,)
+        ItemBuildPathScreen(uiState = uiState)
     }
 }

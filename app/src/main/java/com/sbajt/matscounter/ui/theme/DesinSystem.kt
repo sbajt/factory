@@ -40,9 +40,6 @@ data class SizeScheme(
     val tab: Dp,
     val gridCell: Dp,
     val contentPadding: Dp,
-    val paddingSmall: Dp,
-    val paddingMedium: Dp,
-    val paddingLarge: Dp,
 )
 
 data class ShapeScheme(
@@ -88,9 +85,6 @@ val localSizeScheme = staticCompositionLocalOf {
         tab = Dp.Unspecified,
         gridCell = Dp.Unspecified,
         contentPadding = Dp.Unspecified,
-        paddingSmall = Dp.Unspecified,
-        paddingMedium = Dp.Unspecified,
-        paddingLarge = Dp.Unspecified,
     )
 }
 

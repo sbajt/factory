@@ -32,7 +32,7 @@ fun InputSection(
         verticalAlignment = Alignment.CenterVertically
     ) {
         Text(
-            modifier = Modifier.padding(MatsCounterTheme.dimensions.paddingMedium),
+            modifier = Modifier.padding(MatsCounterTheme.dimensions.medium),
             text = "Item count:",
             style = MatsCounterTheme.typography.bodyTextLarge,
             color = MatsCounterTheme.colors.primary,

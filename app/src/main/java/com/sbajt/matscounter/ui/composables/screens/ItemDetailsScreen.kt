@@ -57,15 +57,15 @@ private fun ContentScreen(
         .background(MatsCounterTheme.colors.background)
         .padding(MatsCounterTheme.dimensions.contentPadding)
 ) {
-    Row(modifier = Modifier.padding(MatsCounterTheme.dimensions.paddingMedium)) {
+    Row(modifier = Modifier.padding(MatsCounterTheme.dimensions.medium)) {
         ItemView(
-            modifier = Modifier.padding(MatsCounterTheme.dimensions.paddingMedium),
+            modifier = Modifier.padding(MatsCounterTheme.dimensions.medium),
             uiState = uiState.selectedItem,
             onItemSelected = { _, _ -> },
         )
         if (uiState.selectedItem != null && uiState.selectedItemAmount > 0) {
             InputSection(
-                modifier = Modifier.padding(MatsCounterTheme.dimensions.paddingMedium),
+                modifier = Modifier.padding(MatsCounterTheme.dimensions.medium),
                 uiState = InputSectionUiState(
                     selectedItem = uiState.selectedItem,
                     itemCount = uiState.selectedItemAmount,
@@ -77,7 +77,7 @@ private fun ContentScreen(
     if (uiState.selectedItem?.groupType != ItemGroupType.BASIC_MATERIAL) {
         with(uiState.selectedItemBuildMaterialListWrapper) {
             Text(
-                modifier = Modifier.padding(bottom = MatsCounterTheme.dimensions.paddingSmall),
+                modifier = Modifier.padding(bottom = MatsCounterTheme.dimensions.small),
                 style = MatsCounterTheme.typography.titleTextNormal,
                 color = MatsCounterTheme.colors.primary,
                 text = remember { mutableStateOf(this?.titleText ?: "") }.value,
@@ -85,7 +85,7 @@ private fun ContentScreen(
             if (this?.buildMaterialsList?.isNotEmpty() == true) {
                 buildMaterialsList.forEach {
                     BuildMaterialView(
-                        modifier = Modifier.padding(start = MatsCounterTheme.dimensions.paddingMedium),
+                        modifier = Modifier.padding(start = MatsCounterTheme.dimensions.medium),
                         uiState = it
                     )
                 }
@@ -95,7 +95,7 @@ private fun ContentScreen(
             Box(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(top = MatsCounterTheme.dimensions.paddingLarge)
+                    .padding(top = MatsCounterTheme.dimensions.large)
             ) {
                 Button(
                     modifier = Modifier.padding(MatsCounterTheme.dimensions.contentPadding),
