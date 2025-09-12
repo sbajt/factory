@@ -19,11 +19,8 @@ class ItemDetailsScreenMapper : KoinComponent {
                     titleText = "Build materials",
                     groupType = selectedItem?.groupType,
                     initialItemAmount = selectedItemAmount,
-                    initialBuildMaterialsList = selectedItem?.buildMaterialListWrapper?.buildMaterialsList?.map {
-                        it.copy(amount = it.amount * selectedItemAmount)
-                    } ?: emptyList(),
+                    initialBuildMaterialsList = selectedItem?.buildMaterialListWrapper?.buildMaterialsList ?: emptyList(),
                     itemList = inputData.itemList,
-                    hasOnlyInitialBuildMaterials = true,
                 )
             )
         )

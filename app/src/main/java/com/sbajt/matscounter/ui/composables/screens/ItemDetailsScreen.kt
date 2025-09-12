@@ -84,7 +84,10 @@ private fun ContentScreen(
             )
             if (this?.buildMaterialsList?.isNotEmpty() == true) {
                 buildMaterialsList.forEach {
-                    BuildMaterialView(uiState = it)
+                    BuildMaterialView(
+                        modifier = Modifier.padding(start = MatsCounterTheme.dimensions.paddingMedium),
+                        uiState = it
+                    )
                 }
             }
         }

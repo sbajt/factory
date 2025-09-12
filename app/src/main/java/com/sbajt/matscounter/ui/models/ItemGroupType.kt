@@ -50,7 +50,11 @@ fun ItemGroupType?.toLowerGroupType(): ItemGroupType = when (this) {
 fun ItemGroupType?.toLowerGroupsList(): List<ItemGroupType> = when (this) {
     ItemGroupType.TIER1 -> listOf(ItemGroupType.BASIC_MATERIAL)
     ItemGroupType.TIER2 -> listOf(ItemGroupType.TIER1, ItemGroupType.BASIC_MATERIAL)
-    ItemGroupType.TIER3 -> listOf(ItemGroupType.TIER2, ItemGroupType.TIER1, ItemGroupType.BASIC_MATERIAL)
+    ItemGroupType.TIER3 -> listOf(
+        ItemGroupType.TIER2,
+        ItemGroupType.TIER1,
+        ItemGroupType.BASIC_MATERIAL
+    )
 
     ItemGroupType.TIER4 -> listOf(
         ItemGroupType.TIER3,

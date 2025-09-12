@@ -30,6 +30,21 @@ class ItemBuildPathScreenMapper() : KoinComponent {
         itemList: List<ItemUiState>,
     ): List<BuildMaterialListWrapper> {
         val buildMaterialWrapperList = mutableListOf<BuildMaterialListWrapper>()
+        selectedItem.buildMaterialListWrapper?.buildMaterialsList?.let {
+            buildMaterialWrapperList.add(
+                matsWrapperMapper.mapToUiState(
+                    inputData = BuildMaterialListWrapperMapper.Companion.InputData(
+                        titleText = "${selectedItem.name} build materials",
+                        groupType = selectedItem.groupType,
+                        initialBuildMaterialsList = selectedItem.buildMaterialListWrapper.buildMaterialsList.map {
+                            it.copy(amount = it.amount * selectedItemAmount)
+                        },
+                        itemList = itemList,
+                        initialItemAmount = selectedItemAmount,
+                    )
+                )
+            )
+        }
 
         selectedItem.groupType.toLowerGroupsList().forEach { groupType ->
             buildMaterialWrapperList.add(
@@ -45,34 +60,7 @@ class ItemBuildPathScreenMapper() : KoinComponent {
             )
         }
 
-        return createInitialBuildMaterialWrapperList(
-            selectedItem = selectedItem,
-            selectedItemAmount = selectedItemAmount,
-            itemList = itemList,
-        ) + buildMaterialWrapperList
-    }
-
-    private fun createInitialBuildMaterialWrapperList(
-        selectedItem: ItemUiState,
-        selectedItemAmount: Int,
-        itemList: List<ItemUiState>,
-    ): MutableList<BuildMaterialListWrapper> = if (selectedItem.buildMaterialListWrapper != null) {
-        mutableListOf(
-            matsWrapperMapper.mapToUiState(
-                inputData = BuildMaterialListWrapperMapper.Companion.InputData(
-                    titleText = "${selectedItem.name} build materials",
-                    groupType =  selectedItem.groupType,
-                    initialBuildMaterialsList = selectedItem.buildMaterialListWrapper.buildMaterialsList.map {
-                        it.copy(amount = it.amount * selectedItemAmount)
-                    },
-                    itemList = itemList,
-                    initialItemAmount = selectedItemAmount,
-                    hasOnlyInitialBuildMaterials = true
-                )
-            )
-        )
-    } else {
-        mutableListOf()
+        return buildMaterialWrapperList
     }
 
     companion object {

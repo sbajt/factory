@@ -12,17 +12,13 @@ class BuildMaterialListWrapperMapper {
     fun mapToUiState(inputData: InputData): BuildMaterialListWrapper {
 
         val buildMaterialList = mutableListOf<BuildMaterialUiState>()
-        if (inputData.hasOnlyInitialBuildMaterials) {
-            buildMaterialList.addAll(inputData.initialBuildMaterialsList)
-        } else {
-            buildMaterialList.addAll(inputData.initialBuildMaterialsList)
-            buildMaterialList.processList(
-                buildMaterialList = inputData.initialBuildMaterialsList,
-                multiplier = inputData.initialItemAmount,
-                groupType = inputData.groupType,
-                itemList = inputData.itemList,
-            )
-        }
+        processList(
+            outputBuildMaterialList = buildMaterialList,
+            buildMaterialList = inputData.initialBuildMaterialsList,
+            initialItemAmount = inputData.initialItemAmount,
+            groupType = inputData.groupType,
+            itemList = inputData.itemList,
+        )
         return BuildMaterialListWrapper(
             titleText = inputData.titleText,
             groupType = inputData.groupType,
@@ -30,9 +26,10 @@ class BuildMaterialListWrapperMapper {
         )
     }
 
-    private fun MutableList<BuildMaterialUiState>.processList(
+    private fun processList(
+        outputBuildMaterialList: MutableList<BuildMaterialUiState>,
         buildMaterialList: List<BuildMaterialUiState>,
-        multiplier: Int,
+        initialItemAmount: Int,
         groupType: ItemGroupType? = null,
         itemList: List<ItemUiState> = emptyList(),
     ) {
@@ -40,12 +37,13 @@ class BuildMaterialListWrapperMapper {
             val buildMaterialItem = itemList.find { it.name == buildMaterial.name }
             buildMaterialItem?.let {
                 if (buildMaterialItem.groupType.isValid(groupType = groupType)) {
-                    addOrUpdateBuildMaterial(buildMaterial = buildMaterial, multiplier = multiplier)
+                    addOrUpdateBuildMaterial(outputBuildMaterialList = outputBuildMaterialList, buildMaterial = buildMaterial, multiplier = initialItemAmount)
                 } else {
-                    this.remove(buildMaterial)
+                    outputBuildMaterialList.remove(buildMaterial)
                     processList(
+                        outputBuildMaterialList = outputBuildMaterialList,
                         buildMaterialList = buildMaterialItem.buildMaterialListWrapper?.buildMaterialsList ?: emptyList(),
-                        multiplier = buildMaterial.amount * multiplier,
+                        initialItemAmount = buildMaterial.amount * initialItemAmount,
                         groupType = groupType.toLowerGroupType(),
                         itemList = itemList,
                     )
@@ -57,17 +55,17 @@ class BuildMaterialListWrapperMapper {
     private fun ItemGroupType?.isValid(groupType: ItemGroupType?) = this == groupType
         || this?.toLowerGroupsList()?.contains(this) == true
 
-    private fun MutableList<BuildMaterialUiState>.addOrUpdateBuildMaterial(
+    private fun addOrUpdateBuildMaterial(
+        outputBuildMaterialList: MutableList<BuildMaterialUiState>,
         buildMaterial: BuildMaterialUiState,
         multiplier: Int,
     ) {
-        val buildMaterialItem = this.find { it.name == buildMaterial.name }
-        buildMaterialItem?.let {
-            val existingBuildMaterial = this.find { it.name == buildMaterial.name }
-            existingBuildMaterial?.let {
-                this.remove(existingBuildMaterial)
-                this.add(buildMaterial.copy(amount = existingBuildMaterial.amount + multiplier * buildMaterial.amount))
-            }
+        val existingBuildMaterial = outputBuildMaterialList.find { it.name == buildMaterial.name }
+        if (existingBuildMaterial != null) {
+            outputBuildMaterialList.remove(existingBuildMaterial)
+            outputBuildMaterialList.add(buildMaterial.copy(amount = existingBuildMaterial.amount + multiplier * buildMaterial.amount))
+        } else {
+            outputBuildMaterialList.add(buildMaterial.copy(amount = multiplier * buildMaterial.amount))
         }
     }
 
@@ -79,7 +77,6 @@ class BuildMaterialListWrapperMapper {
             val initialBuildMaterialsList: List<BuildMaterialUiState>,
             val initialItemAmount: Int,
             val itemList: List<ItemUiState>,
-            val hasOnlyInitialBuildMaterials: Boolean = false,
         )
     }
 }
