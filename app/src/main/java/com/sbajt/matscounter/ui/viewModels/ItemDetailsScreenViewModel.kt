@@ -7,8 +7,10 @@ import com.sbajt.matscounter.ui.mappers.ItemDetailsScreenMapper
 import com.sbajt.matscounter.ui.models.screens.ItemDetailsScreenUiState
 import com.sbajt.matscounter.ui.navigation.ItemBuildComponents
 import com.sbajt.matscounter.ui.stateSubject
+import com.sbajt.matscounter.ui.useCases.ItemUiStateListUseCase
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.catch
+import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
@@ -18,13 +20,17 @@ import org.koin.core.component.inject
 class ItemDetailsScreenViewModel : ViewModel(), KoinComponent {
 
     private val mapper: ItemDetailsScreenMapper by inject()
+    private val useCase: ItemUiStateListUseCase by inject()
 
-    val uiState = stateSubject
-        .map { state ->
+    val uiState = combine(
+        stateSubject,
+        useCase(),
+    ){ state, itemList ->
             mapper.mapToUiState(
                 ItemDetailsScreenMapper.Companion.InputData(
                     selectedItem = state.selectedItem,
                     selectedItemAmount = state.selectedItemAmount,
+                    itemList = itemList,
                 )
             )
         }

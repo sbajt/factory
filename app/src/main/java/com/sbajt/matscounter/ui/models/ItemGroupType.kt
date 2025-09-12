@@ -20,6 +20,9 @@ enum class ItemGroupType {
     TIER4;
 }
 
+fun Int?.toGroupType(): ItemGroupType = ItemGroupType.entries
+    .firstOrNull { it.ordinal == this } ?: ItemGroupType.NONE
+
 fun ItemGroupType?.getName() = this
     ?.takeIf { it != ItemGroupType.NONE }
     ?.name

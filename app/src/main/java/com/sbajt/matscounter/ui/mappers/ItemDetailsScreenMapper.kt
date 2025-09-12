@@ -1,6 +1,5 @@
 package com.sbajt.matscounter.ui.mappers
 
-import com.sbajt.matscounter.ui.models.ItemGroupType
 import com.sbajt.matscounter.ui.models.screens.ItemDetailsScreenUiState
 import com.sbajt.matscounter.ui.models.toLowerGroupType
 import com.sbajt.matscounter.ui.models.views.ItemUiState
@@ -18,12 +17,13 @@ class ItemDetailsScreenMapper : KoinComponent {
             selectedItemBuildMaterialListWrapper = matsWrapperMapper.mapToUiState(
                 inputData = BuildMaterialListWrapperMapper.Companion.InputData(
                     titleText = "Build materials",
-                    groupType = selectedItem?.groupType?.toLowerGroupType(),
+                    groupType = selectedItem?.groupType,
                     initialItemAmount = selectedItemAmount,
                     initialBuildMaterialsList = selectedItem?.buildMaterialListWrapper?.buildMaterialsList?.map {
                         it.copy(amount = it.amount * selectedItemAmount)
                     } ?: emptyList(),
-                    itemList = emptyList(),
+                    itemList = inputData.itemList,
+                    hasOnlyInitialBuildMaterials = true,
                 )
             )
         )
@@ -34,12 +34,10 @@ class ItemDetailsScreenMapper : KoinComponent {
         data class InputData(
             val selectedItem: ItemUiState?,
             val selectedItemAmount: Int,
+            val itemList: List<ItemUiState>,
         )
     }
 }
-
-fun Int?.toGroupType(): ItemGroupType = ItemGroupType.entries
-    .firstOrNull { it.ordinal == this } ?: ItemGroupType.NONE
 
 
 

@@ -57,17 +57,17 @@ class ItemBuildPathScreenMapper() : KoinComponent {
         selectedItemAmount: Int,
         itemList: List<ItemUiState>,
     ): MutableList<BuildMaterialListWrapper> = if (selectedItem.buildMaterialListWrapper != null) {
-        val selectedItemGroup = selectedItem.groupType
         mutableListOf(
             matsWrapperMapper.mapToUiState(
                 inputData = BuildMaterialListWrapperMapper.Companion.InputData(
                     titleText = "${selectedItem.name} build materials",
-                    groupType = selectedItemGroup,
+                    groupType =  selectedItem.groupType,
                     initialBuildMaterialsList = selectedItem.buildMaterialListWrapper.buildMaterialsList.map {
                         it.copy(amount = it.amount * selectedItemAmount)
                     },
                     itemList = itemList,
                     initialItemAmount = selectedItemAmount,
+                    hasOnlyInitialBuildMaterials = true
                 )
             )
         )
