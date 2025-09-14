@@ -17,7 +17,7 @@ import androidx.compose.ui.tooling.preview.PreviewParameter
 import com.chargemap.compose.numberpicker.NumberPicker
 import com.sbajt.matscounter.ui.composables.previewProviders.InputSectionUiStateProvider
 import com.sbajt.matscounter.ui.models.views.InputSectionUiState
-import com.sbajt.matscounter.ui.theme.MatsCounterTheme
+import com.sbajt.matscounter.ui.theme.FactoryTheme
 
 @Composable
 fun InputSection(
@@ -27,22 +27,22 @@ fun InputSection(
 ) {
     Row(
         modifier = modifier
-            .background(MatsCounterTheme.colors.background)
-            .padding(MatsCounterTheme.dimensions.contentPadding),
+            .background(FactoryTheme.colors.background)
+            .padding(FactoryTheme.dimensions.contentPadding),
         verticalAlignment = Alignment.CenterVertically
     ) {
         Text(
-            modifier = Modifier.padding(MatsCounterTheme.dimensions.medium),
+            modifier = Modifier.padding(FactoryTheme.dimensions.medium),
             text = "Item count:",
-            style = MatsCounterTheme.typography.bodyTextLarge,
-            color = MatsCounterTheme.colors.primary,
+            style = FactoryTheme.typography.bodyTextLarge,
+            color = FactoryTheme.colors.primary,
         )
         var pickerValue by remember { mutableIntStateOf(uiState.itemCount) }
         NumberPicker(
             value = pickerValue,
             range = 1..9,
-            textStyle = TextStyle(color = MatsCounterTheme.colors.primary),
-            dividersColor = MatsCounterTheme.colors.secondary,
+            textStyle = TextStyle(color = FactoryTheme.colors.primary),
+            dividersColor = FactoryTheme.colors.secondary,
             onValueChange = {
                 pickerValue = it
                 onCountChange.invoke(it)
@@ -54,7 +54,7 @@ fun InputSection(
 @PreviewLightDark
 @Composable
 private fun InputSectionPreview(@PreviewParameter(InputSectionUiStateProvider::class) uiState: InputSectionUiState) {
-    MatsCounterTheme {
+    FactoryTheme {
         InputSection(
             uiState = uiState,
         )

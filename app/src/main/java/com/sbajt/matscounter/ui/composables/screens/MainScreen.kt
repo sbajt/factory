@@ -13,7 +13,7 @@ import com.sbajt.matscounter.ui.models.ItemGroupType
 import com.sbajt.matscounter.ui.navigation.ItemBuildComponents
 import com.sbajt.matscounter.ui.navigation.ItemDetails
 import com.sbajt.matscounter.ui.navigation.ItemList
-import com.sbajt.matscounter.ui.theme.MatsCounterTheme
+import com.sbajt.matscounter.ui.theme.FactoryTheme
 import com.sbajt.matscounter.ui.viewModels.ItemBuildPathScreenViewModel
 import com.sbajt.matscounter.ui.viewModels.ItemDetailsScreenViewModel
 import com.sbajt.matscounter.ui.viewModels.ItemListViewModel
@@ -29,7 +29,7 @@ fun MainScreen(
 ) {
     Surface {
         NavHost(
-            modifier = modifier.background(MatsCounterTheme.colors.background),
+            modifier = modifier.background(FactoryTheme.colors.background),
             navController = navController,
             startDestination = ItemList
         ) {

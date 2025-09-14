@@ -18,7 +18,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import com.sbajt.matscounter.ui.composables.screens.MainScreen
 import com.sbajt.matscounter.ui.navigation.ItemDetails
-import com.sbajt.matscounter.ui.theme.MatsCounterTheme
+import com.sbajt.matscounter.ui.theme.FactoryTheme
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
@@ -68,7 +68,7 @@ class MainActivity : ComponentActivity() {
     private fun setupContent(
         modifier: Modifier = Modifier
     ) {
-        MatsCounterTheme {
+        FactoryTheme {
             val topPadding = WindowInsets.statusBars.asPaddingValues()
             val bottomPadding = WindowInsets.navigationBars.asPaddingValues()
             navController = rememberNavController()

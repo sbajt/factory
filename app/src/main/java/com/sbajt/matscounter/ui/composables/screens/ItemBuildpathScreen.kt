@@ -22,7 +22,7 @@ import com.sbajt.matscounter.ui.composables.views.Arrow
 import com.sbajt.matscounter.ui.composables.views.BuildMaterialView
 import com.sbajt.matscounter.ui.composables.views.ItemView
 import com.sbajt.matscounter.ui.models.screens.ItemBuildPathScreenUiState
-import com.sbajt.matscounter.ui.theme.MatsCounterTheme
+import com.sbajt.matscounter.ui.theme.FactoryTheme
 
 @Composable
 fun ItemBuildPathScreen(
@@ -49,11 +49,11 @@ fun ContentScreen(
     LazyColumn(
         modifier = Modifier
             .fillMaxSize()
-            .background(MatsCounterTheme.colors.background)
-            .padding(MatsCounterTheme.dimensions.contentPadding)
+            .background(FactoryTheme.colors.background)
+            .padding(FactoryTheme.dimensions.contentPadding)
             .fadingEdge(
-                color = MatsCounterTheme.colors.fadingEdge,
-                length = MatsCounterTheme.dimensions.fadingEdge,
+                color = FactoryTheme.colors.fadingEdge,
+                length = FactoryTheme.dimensions.fadingEdge,
                 scrollableState = lazyListState,
             ),
         state = lazyListState
@@ -61,22 +61,22 @@ fun ContentScreen(
         item {
             Row(
                 modifier = modifier
-                    .background(MatsCounterTheme.colors.background)
+                    .background(FactoryTheme.colors.background)
                     .fillMaxWidth(),
                 horizontalArrangement = Arrangement.spacedBy(
-                    MatsCounterTheme.dimensions.medium,
+                    FactoryTheme.dimensions.medium,
                     Alignment.CenterHorizontally
                 ),
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 ItemView(
-                    modifier = Modifier.padding(vertical = MatsCounterTheme.dimensions.medium),
+                    modifier = Modifier.padding(vertical = FactoryTheme.dimensions.medium),
                     uiState = uiState.selectedItem,
                     onItemSelected = { _, _ -> },
                 )
                 Text(
-                    style = MatsCounterTheme.typography.subtitleTextNormal,
-                    color = MatsCounterTheme.colors.primary,
+                    style = FactoryTheme.typography.subtitleTextNormal,
+                    color = FactoryTheme.colors.primary,
                     text = remember { "x${uiState.selectedItemAmount}" },
                 )
             }
@@ -89,16 +89,16 @@ fun ContentScreen(
                 }
                 item("group_$index") {
                     Text(
-                        modifier = Modifier.padding(bottom = MatsCounterTheme.dimensions.small),
-                        style = MatsCounterTheme.typography.titleTextNormal,
-                        color = MatsCounterTheme.colors.primary,
+                        modifier = Modifier.padding(bottom = FactoryTheme.dimensions.small),
+                        style = FactoryTheme.typography.titleTextNormal,
+                        color = FactoryTheme.colors.primary,
                         text = buildMaterialListWrapper.titleText ?: ""
                     )
                 }
                 buildMaterialListWrapper.buildMaterialsList.forEach { buildMaterial ->
                     item("group_${index}_item_${buildMaterial.name}") {
                         BuildMaterialView(
-                            modifier = Modifier.padding(start = MatsCounterTheme.dimensions.medium),
+                            modifier = Modifier.padding(start = FactoryTheme.dimensions.medium),
                             uiState = buildMaterial,
                         )
                     }
@@ -108,7 +108,7 @@ fun ContentScreen(
         item(key = "bottom_space") {
             Spacer(
                 modifier = Modifier
-                    .height(MatsCounterTheme.dimensions.large)
+                    .height(FactoryTheme.dimensions.large)
             )
         }
     }
@@ -119,7 +119,7 @@ fun ContentScreen(
 fun MainScreenPreview(
     @PreviewParameter(ItemBuildPathUiStateProvider::class) uiState: ItemBuildPathScreenUiState
 ) {
-    MatsCounterTheme {
+    FactoryTheme {
         ItemBuildPathScreen(uiState = uiState)
     }
 }

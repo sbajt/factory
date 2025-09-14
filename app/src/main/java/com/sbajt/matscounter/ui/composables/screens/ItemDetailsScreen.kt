@@ -23,7 +23,7 @@ import com.sbajt.matscounter.ui.composables.views.ItemView
 import com.sbajt.matscounter.ui.models.ItemGroupType
 import com.sbajt.matscounter.ui.models.screens.ItemDetailsScreenUiState
 import com.sbajt.matscounter.ui.models.views.InputSectionUiState
-import com.sbajt.matscounter.ui.theme.MatsCounterTheme
+import com.sbajt.matscounter.ui.theme.FactoryTheme
 
 @Composable
 fun ItemDetailsScreen(
@@ -54,18 +54,18 @@ private fun ContentScreen(
 ) = Column(
     modifier = modifier
         .fillMaxSize()
-        .background(MatsCounterTheme.colors.background)
-        .padding(MatsCounterTheme.dimensions.contentPadding)
+        .background(FactoryTheme.colors.background)
+        .padding(FactoryTheme.dimensions.contentPadding)
 ) {
-    Row(modifier = Modifier.padding(MatsCounterTheme.dimensions.medium)) {
+    Row(modifier = Modifier.padding(FactoryTheme.dimensions.medium)) {
         ItemView(
-            modifier = Modifier.padding(MatsCounterTheme.dimensions.medium),
+            modifier = Modifier.padding(FactoryTheme.dimensions.medium),
             uiState = uiState.selectedItem,
             onItemSelected = { _, _ -> },
         )
         if (uiState.selectedItem != null && uiState.selectedItemAmount > 0) {
             InputSection(
-                modifier = Modifier.padding(MatsCounterTheme.dimensions.medium),
+                modifier = Modifier.padding(FactoryTheme.dimensions.medium),
                 uiState = InputSectionUiState(
                     selectedItem = uiState.selectedItem,
                     itemCount = uiState.selectedItemAmount,
@@ -77,15 +77,15 @@ private fun ContentScreen(
     if (uiState.selectedItem?.groupType != ItemGroupType.BASIC_MATERIAL) {
         with(uiState.selectedItemBuildMaterialListWrapper) {
             Text(
-                modifier = Modifier.padding(bottom = MatsCounterTheme.dimensions.small),
-                style = MatsCounterTheme.typography.titleTextNormal,
-                color = MatsCounterTheme.colors.primary,
+                modifier = Modifier.padding(bottom = FactoryTheme.dimensions.small),
+                style = FactoryTheme.typography.titleTextNormal,
+                color = FactoryTheme.colors.primary,
                 text = remember { mutableStateOf(this?.titleText ?: "") }.value,
             )
             if (this?.buildMaterialsList?.isNotEmpty() == true) {
                 buildMaterialsList.forEach {
                     BuildMaterialView(
-                        modifier = Modifier.padding(start = MatsCounterTheme.dimensions.medium),
+                        modifier = Modifier.padding(start = FactoryTheme.dimensions.medium),
                         uiState = it
                     )
                 }
@@ -95,21 +95,21 @@ private fun ContentScreen(
             Box(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(top = MatsCounterTheme.dimensions.large)
+                    .padding(top = FactoryTheme.dimensions.large)
             ) {
                 Button(
-                    modifier = Modifier.padding(MatsCounterTheme.dimensions.contentPadding),
+                    modifier = Modifier.padding(FactoryTheme.dimensions.contentPadding),
                     colors = ButtonDefaults.buttonColors(
-                        containerColor = MatsCounterTheme.colors.secondary
+                        containerColor = FactoryTheme.colors.secondary
                     ),
-                    shape = MatsCounterTheme.shape.button,
+                    shape = FactoryTheme.shape.button,
                     onClick = {
                         onNavigate.invoke()
                     }
                 ) {
                     Text(
-                        style = MatsCounterTheme.typography.subtitleTextNormal,
-                        color = MatsCounterTheme.colors.primary,
+                        style = FactoryTheme.typography.subtitleTextNormal,
+                        color = FactoryTheme.colors.primary,
                         text = "Show build path"
                     )
                 }
@@ -121,7 +121,7 @@ private fun ContentScreen(
 @PreviewLightDark
 @Composable
 fun DescriptionSectionPreview(@PreviewParameter(ItemDetailsUiStateProvider::class) uiState: ItemDetailsScreenUiState) {
-    MatsCounterTheme {
+    FactoryTheme {
         ItemDetailsScreen(
             uiState = uiState,
             onCountChange = {},

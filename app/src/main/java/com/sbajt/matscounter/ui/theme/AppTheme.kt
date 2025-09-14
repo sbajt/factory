@@ -92,7 +92,7 @@ val size = SizeScheme(
 )
 
 @Composable
-fun MatsCounterTheme(
+fun FactoryTheme(
     darkTheme: Boolean = isSystemInDarkTheme(),
     content: @Composable () -> Unit
 ) {
@@ -109,7 +109,7 @@ fun MatsCounterTheme(
     )
 }
 
-object MatsCounterTheme {
+object FactoryTheme {
     val colors: ColorScheme
         @Composable get() = localColorScheme.current
 

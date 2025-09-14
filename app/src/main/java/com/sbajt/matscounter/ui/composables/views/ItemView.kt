@@ -3,7 +3,6 @@ package com.sbajt.matscounter.ui.composables.views
 import android.R
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
@@ -23,7 +22,7 @@ import com.sbajt.matscounter.ui.composables.previewProviders.ItemUiStateProvider
 import com.sbajt.matscounter.ui.models.ItemGroupType
 import com.sbajt.matscounter.ui.models.getName
 import com.sbajt.matscounter.ui.models.views.ItemUiState
-import com.sbajt.matscounter.ui.theme.MatsCounterTheme
+import com.sbajt.matscounter.ui.theme.FactoryTheme
 import com.sbajt.matscounter.ui.theme.shape
 import com.sbajt.matscounter.ui.theme.size
 
@@ -52,16 +51,16 @@ fun ItemView(
         )
         Text(
             textAlign = TextAlign.Center,
-            style = MatsCounterTheme.typography.titleTextNormal,
-            color = MatsCounterTheme.colors.primary,
+            style = FactoryTheme.typography.titleTextNormal,
+            color = FactoryTheme.colors.primary,
             text = remember(key1 = uiState?.name.toString()) {
                 uiState?.name ?: ""
             }
         )
         Text(
             textAlign = TextAlign.Center,
-            style = MatsCounterTheme.typography.subtitleTextNormal,
-            color = MatsCounterTheme.colors.primary,
+            style = FactoryTheme.typography.subtitleTextNormal,
+            color = FactoryTheme.colors.primary,
             text = remember(key1 = uiState?.groupType.getName()) {
                 uiState?.groupType?.getName() ?: ""
             }
@@ -72,9 +71,9 @@ fun ItemView(
 @PreviewLightDark
 @Composable
 fun ItemViewPreview(@PreviewParameter(ItemUiStateProvider::class) uiState: ItemUiState) {
-    MatsCounterTheme {
+    FactoryTheme {
         ItemView(
-            modifier = Modifier.background(MatsCounterTheme.colors.background),
+            modifier = Modifier.background(FactoryTheme.colors.background),
             uiState = uiState,
             onItemSelected = { _, _ -> },
         )

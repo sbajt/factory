@@ -7,7 +7,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
@@ -16,7 +15,7 @@ import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import com.sbajt.matscounter.ui.composables.previewProviders.BuildMaterialUiStateProvider
 import com.sbajt.matscounter.ui.models.views.BuildMaterialUiState
-import com.sbajt.matscounter.ui.theme.MatsCounterTheme
+import com.sbajt.matscounter.ui.theme.FactoryTheme
 
 @Composable
 fun BuildMaterialView(
@@ -26,20 +25,20 @@ fun BuildMaterialView(
     Row(
         modifier = modifier
             .fillMaxWidth()
-            .background(MatsCounterTheme.colors.background)
-            .padding(all = MatsCounterTheme.dimensions.small),
+            .background(FactoryTheme.colors.background)
+            .padding(all = FactoryTheme.dimensions.small),
     ) {
         val name by remember { mutableStateOf(uiState.name ?: "") }
         Text(
-            style = MatsCounterTheme.typography.bodyTextNormal,
-            color = MatsCounterTheme.colors.primary,
+            style = FactoryTheme.typography.bodyTextNormal,
+            color = FactoryTheme.colors.primary,
             text = name
         )
         Text(
             modifier = Modifier.weight(1f),
             textAlign = TextAlign.End,
-            style = MatsCounterTheme.typography.bodyTextNormal,
-            color = MatsCounterTheme.colors.primary,
+            style = FactoryTheme.typography.bodyTextNormal,
+            color = FactoryTheme.colors.primary,
             text = uiState.amount.toString()
         )
     }
@@ -48,7 +47,7 @@ fun BuildMaterialView(
 @PreviewLightDark
 @Composable
 fun previewBuildMaterialView(@PreviewParameter(BuildMaterialUiStateProvider::class) uiState: BuildMaterialUiState) {
-    MatsCounterTheme {
+    FactoryTheme {
         BuildMaterialView(
             uiState = uiState,
         )
