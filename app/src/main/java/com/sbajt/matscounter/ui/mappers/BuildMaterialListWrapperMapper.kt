@@ -44,7 +44,7 @@ class BuildMaterialListWrapperMapper {
                         outputBuildMaterialSet = outputBuildMaterialSet,
                         buildMaterialList = buildMaterialItem.buildMaterialListWrapper?.buildMaterialsList?.toHashSet() ?: hashSetOf(),
                         multiplier = buildMaterial.amount * multiplier,
-                        groupType = groupType.toLowerGroupType(),
+                        groupType = groupType,
                         itemList = itemList,
                     )
                 }
