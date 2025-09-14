@@ -22,7 +22,8 @@ val darkColors = ColorScheme(
     background = Black,
     onBackground = Black1,
     surface = Black1,
-    onSurface = Black2
+    onSurface = Black2,
+    fadingEdge = Black,
 )
 
 val lightColors = ColorScheme(
@@ -36,7 +37,8 @@ val lightColors = ColorScheme(
     background = White,
     onBackground = White1,
     surface = White1,
-    onSurface = White2
+    onSurface = White2,
+    fadingEdge = White
 )
 
 val typography = TypographyScheme(
@@ -86,6 +88,7 @@ val size = SizeScheme(
     tab = 2.dp,
     gridCell = 90.dp,
     contentPadding = 16.dp,
+    fadingEdge = 20.dp,
 )
 
 @Composable

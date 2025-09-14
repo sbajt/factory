@@ -3,21 +3,18 @@ package com.sbajt.matscounter.ui.composables.screens
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.drawWithContent
-import androidx.compose.ui.geometry.Offset
-import androidx.compose.ui.graphics.BlendMode
-import androidx.compose.ui.graphics.Brush
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import com.sbajt.matscounter.ui.composables.previewProviders.ItemBuildPathUiStateProvider
@@ -48,31 +45,18 @@ fun ContentScreen(
     uiState: ItemBuildPathScreenUiState.Content,
     modifier: Modifier,
 ) {
-    val backGroundColor = MatsCounterTheme.colors.background
-    val fadingEdgeHeight = MatsCounterTheme.dimensions.medium
+    val lazyListState = rememberLazyListState()
     LazyColumn(
         modifier = Modifier
             .fillMaxSize()
             .background(MatsCounterTheme.colors.background)
             .padding(MatsCounterTheme.dimensions.contentPadding)
-            .graphicsLayer { alpha = 0.99f }
-            .drawWithContent {
-                val colors = listOf(backGroundColor, Color.Transparent)
-                drawContent()
-                //draw top fading edge
-                drawRect(
-                    size = size.copy(height = fadingEdgeHeight.toPx()),
-                    brush = Brush.verticalGradient(colors),
-                    blendMode = BlendMode.DstIn
-                )
-                //draw bottom fading edge
-                drawRect(
-                    topLeft = Offset(x= 0f, size.copy(height = fadingEdgeHeight.toPx()).height),
-                    size = size.copy(height = fadingEdgeHeight.toPx()),
-                    brush = Brush.verticalGradient(colors.reversed()),
-                    blendMode = BlendMode.DstIn
-                )
-            },
+            .fadingEdge(
+                color = MatsCounterTheme.colors.fadingEdge,
+                length = MatsCounterTheme.dimensions.fadingEdge,
+                scrollableState = lazyListState,
+            ),
+        state = lazyListState
     ) {
         item {
             Row(
@@ -120,6 +104,12 @@ fun ContentScreen(
                     }
                 }
             }
+        }
+        item(key = "bottom_space") {
+            Spacer(
+                modifier = Modifier
+                    .height(MatsCounterTheme.dimensions.large)
+            )
         }
     }
 }
