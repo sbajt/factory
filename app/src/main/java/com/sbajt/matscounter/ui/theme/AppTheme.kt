@@ -11,26 +11,11 @@ import androidx.compose.ui.unit.TextUnitType
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 
-val darkColors = ColorScheme(
-    primary = White,
-    onPrimary = White1,
-    secondary = Gray,
-    onSecondary = Gray1,
-    accent = Accent,
-    error = Error,
-    onError = Error1,
-    background = Black,
-    onBackground = Black1,
-    surface = Black1,
-    onSurface = Black2,
-    fadingEdge = Black,
-)
-
 val lightColors = ColorScheme(
     primary = Black,
     onPrimary = Black1,
-    secondary = Gray1,
-    onSecondary = Gray2,
+    secondary = Gray,
+    onSecondary = Gray1,
     accent = Accent,
     error = Error,
     onError = Error1,
@@ -39,6 +24,18 @@ val lightColors = ColorScheme(
     surface = White1,
     onSurface = White2,
     fadingEdge = White
+)
+
+val darkColors = lightColors.copy(
+    primary = White,
+    onPrimary = White1,
+    secondary = Purple,
+    onSecondary = Purple1,
+    background = Black,
+    onBackground = Black1,
+    surface = Black1,
+    onSurface = Black2,
+    fadingEdge = Black,
 )
 
 val typography = TypographyScheme(

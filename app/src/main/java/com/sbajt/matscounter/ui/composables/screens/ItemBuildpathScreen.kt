@@ -1,9 +1,10 @@
 package com.sbajt.matscounter.ui.composables.screens
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.gestures.Orientation
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -17,6 +18,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.compose.ui.tooling.preview.PreviewParameter
+import com.sbajt.matscounter.ui.composables.fadingEdge
 import com.sbajt.matscounter.ui.composables.previewProviders.ItemBuildPathUiStateProvider
 import com.sbajt.matscounter.ui.composables.views.Arrow
 import com.sbajt.matscounter.ui.composables.views.BuildMaterialView
@@ -50,11 +52,11 @@ fun ContentScreen(
         modifier = Modifier
             .fillMaxSize()
             .background(FactoryTheme.colors.background)
-            .padding(FactoryTheme.dimensions.contentPadding)
             .fadingEdge(
                 color = FactoryTheme.colors.fadingEdge,
                 length = FactoryTheme.dimensions.fadingEdge,
                 scrollableState = lazyListState,
+                orientation = Orientation.Vertical
             ),
         state = lazyListState
     ) {
@@ -89,7 +91,11 @@ fun ContentScreen(
                 }
                 item("group_$index") {
                     Text(
-                        modifier = Modifier.padding(bottom = FactoryTheme.dimensions.small),
+                        modifier = Modifier.padding(
+                            bottom = FactoryTheme.dimensions.small,
+                            start = FactoryTheme.dimensions.contentPadding,
+                            end = FactoryTheme.dimensions.contentPadding
+                        ),
                         style = FactoryTheme.typography.titleTextNormal,
                         color = FactoryTheme.colors.primary,
                         text = buildMaterialListWrapper.titleText ?: ""
@@ -98,7 +104,7 @@ fun ContentScreen(
                 buildMaterialListWrapper.buildMaterialsList.forEach { buildMaterial ->
                     item("group_${index}_item_${buildMaterial.name}") {
                         BuildMaterialView(
-                            modifier = Modifier.padding(start = FactoryTheme.dimensions.medium),
+                            modifier = Modifier.padding(horizontal = FactoryTheme.dimensions.contentPadding),
                             uiState = buildMaterial,
                         )
                     }
@@ -106,9 +112,10 @@ fun ContentScreen(
             }
         }
         item(key = "bottom_space") {
-            Spacer(
+            Box(
                 modifier = Modifier
                     .height(FactoryTheme.dimensions.large)
+                    .background(FactoryTheme.colors.background)
             )
         }
     }
