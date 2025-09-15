@@ -12,6 +12,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material3.Text
+import androidx.compose.material3.VerticalDivider
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
@@ -48,75 +49,78 @@ fun ContentScreen(
     modifier: Modifier,
 ) {
     val lazyListState = rememberLazyListState()
-    LazyColumn(
-        modifier = Modifier
-            .fillMaxSize()
-            .background(FactoryTheme.colors.background)
-            .fadingEdge(
-                color = FactoryTheme.colors.fadingEdge,
-                length = FactoryTheme.dimensions.fadingEdge,
-                scrollableState = lazyListState,
-                orientation = Orientation.Vertical
-            ),
-        state = lazyListState
+    Box(
+        modifier = modifier.fadingEdge(
+            orientation = Orientation.Vertical,
+            color = FactoryTheme.colors.fadingEdge,
+            length = FactoryTheme.dimensions.fadingEdge,
+            scrollableState = lazyListState,
+        )
     ) {
-        item {
-            Row(
-                modifier = modifier
-                    .background(FactoryTheme.colors.background)
-                    .fillMaxWidth(),
-                horizontalArrangement = Arrangement.spacedBy(
-                    FactoryTheme.dimensions.medium,
-                    Alignment.CenterHorizontally
-                ),
-                verticalAlignment = Alignment.CenterVertically
-            ) {
-                ItemView(
-                    modifier = Modifier.padding(vertical = FactoryTheme.dimensions.medium),
-                    uiState = uiState.selectedItem,
-                    onItemSelected = { _, _ -> },
-                )
-                Text(
-                    style = FactoryTheme.typography.subtitleTextNormal,
-                    color = FactoryTheme.colors.primary,
-                    text = remember { "x${uiState.selectedItemAmount}" },
-                )
-            }
-        }
-
-        if (uiState.selectedItemBuildMaterialListWrapperList.isNotEmpty()) {
-            uiState.selectedItemBuildMaterialListWrapperList.forEachIndexed { index, buildMaterialListWrapper ->
-                item {
-                    Arrow()
-                }
-                item("group_$index") {
+        LazyColumn(
+            modifier = Modifier
+                .fillMaxSize()
+                .background(FactoryTheme.colors.background),
+            state = lazyListState,
+        ) {
+            item {
+                Row(
+                    modifier = modifier
+                        .background(FactoryTheme.colors.background)
+                        .fillMaxWidth(),
+                    horizontalArrangement = Arrangement.spacedBy(
+                        FactoryTheme.dimensions.medium,
+                        Alignment.CenterHorizontally
+                    ),
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    ItemView(
+                        modifier = Modifier.padding(vertical = FactoryTheme.dimensions.medium),
+                        uiState = uiState.selectedItem,
+                        onItemSelected = { _, _ -> },
+                    )
                     Text(
-                        modifier = Modifier.padding(
-                            bottom = FactoryTheme.dimensions.small,
-                            start = FactoryTheme.dimensions.contentPadding,
-                            end = FactoryTheme.dimensions.contentPadding
-                        ),
-                        style = FactoryTheme.typography.titleTextNormal,
+                        style = FactoryTheme.typography.subtitleTextNormal,
                         color = FactoryTheme.colors.primary,
-                        text = buildMaterialListWrapper.titleText ?: ""
+                        text = remember { "x${uiState.selectedItemAmount}" },
                     )
                 }
-                buildMaterialListWrapper.buildMaterialsList.forEach { buildMaterial ->
-                    item("group_${index}_item_${buildMaterial.name}") {
-                        BuildMaterialView(
-                            modifier = Modifier.padding(horizontal = FactoryTheme.dimensions.contentPadding),
-                            uiState = buildMaterial,
+            }
+
+            if (uiState.selectedItemBuildMaterialListWrapperList.isNotEmpty()) {
+                uiState.selectedItemBuildMaterialListWrapperList.forEachIndexed { index, buildMaterialListWrapper ->
+                    item {
+                        Arrow()
+                    }
+                    item("group_$index") {
+                        Text(
+                            modifier = Modifier.padding(
+                                bottom = FactoryTheme.dimensions.small,
+                                start = FactoryTheme.dimensions.contentPadding,
+                                end = FactoryTheme.dimensions.contentPadding
+                            ),
+                            style = FactoryTheme.typography.titleTextNormal,
+                            color = FactoryTheme.colors.primary,
+                            text = buildMaterialListWrapper.titleText ?: ""
                         )
+                    }
+                    buildMaterialListWrapper.buildMaterialsList.forEach { buildMaterial ->
+                        item("group_${index}_item_${buildMaterial.name}") {
+                            BuildMaterialView(
+                                modifier = Modifier.padding(horizontal = FactoryTheme.dimensions.contentPadding),
+                                uiState = buildMaterial,
+                            )
+                        }
                     }
                 }
             }
-        }
-        item(key = "bottom_space") {
-            Box(
-                modifier = Modifier
-                    .height(FactoryTheme.dimensions.large)
-                    .background(FactoryTheme.colors.background)
-            )
+            item(key = "bottom_space") {
+                VerticalDivider(
+                    modifier = Modifier
+                        .height(FactoryTheme.dimensions.large)
+                        .background(FactoryTheme.colors.background)
+                )
+            }
         }
     }
 }

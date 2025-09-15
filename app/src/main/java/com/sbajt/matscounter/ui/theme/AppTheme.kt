@@ -35,7 +35,7 @@ val darkColors = lightColors.copy(
     onBackground = Black1,
     surface = Black1,
     onSurface = Black2,
-    fadingEdge = Black,
+    fadingEdge = White,
 )
 
 val typography = TypographyScheme(
