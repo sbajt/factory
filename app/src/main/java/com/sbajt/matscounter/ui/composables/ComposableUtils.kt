@@ -4,13 +4,14 @@ import android.util.Log
 import androidx.compose.foundation.gestures.Orientation
 import androidx.compose.foundation.gestures.ScrollableState
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.draw.drawWithContent
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.BlendMode
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.drawscope.ContentDrawScope
-import androidx.compose.ui.graphics.graphicsLayer
+import androidx.compose.ui.graphics.drawscope.drawIntoCanvas
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 
@@ -23,20 +24,22 @@ fun Modifier.fadingEdge(
     val colorList = listOf(Color.Transparent, color)
     return then(
         Modifier
-            .graphicsLayer { alpha = 0.99f }
+            .alpha(0.99f)
             .drawWithContent {
-                drawContent()
-                if (length > 0.dp) {
-                    Log.d("FadingEdge", "$colorList")
-                    when (orientation) {
-                        Orientation.Horizontal -> {
-                            drawLeftFadingEdge(colorList = colorList, length = length)
-                            drawRightFadingEdge(colorList = colorList, length = length)
-                        }
+                drawIntoCanvas {
+                    drawContent()
+                    if (length > 0.dp) {
+                        Log.d("FadingEdge", "$colorList")
+                        when (orientation) {
+                            Orientation.Horizontal -> {
+                                drawLeftFadingEdge(colorList = colorList, length = length)
+                                drawRightFadingEdge(colorList = colorList, length = length)
+                            }
 
-                        Orientation.Vertical -> {
-                            drawTopFadingEdge(colorList = colorList, length = length)
-                            drawBottomFadingEdge(colorList = colorList, length = length)
+                            Orientation.Vertical -> {
+                                drawTopFadingEdge(colorList = colorList, length = length)
+                                drawBottomFadingEdge(colorList = colorList, length = length)
+                            }
                         }
                     }
                 }
