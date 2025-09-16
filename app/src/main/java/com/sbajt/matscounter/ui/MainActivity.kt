@@ -10,7 +10,9 @@ import androidx.compose.foundation.layout.navigationBars
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.statusBars
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.currentRecomposeScope
 import androidx.compose.ui.Modifier
+import androidx.core.view.WindowCompat
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
@@ -28,6 +30,7 @@ class MainActivity : ComponentActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        WindowCompat.setDecorFitsSystemWindows(window, false)
         onBackPressedDispatcher.addCallback(this, object : OnBackPressedCallback(true) {
             override fun handleOnBackPressed() {
                 launchOnBackPressed()
@@ -55,7 +58,7 @@ class MainActivity : ComponentActivity() {
         lifecycleScope.launch {
             if (::navController.isInitialized) {
                 val destination = navController.currentBackStackEntry?.destination
-                if (destination?.route == ItemDetails.ROUTE) {
+                if (destination == ItemDetails) {
                     stateSubject.update {
                         it.copy(selectedItem = null, selectedItemAmount = 0)
                     }
@@ -65,17 +68,18 @@ class MainActivity : ComponentActivity() {
     }
 
     @Composable
-    private fun setupContent(
-        modifier: Modifier = Modifier
-    ) {
+    private fun setupContent() {
         FactoryTheme {
             val topPadding = WindowInsets.statusBars.asPaddingValues()
             val bottomPadding = WindowInsets.navigationBars.asPaddingValues()
+
+            val recompose = currentRecomposeScope
             navController = rememberNavController()
             MainScreen(
-                modifier = modifier.padding(top = topPadding.calculateTopPadding(), bottom = bottomPadding.calculateBottomPadding()),
+                modifier = Modifier.padding(top = topPadding.calculateTopPadding(), bottom = bottomPadding.calculateBottomPadding()),
                 navController = navController,
             )
+            recompose.invalidate()
         }
     }
 }

@@ -5,13 +5,12 @@ import androidx.lifecycle.viewModelScope
 import androidx.navigation.NavHostController
 import com.sbajt.matscounter.ui.mappers.ItemDetailsScreenMapper
 import com.sbajt.matscounter.ui.models.screens.ItemDetailsScreenUiState
-import com.sbajt.matscounter.ui.navigation.ItemBuildComponents
+import com.sbajt.matscounter.ui.navigation.ItemBuildPath
 import com.sbajt.matscounter.ui.stateSubject
 import com.sbajt.matscounter.ui.useCases.ItemUiStateListUseCase
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.combine
-import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import org.koin.core.component.KoinComponent
@@ -48,6 +47,6 @@ class ItemDetailsScreenViewModel : ViewModel(), KoinComponent {
     }
 
     fun navigateToBuildPath(navController: NavHostController) {
-        navController.navigate(ItemBuildComponents)
+        navController.navigate(ItemBuildPath)
     }
 }

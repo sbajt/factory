@@ -47,7 +47,6 @@ data class SizeScheme(
 data class ShapeScheme(
     val container: Shape,
     val button: Shape,
-    val tabIndicator: Shape = RectangleShape,
 )
 
 val localColorScheme = staticCompositionLocalOf {

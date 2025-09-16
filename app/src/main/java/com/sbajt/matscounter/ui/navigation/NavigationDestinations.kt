@@ -7,10 +7,8 @@ import org.koin.ext.getFullName
 object ItemList
 
 @Serializable
-object ItemDetails {
-    val ROUTE: String = ItemDetails::class.getFullName() // ROUTE is used for onBackPressed navigation
-}
+object ItemDetails
 
 @Serializable
-object ItemBuildComponents
+object ItemBuildPath
 
