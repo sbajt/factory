@@ -44,6 +44,24 @@ class ItemUiStateProvider : PreviewParameterProvider<ItemUiState> {
                 buildMaterialsCount = 5,
             ),
         )
+        val tier3ItemUiState = ItemUiState(
+            name = "Item Tier 3",
+            imageName = null,
+            groupType = ItemGroupType.TIER3,
+            buildMaterialListWrapper = BuildMaterialUiStateProvider.mockBuildMaterialWrapper(
+                groupType = ItemGroupType.TIER3,
+                buildMaterialsCount = 5,
+            )
+        )
+        val tier4ItemUiState = ItemUiState(
+            name = "Item Tier 4",
+            imageName = null,
+            groupType = ItemGroupType.TIER4,
+            buildMaterialListWrapper = BuildMaterialUiStateProvider.mockBuildMaterialWrapper(
+                groupType = ItemGroupType.TIER4,
+                buildMaterialsCount = 5,
+            ),
+        )
 
         fun mockItemUiStateList(
             count: Int = 10

@@ -19,7 +19,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.compose.ui.unit.dp
-import com.sbajt.matscounter.ui.theme.MatsCounterTheme
+import com.sbajt.matscounter.ui.theme.FactoryTheme
 
 @Composable
 fun EmptyScreen(modifier: Modifier = Modifier) {
@@ -40,15 +40,15 @@ fun EmptyScreen(modifier: Modifier = Modifier) {
             )
             val title by remember { mutableStateOf("Empty Screen") }
             Text(
-                modifier = Modifier.padding(bottom = MatsCounterTheme.dimensions.small),
-                style = MatsCounterTheme.typography.titleTextNormal,
-                color = MatsCounterTheme.colors.primary,
+                modifier = Modifier.padding(bottom = FactoryTheme.dimensions.small),
+                style = FactoryTheme.typography.titleTextNormal,
+                color = FactoryTheme.colors.primary,
                 text = title
             )
             val subTitle by remember { mutableStateOf("Error loading content data") }
             Text(
-                style = MatsCounterTheme.typography.subtitleTextLarge,
-                color = MatsCounterTheme.colors.secondary,
+                style = FactoryTheme.typography.subtitleTextLarge,
+                color = FactoryTheme.colors.secondary,
                 text = subTitle
             )
         }
@@ -58,9 +58,9 @@ fun EmptyScreen(modifier: Modifier = Modifier) {
 @PreviewLightDark
 @Composable
 private fun EmptyScreenPreview() {
-    MatsCounterTheme {
+    FactoryTheme {
         EmptyScreen(
-            modifier = Modifier.background(MatsCounterTheme.colors.background)
+            modifier = Modifier.background(FactoryTheme.colors.background)
         )
     }
 }

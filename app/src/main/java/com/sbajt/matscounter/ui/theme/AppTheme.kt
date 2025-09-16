@@ -11,32 +11,31 @@ import androidx.compose.ui.unit.TextUnitType
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 
-val darkColors = ColorScheme(
-    primary = White,
-    onPrimary = White1,
-    secondary = Gray,
-    onSecondary = Gray1,
-    accent = Accent,
-    error = Error,
-    onError = Error1,
-    background = Black,
-    onBackground = Black1,
-    surface = Black1,
-    onSurface = Black2
-)
-
 val lightColors = ColorScheme(
     primary = Black,
     onPrimary = Black1,
-    secondary = Gray1,
-    onSecondary = Gray2,
+    secondary = Gray,
+    onSecondary = Gray1,
     accent = Accent,
     error = Error,
     onError = Error1,
     background = White,
     onBackground = White1,
     surface = White1,
-    onSurface = White2
+    onSurface = White2,
+    fadingEdge = White
+)
+
+val darkColors = lightColors.copy(
+    primary = White,
+    onPrimary = White1,
+    secondary = Purple,
+    onSecondary = Purple1,
+    background = Black,
+    onBackground = Black1,
+    surface = Black1,
+    onSurface = Black2,
+    fadingEdge = White,
 )
 
 val typography = TypographyScheme(
@@ -86,10 +85,11 @@ val size = SizeScheme(
     tab = 2.dp,
     gridCell = 90.dp,
     contentPadding = 16.dp,
+    fadingEdge = 20.dp,
 )
 
 @Composable
-fun MatsCounterTheme(
+fun FactoryTheme(
     darkTheme: Boolean = isSystemInDarkTheme(),
     content: @Composable () -> Unit
 ) {
@@ -106,7 +106,7 @@ fun MatsCounterTheme(
     )
 }
 
-object MatsCounterTheme {
+object FactoryTheme {
     val colors: ColorScheme
         @Composable get() = localColorScheme.current
 

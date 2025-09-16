@@ -11,20 +11,20 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import com.sbajt.matscounter.R
-import com.sbajt.matscounter.ui.theme.MatsCounterTheme
+import com.sbajt.matscounter.ui.theme.FactoryTheme
 
 @Composable
 fun Arrow(modifier: Modifier = Modifier) {
     Box(
         modifier = modifier
-            .background(MatsCounterTheme.colors.background)
+            .background(FactoryTheme.colors.background)
             .fillMaxWidth(),
         contentAlignment = Alignment.Center
     ) {
         Image(
             modifier = Modifier
-                .padding(MatsCounterTheme.dimensions.small)
-                .size(MatsCounterTheme.dimensions.iconSmall),
+                .padding(FactoryTheme.dimensions.small)
+                .size(FactoryTheme.dimensions.iconSmall),
             painter = painterResource(id = R.drawable.ic_arrow),
             contentDescription = "Arrow icon",
         )

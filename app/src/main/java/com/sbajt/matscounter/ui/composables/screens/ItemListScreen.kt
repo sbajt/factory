@@ -3,7 +3,6 @@ package com.sbajt.matscounter.ui.composables.screens
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -30,7 +29,7 @@ import com.sbajt.matscounter.ui.composables.views.ItemView
 import com.sbajt.matscounter.ui.models.ItemGroupType
 import com.sbajt.matscounter.ui.models.getName
 import com.sbajt.matscounter.ui.models.screens.ItemListScreenUiState
-import com.sbajt.matscounter.ui.theme.MatsCounterTheme
+import com.sbajt.matscounter.ui.theme.FactoryTheme
 import kotlinx.coroutines.launch
 
 @Composable
@@ -64,18 +63,18 @@ private fun ContentScreen(
     val pagerState = rememberPagerState(pageCount = { groupTypeList.size })
     Column(
         modifier = modifier
-            .background(MatsCounterTheme.colors.background)
-            .padding(MatsCounterTheme.dimensions.contentPadding),
+            .background(FactoryTheme.colors.background)
+            .padding(FactoryTheme.dimensions.contentPadding),
     ) {
         ScrollableTabRow(
             modifier = Modifier.fillMaxWidth(),
-            containerColor = MatsCounterTheme.colors.background,
+            containerColor = FactoryTheme.colors.background,
             selectedTabIndex = pagerState.currentPage,
             indicator = { tabPositions ->
                 TabRowDefaults.SecondaryIndicator(
                     modifier = Modifier.tabIndicatorOffset(tabPositions[pagerState.currentPage]),
-                    height = MatsCounterTheme.dimensions.tab,
-                    color = MatsCounterTheme.colors.accent
+                    height = FactoryTheme.dimensions.tab,
+                    color = FactoryTheme.colors.accent
                 )
             }
         ) {
@@ -86,8 +85,8 @@ private fun ContentScreen(
                     onClick = { scope.launch { pagerState.animateScrollToPage(index) } },
                     text = {
                         Text(
-                            style = MatsCounterTheme.typography.bodyTextNormal,
-                            color = MatsCounterTheme.colors.primary,
+                            style = FactoryTheme.typography.bodyTextNormal,
+                            color = FactoryTheme.colors.primary,
                             maxLines = 1,
                             text = text,
                         )
@@ -105,8 +104,8 @@ private fun ContentScreen(
             }
             LazyVerticalGrid(
                 modifier = Modifier.fillMaxSize(),
-                columns = GridCells.Adaptive(minSize = MatsCounterTheme.dimensions.gridCell),
-                verticalArrangement = Arrangement.spacedBy(MatsCounterTheme.dimensions.small),
+                columns = GridCells.Adaptive(minSize = FactoryTheme.dimensions.gridCell),
+                verticalArrangement = Arrangement.spacedBy(FactoryTheme.dimensions.small),
             ) {
                 items(count = itemUiStatePage.size, key = { index -> "item_$index" }) { index ->
                     ItemView(
@@ -122,9 +121,9 @@ private fun ContentScreen(
 @PreviewLightDark
 @Composable
 fun GridSectionPreview(@PreviewParameter(ItemListUiStateProvider::class) uiState: ItemListScreenUiState) {
-    MatsCounterTheme {
+    FactoryTheme {
         ItemListScreen(
-            modifier = Modifier.background(MatsCounterTheme.colors.background),
+            modifier = Modifier.background(FactoryTheme.colors.background),
             uiState = uiState,
             onItemSelected = { _, _ -> },
         )

@@ -18,7 +18,8 @@ data class ColorScheme(
     val background: Color,
     val onBackground: Color,
     val surface: Color,
-    val onSurface: Color
+    val onSurface: Color,
+    val fadingEdge: Color,
 )
 
 data class TypographyScheme(
@@ -40,6 +41,7 @@ data class SizeScheme(
     val tab: Dp,
     val gridCell: Dp,
     val contentPadding: Dp,
+    val fadingEdge: Dp,
 )
 
 data class ShapeScheme(
@@ -60,7 +62,8 @@ val localColorScheme = staticCompositionLocalOf {
         background = Color.Unspecified,
         onBackground = Color.Unspecified,
         surface = Color.Unspecified,
-        onSurface =  Color.Unspecified,
+        onSurface = Color.Unspecified,
+        fadingEdge = Color.Unspecified,
     )
 }
 
@@ -85,6 +88,7 @@ val localSizeScheme = staticCompositionLocalOf {
         tab = Dp.Unspecified,
         gridCell = Dp.Unspecified,
         contentPadding = Dp.Unspecified,
+        fadingEdge = Dp.Unspecified,
     )
 }
 
