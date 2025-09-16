@@ -1,6 +1,6 @@
 package com.sbajt.matscounter.ui
 
-import com.sbajt.matscounter.ui.models.ActionBarActions
+import com.sbajt.matscounter.ui.models.AppBarState
 import kotlinx.coroutines.flow.MutableStateFlow
 
-val actionBarSubject = MutableStateFlow(listOf<ActionBarActions>())
+val actionBarSubject = MutableStateFlow(AppBarState())

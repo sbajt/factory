@@ -22,6 +22,7 @@ import androidx.navigation.compose.composable
 import com.sbajt.matscounter.R
 import com.sbajt.matscounter.ui.actionBarSubject
 import com.sbajt.matscounter.ui.models.ActionBarActions
+import com.sbajt.matscounter.ui.models.AppBarState
 import com.sbajt.matscounter.ui.models.ItemGroupType
 import com.sbajt.matscounter.ui.navigation.ItemBuildPath
 import com.sbajt.matscounter.ui.navigation.ItemDetails
@@ -30,7 +31,6 @@ import com.sbajt.matscounter.ui.theme.FactoryTheme
 import com.sbajt.matscounter.ui.viewModels.ItemBuildPathScreenViewModel
 import com.sbajt.matscounter.ui.viewModels.ItemDetailsScreenViewModel
 import com.sbajt.matscounter.ui.viewModels.ItemListViewModel
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.update
 
 typealias OnItemSelected = (String?, ItemGroupType?) -> Unit
@@ -42,6 +42,7 @@ typealias OnNavigate = () -> Unit
 fun MainScreen(
     navController: NavHostController,
     modifier: Modifier = Modifier,
+    appBarState: AppBarState? = null
 ) {
     Scaffold(
         modifier = modifier,
@@ -53,27 +54,20 @@ fun MainScreen(
                 ),
                 title = {
                     Text(
-                        text = stringResource(R.string.app_name),
+                        text = appBarState?.title ?: stringResource(id = R.string.app_name),
                         color = FactoryTheme.colors.primary
                     )
                 },
                 actions = {
-                    val tint = FactoryTheme.colors.primary
-                    actionBarSubject.collect {
-                        it.forEach { action ->
-                            when (action) {
-                                ActionBarActions.SHOW_ITEM_BUILD_PATH -> {
-                                    Icon(
-                                        modifier = Modifier.clickable {
-                                            navController.navigate(ItemBuildPath)
-                                        },
-                                        imageVector = Icons.Default.Info,
-                                        contentDescription = "Item Details",
-                                        tint = tint
-                                    )
-                                }
-                            }
-                        }
+                    appBarState?.actionList?.forEach {
+                        Icon(
+                            modifier = Modifier.clickable {
+                                navController.navigate(ItemBuildPath)
+                            },
+                            imageVector = Icons.Default.Info,
+                            contentDescription = "Item Details",
+                            tint = FactoryTheme.colors.primary
+                        )
                     }
                 }
             )
@@ -98,9 +92,9 @@ fun MainScreenContent(
     ) {
 
         composable<ItemList> {
-            actionBarSubject.update { listOf() }
             val viewModel = viewModel<ItemListViewModel>()
             val uiState = viewModel.uiState.collectAsStateWithLifecycle().value
+            actionBarSubject.update { it.copy(actionList = listOf()) }
             ItemListScreen(
                 uiState = uiState,
                 onItemSelected = { itemName, itemGroupType ->
@@ -111,7 +105,7 @@ fun MainScreenContent(
         composable<ItemDetails> {
             val viewModel = viewModel<ItemDetailsScreenViewModel>()
             val uiState = viewModel.uiState.collectAsStateWithLifecycle().value
-            actionBarSubject.update { listOf(ActionBarActions.SHOW_ITEM_BUILD_PATH) }
+            actionBarSubject.update { it.copy(actionList = listOf(ActionBarActions.SHOW_ITEM_BUILD_PATH)) }
             ItemDetailsScreen(
                 uiState = uiState,
                 onCountChange = viewModel::updateSelectedItemAmount,
@@ -121,8 +115,9 @@ fun MainScreenContent(
             )
         }
         composable<ItemBuildPath> {
-            actionBarSubject.update { listOf() }
-            val uiState = viewModel<ItemBuildPathScreenViewModel>().uiState.collectAsStateWithLifecycle().value
+            actionBarSubject.update { it.copy(actionList = listOf()) }
+            val uiState =
+                viewModel<ItemBuildPathScreenViewModel>().uiState.collectAsStateWithLifecycle().value
             ItemBuildPathScreen(
                 uiState = uiState
             )
