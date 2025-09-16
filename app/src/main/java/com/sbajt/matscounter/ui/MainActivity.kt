@@ -10,7 +10,6 @@ import androidx.compose.foundation.layout.navigationBars
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.statusBars
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.currentRecomposeScope
 import androidx.compose.ui.Modifier
 import androidx.core.view.WindowCompat
 import androidx.lifecycle.Lifecycle
@@ -73,13 +72,11 @@ class MainActivity : ComponentActivity() {
             val topPadding = WindowInsets.statusBars.asPaddingValues()
             val bottomPadding = WindowInsets.navigationBars.asPaddingValues()
 
-            val recompose = currentRecomposeScope
             navController = rememberNavController()
             MainScreen(
                 modifier = Modifier.padding(top = topPadding.calculateTopPadding(), bottom = bottomPadding.calculateBottomPadding()),
                 navController = navController,
             )
-            recompose.invalidate()
         }
     }
 }
