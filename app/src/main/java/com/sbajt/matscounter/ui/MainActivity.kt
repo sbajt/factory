@@ -22,6 +22,7 @@ import com.sbajt.matscounter.ui.navigation.ItemDetails
 import com.sbajt.matscounter.ui.theme.FactoryTheme
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import androidx.compose.runtime.collectAsState
 
 class MainActivity : ComponentActivity() {
 

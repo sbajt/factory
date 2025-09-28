@@ -1,5 +1,6 @@
 package com.sbajt.matscounter.ui.mappers
 
+import com.sbajt.matscounter.ui.models.appBars.AppBarState
 import com.sbajt.matscounter.ui.models.screens.ItemDetailsScreenUiState
 import com.sbajt.matscounter.ui.models.views.ItemUiState
 import org.koin.core.component.KoinComponent
@@ -21,13 +22,15 @@ class ItemDetailsScreenMapper : KoinComponent {
                     initialBuildMaterialSet = selectedItem?.buildMaterialListWrapper?.buildMaterialsList?.toHashSet() ?: hashSetOf(),
                     itemList = inputData.itemList,
                 )
-            )
+            ),
+            appBarState = inputData.appBarState as AppBarState.ItemDetails,
         )
     }
 
     companion object {
 
         data class InputData(
+            val appBarState: AppBarState,
             val selectedItem: ItemUiState?,
             val selectedItemAmount: Int,
             val itemList: List<ItemUiState>,

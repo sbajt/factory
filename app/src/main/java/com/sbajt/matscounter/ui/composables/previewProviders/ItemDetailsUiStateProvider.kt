@@ -1,6 +1,8 @@
 package com.sbajt.matscounter.ui.composables.previewProviders
 
 import androidx.compose.ui.tooling.preview.PreviewParameterProvider
+import com.sbajt.matscounter.ui.models.appBars.ActionBarActions
+import com.sbajt.matscounter.ui.models.appBars.AppBarState
 import com.sbajt.matscounter.ui.models.screens.ItemDetailsScreenUiState
 import com.sbajt.matscounter.ui.models.views.BuildMaterialListWrapper
 
@@ -18,6 +20,10 @@ class ItemDetailsUiStateProvider : PreviewParameterProvider<ItemDetailsScreenUiS
             selectedItemBuildMaterialListWrapper = BuildMaterialListWrapper(
                 titleText = "Build Materials",
                 buildMaterialsList = BuildMaterialUiStateProvider.mockBuildMaterials()
+            ),
+            appBarState = AppBarState.ItemDetails(
+                title = "Build path",
+                actionList = listOf(ActionBarActions.SHOW_ITEM_BUILD_PATH)
             )
         )
         val tier2ItemDetailsScreenUiState = ItemDetailsScreenUiState.Content(
@@ -26,6 +32,10 @@ class ItemDetailsUiStateProvider : PreviewParameterProvider<ItemDetailsScreenUiS
             selectedItemBuildMaterialListWrapper = BuildMaterialListWrapper(
                 titleText = "Build materials",
                 buildMaterialsList = BuildMaterialUiStateProvider.mockBuildMaterials()
+            ),
+            appBarState = AppBarState.ItemDetails(
+                title = "Build path",
+                actionList = listOf(ActionBarActions.SHOW_ITEM_BUILD_PATH)
             )
         )
     }

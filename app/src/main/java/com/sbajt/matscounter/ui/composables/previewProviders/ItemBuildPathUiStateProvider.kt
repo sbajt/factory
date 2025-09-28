@@ -2,6 +2,7 @@ package com.sbajt.matscounter.ui.composables.previewProviders
 
 import androidx.compose.ui.tooling.preview.PreviewParameterProvider
 import com.sbajt.matscounter.ui.composables.previewProviders.BuildMaterialUiStateProvider.Companion.mockItemBuildMaterialListWrapperList
+import com.sbajt.matscounter.ui.models.appBars.AppBarState
 import com.sbajt.matscounter.ui.models.screens.ItemBuildPathScreenUiState
 
 class ItemBuildPathUiStateProvider : PreviewParameterProvider<ItemBuildPathScreenUiState> {
@@ -22,6 +23,10 @@ class ItemBuildPathUiStateProvider : PreviewParameterProvider<ItemBuildPathScree
                 selectedItemAmount = 1,
                 selectedItemBuildMaterialListWrapperList = mockItemBuildMaterialListWrapperList(
                     selectedItemGroupType = tier1Item.groupType
+                ),
+                appBarState = AppBarState.ItemBuildPath(
+                    title = "Build path",
+                    actionList = emptyList()
                 )
             )
 
@@ -32,6 +37,10 @@ class ItemBuildPathUiStateProvider : PreviewParameterProvider<ItemBuildPathScree
                 selectedItemAmount = 1,
                 selectedItemBuildMaterialListWrapperList = mockItemBuildMaterialListWrapperList(
                     selectedItemGroupType = tier2Item.groupType
+                ),
+                appBarState = AppBarState.ItemBuildPath(
+                    title = "Build path",
+                    actionList = emptyList()
                 )
             )
         val tier3Item = ItemUiStateProvider.tier3ItemUiState
@@ -41,6 +50,10 @@ class ItemBuildPathUiStateProvider : PreviewParameterProvider<ItemBuildPathScree
                 selectedItemAmount = 1,
                 selectedItemBuildMaterialListWrapperList = mockItemBuildMaterialListWrapperList(
                     selectedItemGroupType = tier3Item.groupType
+                ),
+                appBarState = AppBarState.ItemBuildPath(
+                    title = "Build path",
+                    actionList = emptyList()
                 )
             )
         val tier4Item = ItemUiStateProvider.tier4ItemUiState
@@ -50,9 +63,12 @@ class ItemBuildPathUiStateProvider : PreviewParameterProvider<ItemBuildPathScree
                 selectedItemAmount = 1,
                 selectedItemBuildMaterialListWrapperList = mockItemBuildMaterialListWrapperList(
                     selectedItemGroupType = tier4Item.groupType
+                ),
+                appBarState = AppBarState.ItemBuildPath(
+                    title = "Build path",
+                    actionList = emptyList()
                 )
             )
-
 
     }
 }

@@ -1,5 +1,6 @@
 package com.sbajt.matscounter.ui.mappers
 
+import com.sbajt.matscounter.ui.models.appBars.AppBarState
 import com.sbajt.matscounter.ui.models.getName
 import com.sbajt.matscounter.ui.models.screens.ItemBuildPathScreenUiState
 import com.sbajt.matscounter.ui.models.toLowerGroupsList
@@ -20,7 +21,8 @@ class BuildPathScreenMapper() : KoinComponent {
                 selectedItem = selectedItem,
                 selectedItemAmount = selectedItemAmount,
                 itemList = itemList,
-            )
+            ),
+            appBarState = appBarState as AppBarState.ItemBuildPath,
         )
     }
 
@@ -64,6 +66,7 @@ class BuildPathScreenMapper() : KoinComponent {
     companion object {
 
         data class InputData(
+            val appBarState: AppBarState,
             val selectedItem: ItemUiState,
             val selectedItemAmount: Int,
             val itemList: List<ItemUiState>,

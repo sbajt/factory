@@ -3,6 +3,7 @@ package com.sbajt.matscounter.ui.viewModels
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.navigation.NavHostController
+import com.sbajt.matscounter.ui.appBarSubject
 import com.sbajt.matscounter.ui.mappers.ItemDetailsScreenMapper
 import com.sbajt.matscounter.ui.models.screens.ItemDetailsScreenUiState
 import com.sbajt.matscounter.ui.navigation.ItemBuildPath
@@ -22,14 +23,16 @@ class ItemDetailsScreenViewModel : ViewModel(), KoinComponent {
     private val useCase: ItemUiStateListUseCase by inject()
 
     val uiState = combine(
+        appBarSubject,
         stateSubject,
         useCase(),
-    ){ state, itemList ->
+    ){ appBarState, state, itemList ->
             mapper.mapToUiState(
                 ItemDetailsScreenMapper.Companion.InputData(
                     selectedItem = state.selectedItem,
                     selectedItemAmount = state.selectedItemAmount,
                     itemList = itemList,
+                    appBarState = appBarState,
                 )
             )
         }

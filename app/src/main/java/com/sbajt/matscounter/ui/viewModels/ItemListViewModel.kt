@@ -3,7 +3,9 @@ package com.sbajt.matscounter.ui.viewModels
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.navigation.NavHostController
+import com.sbajt.matscounter.ui.appBarSubject
 import com.sbajt.matscounter.ui.models.ItemGroupType
+import com.sbajt.matscounter.ui.models.appBars.AppBarState
 import com.sbajt.matscounter.ui.models.screens.ItemListScreenUiState
 import com.sbajt.matscounter.ui.navigation.ItemDetails
 import com.sbajt.matscounter.ui.stateSubject
@@ -11,8 +13,8 @@ import com.sbajt.matscounter.ui.useCases.ItemUiStateListUseCase
 import kotlinx.collections.immutable.toPersistentList
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.SharingStarted.Companion.WhileSubscribed
+import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.firstOrNull
-import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
@@ -23,15 +25,21 @@ class ItemListViewModel : ViewModel(), KoinComponent {
 
     private val useCase: ItemUiStateListUseCase by inject()
 
-    val uiState = useCase()
-        .map {
-            delay(1_000)
-            if (it.isEmpty()) {
-                ItemListScreenUiState.Empty
-            } else {
-                ItemListScreenUiState.Content(itemUiStateList = it.toPersistentList())
-            }
+    val uiState = combine(
+        useCase(),
+        stateSubject,
+        appBarSubject,
+    ) { list, state, appBarState ->
+        delay(1_000)
+        if (list.isEmpty()) {
+            ItemListScreenUiState.Empty
+        } else {
+            ItemListScreenUiState.Content(
+                itemUiStateList = list.toPersistentList(),
+                appBarState = appBarState as AppBarState.ItemList,
+            )
         }
+    }
         .stateIn(viewModelScope, WhileSubscribed(5_000), ItemListScreenUiState.Loading)
 
     fun updateSelectedItem(
@@ -45,7 +53,8 @@ class ItemListViewModel : ViewModel(), KoinComponent {
                 if (selectedItemName != previousSelectedItem?.name) {
                     stateSubject.update { uiState ->
                         val list = useCase().firstOrNull() ?: emptyList()
-                        val selectedItem = list.find { it.name == selectedItemName && it.groupType == selectedItemGroupType }
+                        val selectedItem =
+                            list.find { it.name == selectedItemName && it.groupType == selectedItemGroupType }
                         uiState.copy(
                             selectedItem = selectedItem,
                             selectedItemAmount = 1,
