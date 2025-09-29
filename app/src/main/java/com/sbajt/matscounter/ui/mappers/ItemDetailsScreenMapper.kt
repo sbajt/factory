@@ -23,7 +23,7 @@ class ItemDetailsScreenMapper : KoinComponent {
                     itemList = inputData.itemList,
                 )
             ),
-            appBarState = inputData.appBarState as AppBarState.ItemDetails,
+            appBarState = inputData.appBarState as? AppBarState.ItemDetails,
         )
     }
 

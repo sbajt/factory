@@ -22,7 +22,7 @@ class BuildPathScreenMapper() : KoinComponent {
                 selectedItemAmount = selectedItemAmount,
                 itemList = itemList,
             ),
-            appBarState = appBarState as AppBarState.ItemBuildPath,
+            appBarState = appBarState as? AppBarState.ItemBuildPath,
         )
     }
 

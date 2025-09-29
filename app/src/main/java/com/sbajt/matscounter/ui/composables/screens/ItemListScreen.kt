@@ -35,7 +35,6 @@ import kotlinx.coroutines.launch
 @Composable
 fun ItemListScreen(
     uiState: ItemListScreenUiState,
-
     onItemSelected: OnItemSelected,
     modifier: Modifier = Modifier
 ) {
@@ -105,7 +104,7 @@ private fun ContentScreen(
             LazyVerticalGrid(
                 modifier = Modifier.fillMaxSize(),
                 columns = GridCells.Adaptive(minSize = FactoryTheme.dimensions.gridCell),
-                verticalArrangement = Arrangement.spacedBy(FactoryTheme.dimensions.small),
+                verticalArrangement = Arrangement.spacedBy(FactoryTheme.dimensions.medium),
             ) {
                 items(count = itemUiStatePage.size, key = { index -> "item_$index" }) { index ->
                     ItemView(

@@ -23,6 +23,15 @@ import org.koin.core.component.inject
 
 class ItemListViewModel : ViewModel(), KoinComponent {
 
+    init {
+        appBarSubject.update {
+            AppBarState.ItemList(
+                title = "Items",
+                actionList = emptyList(),
+            )
+        }
+    }
+
     private val useCase: ItemUiStateListUseCase by inject()
 
     val uiState = combine(
@@ -36,7 +45,7 @@ class ItemListViewModel : ViewModel(), KoinComponent {
         } else {
             ItemListScreenUiState.Content(
                 itemUiStateList = list.toPersistentList(),
-                appBarState = appBarState as AppBarState.ItemList,
+                appBarState = appBarState as? AppBarState.ItemList,
             )
         }
     }

@@ -1,5 +1,6 @@
 package com.sbajt.matscounter.ui.viewModels
 
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.navigation.NavHostController
@@ -19,6 +20,8 @@ import org.koin.core.component.inject
 
 class ItemDetailsScreenViewModel : ViewModel(), KoinComponent {
 
+    val TAG = this::class.java.name
+
     private val mapper: ItemDetailsScreenMapper by inject()
     private val useCase: ItemUiStateListUseCase by inject()
 
@@ -26,21 +29,24 @@ class ItemDetailsScreenViewModel : ViewModel(), KoinComponent {
         appBarSubject,
         stateSubject,
         useCase(),
-    ){ appBarState, state, itemList ->
-            mapper.mapToUiState(
-                ItemDetailsScreenMapper.Companion.InputData(
-                    selectedItem = state.selectedItem,
-                    selectedItemAmount = state.selectedItemAmount,
-                    itemList = itemList,
-                    appBarState = appBarState,
-                )
+    ) { appBarState, state, itemList ->
+        mapper.mapToUiState(
+            ItemDetailsScreenMapper.Companion.InputData(
+                selectedItem = state.selectedItem,
+                selectedItemAmount = state.selectedItemAmount,
+                itemList = itemList,
+                appBarState = appBarState,
             )
+        )
+    }
+        .catch {
+            Log.e(TAG, "{it.cause}", it)
+            ItemDetailsScreenUiState.Empty
         }
-        .catch { ItemDetailsScreenUiState.Empty }
         .stateIn(
             scope = viewModelScope,
             started = SharingStarted.Companion.WhileSubscribed(5_000),
-            initialValue = ItemDetailsScreenUiState.Loading,
+            initialValue = ItemDetailsScreenUiState.Empty,
         )
 
     fun updateSelectedItemAmount(newItemCount: Int) {

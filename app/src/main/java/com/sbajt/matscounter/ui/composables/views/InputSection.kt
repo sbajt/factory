@@ -19,6 +19,8 @@ import com.sbajt.matscounter.ui.composables.previewProviders.InputSectionUiState
 import com.sbajt.matscounter.ui.models.views.InputSectionUiState
 import com.sbajt.matscounter.ui.theme.FactoryTheme
 
+private val inputSectionRange = 1..10
+
 @Composable
 fun InputSection(
     uiState: InputSectionUiState,
@@ -40,7 +42,7 @@ fun InputSection(
         var pickerValue by remember { mutableIntStateOf(uiState.itemCount) }
         NumberPicker(
             value = pickerValue,
-            range = 1..9,
+            range = inputSectionRange,
             textStyle = TextStyle(color = FactoryTheme.colors.primary),
             dividersColor = FactoryTheme.colors.secondary,
             onValueChange = {

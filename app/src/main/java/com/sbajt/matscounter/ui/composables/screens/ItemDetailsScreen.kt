@@ -77,7 +77,7 @@ private fun ContentScreen(
     if (uiState.selectedItem?.groupType != ItemGroupType.BASIC_MATERIAL) {
         with(uiState.selectedItemBuildMaterialListWrapper) {
             Text(
-                modifier = Modifier.padding(bottom = FactoryTheme.dimensions.small),
+                modifier = Modifier.padding(bottom = FactoryTheme.dimensions.medium),
                 style = FactoryTheme.typography.titleTextNormal,
                 color = FactoryTheme.colors.primary,
                 text = remember { mutableStateOf(this?.titleText ?: "") }.value,

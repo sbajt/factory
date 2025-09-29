@@ -1,7 +1,6 @@
 package com.sbajt.matscounter.ui.composables.screens
 
 import androidx.compose.foundation.background
-import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
@@ -26,7 +25,6 @@ typealias OnItemSelected = (String?, ItemGroupType?) -> Unit
 typealias OnCountChange = (Int) -> Unit
 typealias OnNavigate = () -> Unit
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun MainScreen(
     navController: NavHostController,
@@ -41,12 +39,7 @@ fun MainScreen(
         composable<ItemList> {
             val viewModel = viewModel<ItemListViewModel>()
             val uiState = viewModel.uiState.collectAsStateWithLifecycle().value
-            appBarSubject.update {
-                AppBarState.ItemList(
-                    title = "Items",
-                    actionList = emptyList(),
-                )
-            }
+
             ItemListScreen(
                 uiState = uiState,
                 onItemSelected = { itemName, itemGroupType ->
@@ -71,7 +64,8 @@ fun MainScreen(
                 uiState = uiState,
                 onCountChange = viewModel::updateSelectedItemAmount,
                 onNavigate = {
-                    viewModel::navigateToBuildPath
+                    viewModel.navigateToBuildPath(navController = navController)
+
                 }
             )
         }

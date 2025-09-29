@@ -12,7 +12,7 @@ sealed class ItemListScreenUiState {
     object Empty : ItemListScreenUiState()
 
     data class Content(
-        val appBarState: AppBarState.ItemList,
+        val appBarState: AppBarState.ItemList?,
         val itemUiStateList: ImmutableList<ItemUiState> = persistentListOf(),
     ) : ItemListScreenUiState()
 }

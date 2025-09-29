@@ -95,7 +95,7 @@ fun ContentScreen(
                     item("group_$index") {
                         Text(
                             modifier = Modifier.padding(
-                                bottom = FactoryTheme.dimensions.small,
+                                bottom = FactoryTheme.dimensions.medium,
                                 start = FactoryTheme.dimensions.contentPadding,
                                 end = FactoryTheme.dimensions.contentPadding
                             ),

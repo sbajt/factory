@@ -75,7 +75,7 @@ val shape = ShapeScheme(
 )
 
 val size = SizeScheme(
-    small = 8.dp,
+    small = 6.dp,
     medium = 8.dp,
     large = 16.dp,
     iconSmall = 28.dp,
