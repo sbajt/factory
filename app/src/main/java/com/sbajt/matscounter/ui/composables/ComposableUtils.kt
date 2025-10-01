@@ -1,19 +1,12 @@
 package com.sbajt.matscounter.ui.composables
 
-import android.content.res.Resources
 import android.util.Log
-import androidx.compose.animation.core.animateFloatAsState
-import androidx.compose.animation.core.tween
 import androidx.compose.foundation.gestures.Orientation
-import androidx.compose.foundation.gestures.ScrollableState
 import androidx.compose.foundation.lazy.LazyListState
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.draw.drawWithContent
 import androidx.compose.ui.geometry.Offset
-import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.graphics.BlendMode
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
@@ -21,13 +14,11 @@ import androidx.compose.ui.graphics.drawscope.ContentDrawScope
 import androidx.compose.ui.graphics.drawscope.drawIntoCanvas
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
-import com.sbajt.matscounter.ui.theme.FactoryTheme
 
 fun Modifier.fadingEdge(
     color: Color,
     length: Dp,
     orientation: Orientation,
-    scrollableState: ScrollableState,
 ): Modifier {
     val colorList = listOf(Color.Transparent, color)
     return then(
@@ -118,44 +109,30 @@ private fun ContentDrawScope.drawRightFadingEdge(
     )
 }
 
-@Composable
 fun Modifier.verticalScrollbar(
-    state: LazyListState,
-    color: Color = FactoryTheme.colors.onSurface,
-    width: Dp = FactoryTheme.dimensions.medium,
-    listBottomPadding: Dp = 0.dp,
+    listState: LazyListState,
+    color: Color,
+    thickness: Dp = 4.dp,
+    padding: Dp = 0.dp,
 ): Modifier {
-    val targetAlpha = if (state.isScrollInProgress) 1f else 0f
-    val duration = if (state.isScrollInProgress) 150 else 500
+    // Only show scrollbar if the content is taller than the visible area
+    return if (listState.layoutInfo.totalItemsCount > listState.layoutInfo.visibleItemsInfo.size) {
+        this.then(
+            Modifier.drawWithContent {
+                drawContent()
 
-    val alpha by animateFloatAsState(
-        targetValue = targetAlpha,
-        animationSpec = tween(durationMillis = duration)
-    )
+                val scrollbarHeight = listState.layoutInfo.viewportSize.height / listState.layoutInfo.totalItemsCount.toFloat()
+                val scrollbarOffset = listState.firstVisibleItemIndex * scrollbarHeight
 
-    return drawWithContent {
-        drawContent()
-
-        val firstVisibleElementIndex = state.layoutInfo.visibleItemsInfo.firstOrNull()?.index
-        val needDrawScrollbar = state.isScrollInProgress || alpha > 0.0f
-
-        if (needDrawScrollbar && firstVisibleElementIndex != null) {
-            val listItemHeight = if(!state.canScrollForward) {
-                state.layoutInfo.viewportSize.height.toFloat() /
-                    (state.layoutInfo.totalItemsCount.toFloat())
-            } else {
-                (state.layoutInfo.viewportSize.height.toFloat() - listBottomPadding.toPx())  /
-                    (state.layoutInfo.totalItemsCount.toFloat())
+                // Draw the scrollbar
+                drawRoundRect(
+                    color = color,
+                    topLeft = Offset(x = size.width - thickness.toPx() - padding.toPx(), y = scrollbarOffset),
+                    size = androidx.compose.ui.geometry.Size(width = thickness.toPx(), height = scrollbarHeight),
+                )
             }
-            val scrollbarOffsetY = firstVisibleElementIndex * listItemHeight
-            val scrollbarHeight = state.layoutInfo.visibleItemsInfo.size * listItemHeight
-
-            drawRect(
-                color = color,
-                topLeft = Offset(this.size.width - width.toPx(), scrollbarOffsetY),
-                size = Size(width.toPx(), scrollbarHeight),
-                alpha = alpha
-            )
-        }
+        )
+    } else {
+        this
     }
 }
