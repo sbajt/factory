@@ -81,6 +81,7 @@ val size = SizeScheme(
     iconSmall = 28.dp,
     icon = 80.dp,
     tab = 2.dp,
+    actionBarAction = 32.dp,
     gridCell = 90.dp,
     contentPadding = 16.dp,
     fadingEdge = 20.dp,
