@@ -20,17 +20,17 @@ class ItemDetailsScreenMapper : KoinComponent {
                     groupType = selectedItem?.groupType,
                     initialItemAmount = selectedItemAmount,
                     initialBuildMaterialSet = selectedItem?.buildMaterialListWrapper?.buildMaterialsList?.toHashSet() ?: hashSetOf(),
-                    itemList = inputData.itemList,
+                    itemList = itemList,
                 )
             ),
-            appBarState = inputData.appBarState as AppBarState.ItemDetails,
+            appBarState = appBarState?.run { this as AppBarState.ItemDetails }
         )
     }
 
     companion object {
 
         data class InputData(
-            val appBarState: AppBarState,
+            val appBarState: AppBarState?,
             val selectedItem: ItemUiState?,
             val selectedItemAmount: Int,
             val itemList: List<ItemUiState>,

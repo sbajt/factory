@@ -1,7 +1,6 @@
 package com.sbajt.matscounter.ui.mappers
 
 import com.sbajt.matscounter.ui.models.ItemGroupType
-import com.sbajt.matscounter.ui.models.toLowerGroupType
 import com.sbajt.matscounter.ui.models.toLowerGroupsList
 import com.sbajt.matscounter.ui.models.views.BuildMaterialListWrapper
 import com.sbajt.matscounter.ui.models.views.BuildMaterialUiState
@@ -9,19 +8,18 @@ import com.sbajt.matscounter.ui.models.views.ItemUiState
 
 class BuildMaterialListWrapperMapper {
 
-    fun mapToUiState(inputData: InputData): BuildMaterialListWrapper {
-
+    fun mapToUiState(inputData: InputData): BuildMaterialListWrapper = with(inputData) {
         val outputBuildMaterialSet = hashSetOf<BuildMaterialUiState>()
         processList(
             outputBuildMaterialSet = outputBuildMaterialSet,
-            buildMaterialList = inputData.initialBuildMaterialSet,
-            multiplier = inputData.initialItemAmount,
-            groupType = inputData.groupType,
-            itemList = inputData.itemList,
+            buildMaterialList = initialBuildMaterialSet,
+            multiplier = initialItemAmount,
+            groupType = groupType,
+            itemList = itemList,
         )
         return BuildMaterialListWrapper(
-            titleText = inputData.titleText,
-            groupType = inputData.groupType,
+            titleText = titleText,
+            groupType = groupType,
             buildMaterialsList = outputBuildMaterialSet.sortedBy { it.name },
         )
     }
@@ -36,13 +34,22 @@ class BuildMaterialListWrapperMapper {
         buildMaterialList.forEach { buildMaterial ->
             val buildMaterialItem = itemList.find { it.name == buildMaterial.name }
             buildMaterialItem?.let {
-                if (isValid(buildMaterialGroupType = buildMaterialItem.groupType, targetGroupType = groupType)) {
-                    addOrUpdateBuildMaterial(outputBuildMaterialSet = outputBuildMaterialSet, buildMaterial = buildMaterial, multiplier = multiplier)
+                if (isValid(
+                        buildMaterialGroupType = buildMaterialItem.groupType,
+                        targetGroupType = groupType
+                    )
+                ) {
+                    addOrUpdateBuildMaterial(
+                        outputBuildMaterialSet = outputBuildMaterialSet,
+                        buildMaterial = buildMaterial,
+                        multiplier = multiplier
+                    )
                 } else {
                     outputBuildMaterialSet.remove(buildMaterial)
                     processList(
                         outputBuildMaterialSet = outputBuildMaterialSet,
-                        buildMaterialList = buildMaterialItem.buildMaterialListWrapper?.buildMaterialsList?.toHashSet() ?: hashSetOf(),
+                        buildMaterialList = buildMaterialItem.buildMaterialListWrapper?.buildMaterialsList?.toHashSet()
+                            ?: hashSetOf(),
                         multiplier = buildMaterial.amount * multiplier,
                         groupType = groupType,
                         itemList = itemList,
@@ -52,9 +59,10 @@ class BuildMaterialListWrapperMapper {
         }
     }
 
-    private fun isValid(buildMaterialGroupType: ItemGroupType, targetGroupType: ItemGroupType?) = buildMaterialGroupType == ItemGroupType.BASIC_MATERIAL
-        || buildMaterialGroupType == targetGroupType
-        || targetGroupType.toLowerGroupsList().contains(buildMaterialGroupType)
+    private fun isValid(buildMaterialGroupType: ItemGroupType, targetGroupType: ItemGroupType?) =
+        buildMaterialGroupType == ItemGroupType.BASIC_MATERIAL
+                || buildMaterialGroupType == targetGroupType
+                || targetGroupType.toLowerGroupsList().contains(buildMaterialGroupType)
 
     private fun addOrUpdateBuildMaterial(
         outputBuildMaterialSet: HashSet<BuildMaterialUiState>,

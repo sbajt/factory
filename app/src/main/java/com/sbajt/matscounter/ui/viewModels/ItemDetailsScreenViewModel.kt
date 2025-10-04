@@ -1,9 +1,9 @@
 package com.sbajt.matscounter.ui.viewModels
 
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.navigation.NavHostController
-import com.sbajt.matscounter.ui.appBarSubject
 import com.sbajt.matscounter.ui.mappers.ItemDetailsScreenMapper
 import com.sbajt.matscounter.ui.models.screens.ItemDetailsScreenUiState
 import com.sbajt.matscounter.ui.navigation.ItemBuildPath
@@ -20,23 +20,24 @@ import org.koin.core.component.inject
 class ItemDetailsScreenViewModel : ViewModel(), KoinComponent {
 
     private val mapper: ItemDetailsScreenMapper by inject()
-    private val useCase: ItemUiStateListUseCase by inject()
+    private val itemsUseCase: ItemUiStateListUseCase by inject()
 
     val uiState = combine(
-        appBarSubject,
         stateSubject,
-        useCase(),
-    ){ appBarState, state, itemList ->
-            mapper.mapToUiState(
-                ItemDetailsScreenMapper.Companion.InputData(
-                    selectedItem = state.selectedItem,
-                    selectedItemAmount = state.selectedItemAmount,
-                    itemList = itemList,
-                    appBarState = appBarState,
-                )
+        itemsUseCase(),
+    ) { state, itemList ->
+        mapper.mapToUiState(
+            ItemDetailsScreenMapper.Companion.InputData(
+                selectedItem = state.selectedItem,
+                selectedItemAmount = state.selectedItemAmount,
+                itemList = itemList,
+                appBarState = state.appBarState,
             )
+        )
+    }
+        .catch {
+            ItemDetailsScreenUiState.Empty
         }
-        .catch { ItemDetailsScreenUiState.Empty }
         .stateIn(
             scope = viewModelScope,
             started = SharingStarted.Companion.WhileSubscribed(5_000),

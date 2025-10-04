@@ -22,7 +22,7 @@ class BuildPathScreenMapper() : KoinComponent {
                 selectedItemAmount = selectedItemAmount,
                 itemList = itemList,
             ),
-            appBarState = appBarState as AppBarState.ItemBuildPath,
+            appBarState = appBarState?.run { this as AppBarState.ItemBuildPath }
         )
     }
 
@@ -66,7 +66,7 @@ class BuildPathScreenMapper() : KoinComponent {
     companion object {
 
         data class InputData(
-            val appBarState: AppBarState,
+            val appBarState: AppBarState?,
             val selectedItem: ItemUiState,
             val selectedItemAmount: Int,
             val itemList: List<ItemUiState>,

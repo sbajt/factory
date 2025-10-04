@@ -35,7 +35,6 @@ import kotlinx.coroutines.launch
 @Composable
 fun ItemListScreen(
     uiState: ItemListScreenUiState,
-
     onItemSelected: OnItemSelected,
     modifier: Modifier = Modifier
 ) {

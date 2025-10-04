@@ -11,7 +11,7 @@ sealed class ItemBuildPathScreenUiState {
     object Empty : ItemBuildPathScreenUiState()
 
     data class Content(
-        val appBarState: AppBarState.ItemBuildPath,
+        val appBarState: AppBarState.ItemBuildPath?,
         val selectedItem: ItemUiState,
         val selectedItemAmount: Int,
         val selectedItemBuildMaterialListWrapperList: List<BuildMaterialListWrapper>,

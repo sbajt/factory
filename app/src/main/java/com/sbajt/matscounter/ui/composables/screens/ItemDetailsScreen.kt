@@ -103,9 +103,7 @@ private fun ContentScreen(
                         containerColor = FactoryTheme.colors.secondary
                     ),
                     shape = FactoryTheme.shape.button,
-                    onClick = {
-                        onNavigate.invoke()
-                    }
+                    onClick = { onNavigate.invoke() }
                 ) {
                     Text(
                         style = FactoryTheme.typography.subtitleTextNormal,

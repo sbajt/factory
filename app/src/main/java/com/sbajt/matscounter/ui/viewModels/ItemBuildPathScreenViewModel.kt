@@ -3,7 +3,6 @@ package com.sbajt.matscounter.ui.viewModels
 import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.sbajt.matscounter.ui.appBarSubject
 import com.sbajt.matscounter.ui.mappers.BuildPathScreenMapper
 import com.sbajt.matscounter.ui.models.screens.ItemBuildPathScreenUiState
 import com.sbajt.matscounter.ui.stateSubject
@@ -19,19 +18,18 @@ class ItemBuildPathScreenViewModel : ViewModel(), KoinComponent {
 
     private val TAG = this::class.java.name
     private val mapper: BuildPathScreenMapper by inject()
-    private val useCase: ItemUiStateListUseCase by inject()
+    private val itemsUseCase: ItemUiStateListUseCase by inject()
 
     val uiState = combine(
-        appBarSubject,
         stateSubject,
-        useCase()
-    ) { appBarState, state, itemList ->
+        itemsUseCase()
+    ) { state, itemList ->
         if (state.selectedItem == null) {
             throw IllegalStateException("Selected item is null")
         }
         mapper.mapToUiState(
             BuildPathScreenMapper.Companion.InputData(
-                appBarState = appBarState,
+                appBarState = state.appBarState,
                 selectedItem = state.selectedItem,
                 selectedItemAmount = state.selectedItemAmount,
                 itemList = itemList,
