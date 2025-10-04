@@ -1,7 +1,7 @@
 package com.sbajt.matscounter.ui.composables.previewProviders
 
 import androidx.compose.ui.tooling.preview.PreviewParameterProvider
-import com.sbajt.matscounter.ui.models.appBars.ActionBarActions
+import com.sbajt.matscounter.ui.models.appBars.AppBarActionType
 import com.sbajt.matscounter.ui.models.appBars.AppBarState
 import com.sbajt.matscounter.ui.models.screens.ItemDetailsScreenUiState
 import com.sbajt.matscounter.ui.models.views.BuildMaterialListWrapper
@@ -9,33 +9,33 @@ import com.sbajt.matscounter.ui.models.views.BuildMaterialListWrapper
 class ItemDetailsUiStateProvider : PreviewParameterProvider<ItemDetailsScreenUiState> {
 
     override val values: Sequence<ItemDetailsScreenUiState> = sequenceOf(
-        tier1ItemDetailsScreenUiState,
-        tier2ItemDetailsScreenUiState,
+        tier1ItemDetailsAppBarScreenUiState,
+        tier2ItemDetailsAppBarScreenUiState,
     )
 
     companion object {
-        val tier1ItemDetailsScreenUiState = ItemDetailsScreenUiState.Content(
+        val tier1ItemDetailsAppBarScreenUiState = ItemDetailsScreenUiState.Content(
             selectedItem = ItemUiStateProvider.Companion.tier2ItemUiState,
             selectedItemAmount = 1,
             selectedItemBuildMaterialListWrapper = BuildMaterialListWrapper(
                 titleText = "Build Materials",
                 buildMaterialsList = BuildMaterialUiStateProvider.mockBuildMaterials()
             ),
-            appBarState = AppBarState.ItemDetails(
+            appBarState = AppBarState.ItemDetailsAppBar(
                 title = "Build path",
-                actionList = listOf(ActionBarActions.SHOW_ITEM_BUILD_PATH)
+                actionList = listOf(AppBarActionType.ACTION_BUILD_PATH)
             )
         )
-        val tier2ItemDetailsScreenUiState = ItemDetailsScreenUiState.Content(
+        val tier2ItemDetailsAppBarScreenUiState = ItemDetailsScreenUiState.Content(
             selectedItem = ItemUiStateProvider.Companion.tier2ItemUiState,
             selectedItemAmount = 1,
             selectedItemBuildMaterialListWrapper = BuildMaterialListWrapper(
                 titleText = "Build materials",
                 buildMaterialsList = BuildMaterialUiStateProvider.mockBuildMaterials()
             ),
-            appBarState = AppBarState.ItemDetails(
+            appBarState = AppBarState.ItemDetailsAppBar(
                 title = "Build path",
-                actionList = listOf(ActionBarActions.SHOW_ITEM_BUILD_PATH)
+                actionList = listOf(AppBarActionType.ACTION_BUILD_PATH)
             )
         )
     }

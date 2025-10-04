@@ -1,5 +1,6 @@
 package com.sbajt.matscounter.ui.mappers
 
+import com.sbajt.matscounter.ui.models.appBars.AppBarActionType
 import com.sbajt.matscounter.ui.models.appBars.AppBarState
 import com.sbajt.matscounter.ui.models.screens.ItemDetailsScreenUiState
 import com.sbajt.matscounter.ui.models.views.ItemUiState
@@ -19,18 +20,21 @@ class ItemDetailsScreenMapper : KoinComponent {
                     titleText = "Build materials",
                     groupType = selectedItem?.groupType,
                     initialItemAmount = selectedItemAmount,
-                    initialBuildMaterialSet = selectedItem?.buildMaterialListWrapper?.buildMaterialsList?.toHashSet() ?: hashSetOf(),
+                    initialBuildMaterialSet = selectedItem?.buildMaterialListWrapper?.buildMaterialsList?.toHashSet()
+                        ?: hashSetOf(),
                     itemList = itemList,
                 )
             ),
-            appBarState = appBarState?.run { this as AppBarState.ItemDetails }
+            appBarState = AppBarState.ItemDetailsAppBar(
+                title = selectedItem?.name ?: "",
+                actionList = listOf(AppBarActionType.ACTION_BUILD_PATH)
+            )
         )
     }
 
     companion object {
 
         data class InputData(
-            val appBarState: AppBarState?,
             val selectedItem: ItemUiState?,
             val selectedItemAmount: Int,
             val itemList: List<ItemUiState>,

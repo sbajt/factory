@@ -32,7 +32,10 @@ class ItemListViewModel : ViewModel(), KoinComponent {
         } else {
             ItemListScreenUiState.Content(
                 itemUiStateList = list.toPersistentList(),
-                appBarState = state.appBarState as? AppBarState.ItemList,
+                appBarState = AppBarState.ItemListAppBar(
+                    title = "Item list",
+                    actionList = emptyList()
+                ),
             )
         }
     }

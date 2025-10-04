@@ -11,7 +11,7 @@ sealed class ItemDetailsScreenUiState {
     object Empty : ItemDetailsScreenUiState()
 
     data class Content(
-        val appBarState: AppBarState.ItemDetails?,
+        val appBarState: AppBarState.ItemDetailsAppBar?,
         val selectedItem: ItemUiState?,
         val selectedItemAmount: Int = 0,
         val selectedItemBuildMaterialListWrapper: BuildMaterialListWrapper? = null,

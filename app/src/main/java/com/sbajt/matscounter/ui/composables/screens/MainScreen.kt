@@ -39,13 +39,7 @@ fun MainScreen(
             val uiState = viewModel.uiState.collectAsStateWithLifecycle().value
             ItemListScreen(
                 uiState = uiState,
-                onItemSelected = { itemName, itemGroupType ->
-                    viewModel.updateSelectedItem(
-                        selectedItemName = itemName,
-                        selectedItemGroupType = itemGroupType,
-                    )
-                    navController.navigate(ItemDetails)
-                }
+                navController = navController,
             )
         }
         composable<ItemDetails> {

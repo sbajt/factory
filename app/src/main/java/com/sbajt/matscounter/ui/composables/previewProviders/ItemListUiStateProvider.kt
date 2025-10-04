@@ -1,7 +1,6 @@
 package com.sbajt.matscounter.ui.composables.previewProviders
 
 import androidx.compose.ui.tooling.preview.PreviewParameterProvider
-import com.sbajt.matscounter.ui.composables.previewProviders.ItemListUiStateProvider.Companion.mockedAppBarState
 import com.sbajt.matscounter.ui.models.ItemGroupType
 import com.sbajt.matscounter.ui.models.appBars.AppBarState
 import com.sbajt.matscounter.ui.models.screens.ItemListScreenUiState
@@ -17,7 +16,7 @@ class ItemListUiStateProvider : PreviewParameterProvider<ItemListScreenUiState> 
 
     companion object {
 
-        val mockedAppBarState = AppBarState.ItemList(
+        val mockedAppBarState = AppBarState.ItemListAppBar(
             title = "Item list",
             actionList = emptyList()
         )

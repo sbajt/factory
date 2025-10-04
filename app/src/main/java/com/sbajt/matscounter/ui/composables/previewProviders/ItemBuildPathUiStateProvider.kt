@@ -24,7 +24,7 @@ class ItemBuildPathUiStateProvider : PreviewParameterProvider<ItemBuildPathScree
                 selectedItemBuildMaterialListWrapperList = mockItemBuildMaterialListWrapperList(
                     selectedItemGroupType = tier1Item.groupType
                 ),
-                appBarState = AppBarState.ItemBuildPath(
+                appBarState = AppBarState.ItemBuildPathAppBar(
                     title = "Build path",
                     actionList = emptyList()
                 )
@@ -38,7 +38,7 @@ class ItemBuildPathUiStateProvider : PreviewParameterProvider<ItemBuildPathScree
                 selectedItemBuildMaterialListWrapperList = mockItemBuildMaterialListWrapperList(
                     selectedItemGroupType = tier2Item.groupType
                 ),
-                appBarState = AppBarState.ItemBuildPath(
+                appBarState = AppBarState.ItemBuildPathAppBar(
                     title = "Build path",
                     actionList = emptyList()
                 )
@@ -51,7 +51,7 @@ class ItemBuildPathUiStateProvider : PreviewParameterProvider<ItemBuildPathScree
                 selectedItemBuildMaterialListWrapperList = mockItemBuildMaterialListWrapperList(
                     selectedItemGroupType = tier3Item.groupType
                 ),
-                appBarState = AppBarState.ItemBuildPath(
+                appBarState = AppBarState.ItemBuildPathAppBar(
                     title = "Build path",
                     actionList = emptyList()
                 )
@@ -64,7 +64,7 @@ class ItemBuildPathUiStateProvider : PreviewParameterProvider<ItemBuildPathScree
                 selectedItemBuildMaterialListWrapperList = mockItemBuildMaterialListWrapperList(
                     selectedItemGroupType = tier4Item.groupType
                 ),
-                appBarState = AppBarState.ItemBuildPath(
+                appBarState = AppBarState.ItemBuildPathAppBar(
                     title = "Build path",
                     actionList = emptyList()
                 )

@@ -22,7 +22,10 @@ class BuildPathScreenMapper() : KoinComponent {
                 selectedItemAmount = selectedItemAmount,
                 itemList = itemList,
             ),
-            appBarState = appBarState?.run { this as AppBarState.ItemBuildPath }
+            appBarState = AppBarState.ItemBuildPathAppBar(
+                title = selectedItem.name,
+                actionList = emptyList()
+            )
         )
     }
 
@@ -52,7 +55,8 @@ class BuildPathScreenMapper() : KoinComponent {
                     inputData = BuildMaterialListWrapperMapper.Companion.InputData(
                         titleText = groupType.getName(),
                         groupType = groupType,
-                        initialBuildMaterialSet = selectedItem.buildMaterialListWrapper?.buildMaterialsList?.toHashSet() ?: hashSetOf(),
+                        initialBuildMaterialSet = selectedItem.buildMaterialListWrapper?.buildMaterialsList?.toHashSet()
+                            ?: hashSetOf(),
                         itemList = itemList,
                         initialItemAmount = selectedItemAmount,
                     )
@@ -66,7 +70,6 @@ class BuildPathScreenMapper() : KoinComponent {
     companion object {
 
         data class InputData(
-            val appBarState: AppBarState?,
             val selectedItem: ItemUiState,
             val selectedItemAmount: Int,
             val itemList: List<ItemUiState>,

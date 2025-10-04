@@ -29,7 +29,6 @@ class ItemBuildPathScreenViewModel : ViewModel(), KoinComponent {
         }
         mapper.mapToUiState(
             BuildPathScreenMapper.Companion.InputData(
-                appBarState = state.appBarState,
                 selectedItem = state.selectedItem,
                 selectedItemAmount = state.selectedItemAmount,
                 itemList = itemList,

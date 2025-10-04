@@ -31,7 +31,6 @@ class ItemDetailsScreenViewModel : ViewModel(), KoinComponent {
                 selectedItem = state.selectedItem,
                 selectedItemAmount = state.selectedItemAmount,
                 itemList = itemList,
-                appBarState = state.appBarState,
             )
         )
     }
