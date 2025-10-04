@@ -49,6 +49,20 @@ class MainActivity : ComponentActivity() {
         }
     }
 
+    @Composable
+    private fun setupContent() {
+        FactoryTheme {
+            val topPadding = WindowInsets.statusBars.asPaddingValues()
+            val bottomPadding = WindowInsets.navigationBars.asPaddingValues()
+
+            navController = rememberNavController()
+            MainScreen(
+                modifier = Modifier.padding(top = topPadding.calculateTopPadding(), bottom = bottomPadding.calculateBottomPadding()),
+                navController = navController,
+            )
+        }
+    }
+
     override fun onBackPressed() {
         launchOnBackPressed()
         super.onBackPressed()
@@ -64,20 +78,6 @@ class MainActivity : ComponentActivity() {
                     }
                 }
             }
-        }
-    }
-
-    @Composable
-    private fun setupContent() {
-        FactoryTheme {
-            val topPadding = WindowInsets.statusBars.asPaddingValues()
-            val bottomPadding = WindowInsets.navigationBars.asPaddingValues()
-
-            navController = rememberNavController()
-            MainScreen(
-                modifier = Modifier.padding(top = topPadding.calculateTopPadding(), bottom = bottomPadding.calculateBottomPadding()),
-                navController = navController,
-            )
         }
     }
 }

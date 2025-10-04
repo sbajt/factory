@@ -21,6 +21,7 @@ import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import com.sbajt.matscounter.ui.composables.fadingEdge
 import com.sbajt.matscounter.ui.composables.previewProviders.ItemBuildPathUiStateProvider
+import com.sbajt.matscounter.ui.composables.verticalScrollbar
 import com.sbajt.matscounter.ui.composables.views.Arrow
 import com.sbajt.matscounter.ui.composables.views.BuildMaterialView
 import com.sbajt.matscounter.ui.composables.views.ItemView
@@ -51,15 +52,18 @@ fun ContentScreen(
     val lazyListState = rememberLazyListState()
     Box(
         modifier = modifier.fadingEdge(
-            orientation = Orientation.Vertical,
             color = FactoryTheme.colors.fadingEdge,
             length = FactoryTheme.dimensions.fadingEdge,
-            scrollableState = lazyListState,
+            orientation = Orientation.Vertical,
         )
     ) {
         LazyColumn(
             modifier = Modifier
                 .fillMaxSize()
+                .verticalScrollbar(
+                    listState = lazyListState,
+                    color = FactoryTheme.colors.accent,
+                )
                 .background(FactoryTheme.colors.background),
             state = lazyListState,
         ) {
@@ -95,7 +99,7 @@ fun ContentScreen(
                     item("group_$index") {
                         Text(
                             modifier = Modifier.padding(
-                                bottom = FactoryTheme.dimensions.small,
+                                bottom = FactoryTheme.dimensions.medium,
                                 start = FactoryTheme.dimensions.contentPadding,
                                 end = FactoryTheme.dimensions.contentPadding
                             ),

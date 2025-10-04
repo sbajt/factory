@@ -6,6 +6,7 @@ import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.Dp
+import androidx.compose.ui.unit.DpSize
 
 data class ColorScheme(
     val primary: Color,
@@ -39,6 +40,7 @@ data class SizeScheme(
     val iconSmall: Dp,
     val icon: Dp,
     val tab: Dp,
+    val actionBarAction: Dp,
     val gridCell: Dp,
     val contentPadding: Dp,
     val fadingEdge: Dp,
@@ -85,6 +87,7 @@ val localSizeScheme = staticCompositionLocalOf {
         iconSmall = Dp.Unspecified,
         icon = Dp.Unspecified,
         tab = Dp.Unspecified,
+        actionBarAction = Dp.Unspecified,
         gridCell = Dp.Unspecified,
         contentPadding = Dp.Unspecified,
         fadingEdge = Dp.Unspecified,

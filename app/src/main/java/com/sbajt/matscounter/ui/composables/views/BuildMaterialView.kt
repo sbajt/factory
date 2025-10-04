@@ -26,7 +26,7 @@ fun BuildMaterialView(
         modifier = modifier
             .fillMaxWidth()
             .background(FactoryTheme.colors.background)
-            .padding(all = FactoryTheme.dimensions.small),
+            .padding(all = FactoryTheme.dimensions.medium),
     ) {
         val name by remember { mutableStateOf(uiState.name ?: "") }
         Text(

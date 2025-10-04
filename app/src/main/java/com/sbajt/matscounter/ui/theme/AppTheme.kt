@@ -75,12 +75,13 @@ val shape = ShapeScheme(
 )
 
 val size = SizeScheme(
-    small = 8.dp,
+    small = 6.dp,
     medium = 8.dp,
     large = 16.dp,
     iconSmall = 28.dp,
     icon = 80.dp,
     tab = 2.dp,
+    actionBarAction = 32.dp,
     gridCell = 90.dp,
     contentPadding = 16.dp,
     fadingEdge = 20.dp,

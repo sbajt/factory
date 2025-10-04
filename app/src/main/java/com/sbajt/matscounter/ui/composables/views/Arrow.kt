@@ -23,7 +23,7 @@ fun Arrow(modifier: Modifier = Modifier) {
     ) {
         Image(
             modifier = Modifier
-                .padding(FactoryTheme.dimensions.small)
+                .padding(FactoryTheme.dimensions.medium)
                 .size(FactoryTheme.dimensions.iconSmall),
             painter = painterResource(id = R.drawable.ic_arrow),
             contentDescription = "Arrow icon",

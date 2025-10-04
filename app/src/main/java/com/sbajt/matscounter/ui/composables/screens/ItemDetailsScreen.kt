@@ -9,6 +9,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
@@ -45,8 +46,24 @@ fun ItemDetailsScreen(
     }
 }
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 private fun ContentScreen(
+    uiState: ItemDetailsScreenUiState.Content,
+    onCountChange: OnCountChange,
+    onNavigate: OnNavigate,
+    modifier: Modifier
+) {
+    Content(
+        modifier = modifier,
+        uiState = uiState,
+        onCountChange = onCountChange,
+        onNavigate = onNavigate,
+    )
+}
+
+@Composable
+private fun Content(
     uiState: ItemDetailsScreenUiState.Content,
     onCountChange: OnCountChange,
     onNavigate: OnNavigate,
@@ -77,7 +94,7 @@ private fun ContentScreen(
     if (uiState.selectedItem?.groupType != ItemGroupType.BASIC_MATERIAL) {
         with(uiState.selectedItemBuildMaterialListWrapper) {
             Text(
-                modifier = Modifier.padding(bottom = FactoryTheme.dimensions.small),
+                modifier = Modifier.padding(bottom = FactoryTheme.dimensions.medium),
                 style = FactoryTheme.typography.titleTextNormal,
                 color = FactoryTheme.colors.primary,
                 text = remember { mutableStateOf(this?.titleText ?: "") }.value,
