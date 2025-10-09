@@ -6,12 +6,14 @@ import androidx.lifecycle.viewModelScope
 import androidx.navigation.NavHostController
 import com.sbajt.matscounter.ui.mappers.ItemListScreenMapper
 import com.sbajt.matscounter.ui.models.ItemGroupType
+import com.sbajt.matscounter.ui.models.screens.BaseScreeUiState
 import com.sbajt.matscounter.ui.models.screens.ItemListScreenUiState
 import com.sbajt.matscounter.ui.navigation.ItemDetails
 import com.sbajt.matscounter.ui.stateSubject
 import com.sbajt.matscounter.ui.useCases.ItemUiStateListUseCase
 import kotlinx.coroutines.delay
-import kotlinx.coroutines.flow.SharingStarted.Companion.WhileSubscribed
+import kotlinx.coroutines.flow.SharingStarted
+import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.flow.stateIn
@@ -30,21 +32,20 @@ class ItemListScreenViewModel : ViewModel(), KoinComponent {
         stateSubject,
     ) { list, state ->
         delay(1_000)
-        if (list.isEmpty()) {
-            ItemListScreenUiState.Empty
-        } else {
-            Log.d("ItemListViewModel", "Using ItemListScreenMapper...")
-            mapper.mapToUiState(
-                inputData = ItemListScreenMapper.Companion.InputData(
-                    itemList = list
-                )
+        Log.d("ItemListViewModel", "Using ItemListScreenMapper...")
+        mapper.mapToUiState(
+            inputData = ItemListScreenMapper.Companion.InputData(
+                itemList = list
             )
-        }
+        )
     }
+        .catch {
+            BaseScreeUiState.Empty
+        }
         .stateIn(
-            viewModelScope,
-            WhileSubscribed(5_000),
-            ItemListScreenUiState.Loading
+            scope = viewModelScope,
+            started = SharingStarted.Companion.WhileSubscribed(5_000),
+            initialValue = BaseScreeUiState.Loading,
         )
 
     fun updateSelectedItem(

@@ -18,7 +18,7 @@ class ItemBuildPathUiStateProvider : PreviewParameterProvider<ItemBuildPathScree
 
         val tier1Item = ItemUiStateProvider.tier1ItemUiState
         val defaultBuildPathUiState: ItemBuildPathScreenUiState =
-            ItemBuildPathScreenUiState.Content(
+            ItemBuildPathScreenUiState(
                 selectedItem = tier1Item,
                 selectedItemAmount = 1,
                 selectedItemBuildMaterialListWrapperList = mockItemBuildMaterialListWrapperList(
@@ -32,7 +32,7 @@ class ItemBuildPathUiStateProvider : PreviewParameterProvider<ItemBuildPathScree
 
         val tier2Item = ItemUiStateProvider.tier2ItemUiState
         val tier2BuildPathUiState: ItemBuildPathScreenUiState =
-            ItemBuildPathScreenUiState.Content(
+            ItemBuildPathScreenUiState(
                 selectedItem = tier2Item,
                 selectedItemAmount = 1,
                 selectedItemBuildMaterialListWrapperList = mockItemBuildMaterialListWrapperList(
@@ -45,7 +45,7 @@ class ItemBuildPathUiStateProvider : PreviewParameterProvider<ItemBuildPathScree
             )
         val tier3Item = ItemUiStateProvider.tier3ItemUiState
         val tier3BuildPathUiState: ItemBuildPathScreenUiState =
-            ItemBuildPathScreenUiState.Content(
+            ItemBuildPathScreenUiState(
                 selectedItem = tier3Item,
                 selectedItemAmount = 1,
                 selectedItemBuildMaterialListWrapperList = mockItemBuildMaterialListWrapperList(
@@ -58,7 +58,7 @@ class ItemBuildPathUiStateProvider : PreviewParameterProvider<ItemBuildPathScree
             )
         val tier4Item = ItemUiStateProvider.tier4ItemUiState
         val tier4BuildPathUiState: ItemBuildPathScreenUiState =
-            ItemBuildPathScreenUiState.Content(
+            ItemBuildPathScreenUiState(
                 selectedItem = tier4Item,
                 selectedItemAmount = 1,
                 selectedItemBuildMaterialListWrapperList = mockItemBuildMaterialListWrapperList(

@@ -5,7 +5,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.navigation.NavHostController
 import com.sbajt.matscounter.ui.mappers.ItemDetailsScreenMapper
-import com.sbajt.matscounter.ui.models.screens.ItemDetailsScreenUiState
+import com.sbajt.matscounter.ui.models.screens.BaseScreeUiState
 import com.sbajt.matscounter.ui.navigation.ItemBuildPath
 import com.sbajt.matscounter.ui.stateSubject
 import com.sbajt.matscounter.ui.useCases.ItemUiStateListUseCase
@@ -26,8 +26,8 @@ class ItemDetailsScreenViewModel : ViewModel(), KoinComponent {
         stateSubject,
         itemsUseCase(),
     ) { state, itemList ->
-        if(state.selectedItem == null) {
-            ItemDetailsScreenUiState.Empty
+        if (state.selectedItem == null) {
+            BaseScreeUiState.Empty
         } else {
             Log.d("ItemDetailsScreenViewModel", "Using ItemDetailsScreenMapper...")
             mapper.mapToUiState(
@@ -40,12 +40,12 @@ class ItemDetailsScreenViewModel : ViewModel(), KoinComponent {
         }
     }
         .catch {
-            ItemDetailsScreenUiState.Empty
+            BaseScreeUiState.Empty
         }
         .stateIn(
             scope = viewModelScope,
             started = SharingStarted.Companion.WhileSubscribed(5_000),
-            initialValue = ItemDetailsScreenUiState.Loading,
+            initialValue = BaseScreeUiState.Loading,
         )
 
     fun updateSelectedItemAmount(newItemCount: Int) {

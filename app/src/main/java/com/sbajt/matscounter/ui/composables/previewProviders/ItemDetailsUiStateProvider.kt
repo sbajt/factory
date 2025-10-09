@@ -14,7 +14,7 @@ class ItemDetailsUiStateProvider : PreviewParameterProvider<ItemDetailsScreenUiS
     )
 
     companion object {
-        val tier1ItemDetailsAppBarScreenUiState = ItemDetailsScreenUiState.Content(
+        val tier1ItemDetailsAppBarScreenUiState = ItemDetailsScreenUiState(
             selectedItem = ItemUiStateProvider.Companion.tier2ItemUiState,
             selectedItemAmount = 1,
             selectedItemBuildMaterialListWrapper = BuildMaterialListWrapper(
@@ -26,7 +26,7 @@ class ItemDetailsUiStateProvider : PreviewParameterProvider<ItemDetailsScreenUiS
                 actionList = listOf(AppBarActionType.ACTION_BUILD_PATH)
             )
         )
-        val tier2ItemDetailsAppBarScreenUiState = ItemDetailsScreenUiState.Content(
+        val tier2ItemDetailsAppBarScreenUiState = ItemDetailsScreenUiState(
             selectedItem = ItemUiStateProvider.Companion.tier2ItemUiState,
             selectedItemAmount = 1,
             selectedItemBuildMaterialListWrapper = BuildMaterialListWrapper(

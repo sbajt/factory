@@ -30,6 +30,7 @@ import com.sbajt.matscounter.ui.models.views.InputSectionUiState
 import com.sbajt.matscounter.ui.theme.FactoryTheme
 
 typealias OnCountChange = (Int) -> Unit
+
 @Composable
 fun ItemDetailsScreen(
     uiState: ItemDetailsScreenUiState,
@@ -38,24 +39,20 @@ fun ItemDetailsScreen(
     onNavigate: OnNavigate,
     modifier: Modifier = Modifier,
 ) {
-    when (uiState) {
-        ItemDetailsScreenUiState.Empty -> EmptyScreen()
-        ItemDetailsScreenUiState.Loading -> LoadingScreen()
-        is ItemDetailsScreenUiState.Content -> ContentScreen(
-            modifier = modifier,
-            onCountChange = onCountChange,
-            onNavigate = onNavigate,
-            navController = navController,
-            uiState = uiState,
-        )
+    ContentScreen(
+        modifier = modifier,
+        onCountChange = onCountChange,
+        onNavigate = onNavigate,
+        navController = navController,
+        uiState = uiState,
+    )
 
-    }
 }
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 private fun ContentScreen(
-    uiState: ItemDetailsScreenUiState.Content,
+    uiState: ItemDetailsScreenUiState,
     onCountChange: OnCountChange,
     onNavigate: OnNavigate,
     navController: NavHostController,
@@ -77,7 +74,7 @@ private fun ContentScreen(
 
 @Composable
 private fun Content(
-    uiState: ItemDetailsScreenUiState.Content,
+    uiState: ItemDetailsScreenUiState,
     onCountChange: OnCountChange,
     onNavigate: OnNavigate,
     modifier: Modifier

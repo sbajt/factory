@@ -33,20 +33,15 @@ fun ItemBuildPathScreen(
     uiState: ItemBuildPathScreenUiState,
     modifier: Modifier = Modifier,
 ) {
-    when (uiState) {
-        ItemBuildPathScreenUiState.Empty -> EmptyScreen()
-        ItemBuildPathScreenUiState.Loading -> LoadingScreen()
-        is ItemBuildPathScreenUiState.Content -> ContentScreen(
-            modifier = modifier,
-            uiState = uiState,
-        )
-
-    }
+    ContentScreen(
+        modifier = modifier,
+        uiState = uiState,
+    )
 }
 
 @Composable
-fun ContentScreen(
-    uiState: ItemBuildPathScreenUiState.Content,
+private fun ContentScreen(
+    uiState: ItemBuildPathScreenUiState,
     modifier: Modifier,
 ) {
     val lazyListState = rememberLazyListState()
@@ -73,8 +68,7 @@ fun ContentScreen(
                         .background(FactoryTheme.colors.background)
                         .fillMaxWidth(),
                     horizontalArrangement = Arrangement.spacedBy(
-                        FactoryTheme.dimensions.medium,
-                        Alignment.CenterHorizontally
+                        FactoryTheme.dimensions.medium, Alignment.CenterHorizontally
                     ),
                     verticalAlignment = Alignment.CenterVertically
                 ) {

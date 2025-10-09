@@ -12,7 +12,7 @@ class ItemDetailsScreenMapper : KoinComponent {
     private val matsWrapperMapper: BuildMaterialListWrapperMapper by inject()
 
     fun mapToUiState(inputData: InputData): ItemDetailsScreenUiState = with(inputData) {
-        ItemDetailsScreenUiState.Content(
+        ItemDetailsScreenUiState(
             selectedItem = selectedItem,
             selectedItemAmount = selectedItemAmount,
             selectedItemBuildMaterialListWrapper = matsWrapperMapper.mapToUiState(

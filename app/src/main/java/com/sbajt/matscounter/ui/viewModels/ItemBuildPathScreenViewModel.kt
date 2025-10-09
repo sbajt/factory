@@ -3,7 +3,7 @@ package com.sbajt.matscounter.ui.viewModels
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.sbajt.matscounter.ui.mappers.BuildPathScreenMapper
-import com.sbajt.matscounter.ui.models.screens.ItemBuildPathScreenUiState
+import com.sbajt.matscounter.ui.models.screens.BaseScreeUiState
 import com.sbajt.matscounter.ui.stateSubject
 import com.sbajt.matscounter.ui.useCases.ItemUiStateListUseCase
 import kotlinx.coroutines.flow.SharingStarted
@@ -14,8 +14,6 @@ import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 
 class ItemBuildPathScreenViewModel : ViewModel(), KoinComponent {
-
-    private val TAG = this::class.java.name
     private val mapper: BuildPathScreenMapper by inject()
     private val itemsUseCase: ItemUiStateListUseCase by inject()
 
@@ -24,7 +22,7 @@ class ItemBuildPathScreenViewModel : ViewModel(), KoinComponent {
         itemsUseCase()
     ) { state, itemList ->
         if (state.selectedItem == null) {
-            ItemBuildPathScreenUiState.Empty
+            BaseScreeUiState.Empty
         } else {
             mapper.mapToUiState(
                 BuildPathScreenMapper.Companion.InputData(
@@ -36,11 +34,11 @@ class ItemBuildPathScreenViewModel : ViewModel(), KoinComponent {
         }
     }
         .catch {
-            ItemBuildPathScreenUiState.Empty
+            BaseScreeUiState.Empty
         }
         .stateIn(
             scope = viewModelScope,
             started = SharingStarted.Companion.WhileSubscribed(5_000),
-            initialValue = ItemBuildPathScreenUiState.Loading,
+            initialValue = BaseScreeUiState.Loading,
         )
 }

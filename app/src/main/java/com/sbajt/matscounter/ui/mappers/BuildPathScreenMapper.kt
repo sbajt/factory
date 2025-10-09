@@ -14,7 +14,7 @@ class BuildPathScreenMapper() : KoinComponent {
     private val matsWrapperMapper: BuildMaterialListWrapperMapper by inject()
 
     fun mapToUiState(inputData: InputData): ItemBuildPathScreenUiState = with(inputData) {
-        ItemBuildPathScreenUiState.Content(
+        ItemBuildPathScreenUiState(
             selectedItem = selectedItem,
             selectedItemAmount = selectedItemAmount,
             selectedItemBuildMaterialListWrapperList = createBuildPathWrapperList(

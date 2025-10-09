@@ -21,12 +21,12 @@ class ItemListUiStateProvider : PreviewParameterProvider<ItemListScreenUiState> 
             actionList = emptyList()
         )
 
-        val defaultGridSectionUiState = ItemListScreenUiState.Content(
+        val defaultGridSectionUiState = ItemListScreenUiState(
             appBarState = mockedAppBarState,
             itemUiStateList = ItemUiStateProvider.mockItemUiStateList(),
         )
 
-        val basicMaterialsGridSectionUiState = ItemListScreenUiState.Content(
+        val basicMaterialsGridSectionUiState = ItemListScreenUiState(
             appBarState = mockedAppBarState,
             itemUiStateList = ItemUiStateProvider.mockItemUiStateList(6)
                 .map {
@@ -34,7 +34,7 @@ class ItemListUiStateProvider : PreviewParameterProvider<ItemListScreenUiState> 
                 }.toPersistentList(),
         )
 
-        val tier1GridSectionUiState = ItemListScreenUiState.Content(
+        val tier1GridSectionUiState = ItemListScreenUiState(
             appBarState = mockedAppBarState,
             itemUiStateList = ItemUiStateProvider.mockItemUiStateList(12)
                 .map {

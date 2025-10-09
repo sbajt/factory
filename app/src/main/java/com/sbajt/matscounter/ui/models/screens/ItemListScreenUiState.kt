@@ -5,14 +5,9 @@ import com.sbajt.matscounter.ui.models.views.ItemUiState
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.persistentListOf
 
-sealed class ItemListScreenUiState {
+class ItemListScreenUiState(
+    val appBarState: AppBarState.ItemListAppBar? = null,
+    val itemUiStateList: ImmutableList<ItemUiState> = persistentListOf(),
+): BaseScreeUiState
 
-    object Loading : ItemListScreenUiState()
 
-    object Empty : ItemListScreenUiState()
-
-    data class Content(
-        val appBarState: AppBarState.ItemListAppBar?,
-        val itemUiStateList: ImmutableList<ItemUiState> = persistentListOf(),
-    ) : ItemListScreenUiState()
-}

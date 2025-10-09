@@ -1,7 +1,6 @@
 package com.sbajt.matscounter.ui.composables.screens
 
 import androidx.compose.foundation.background
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
@@ -37,6 +36,7 @@ import com.sbajt.matscounter.ui.theme.FactoryTheme
 import kotlinx.coroutines.launch
 
 typealias OnItemSelected = (String, ItemGroupType) -> Unit
+
 @Composable
 fun ItemListScreen(
     uiState: ItemListScreenUiState,
@@ -44,21 +44,17 @@ fun ItemListScreen(
     onItemSelected: OnItemSelected,
     modifier: Modifier = Modifier
 ) {
-    when (uiState) {
-        ItemListScreenUiState.Empty -> EmptyScreen()
-        ItemListScreenUiState.Loading -> LoadingScreen()
-        is ItemListScreenUiState.Content -> ContentScreen(
-            modifier = modifier,
-            uiState = uiState,
-            navController = navController,
-            onItemSelected = onItemSelected,
-        )
-    }
+    ContentScreen(
+        modifier = modifier,
+        uiState = uiState,
+        navController = navController,
+        onItemSelected = onItemSelected,
+    )
 }
 
 @Composable
 private fun ContentScreen(
-    uiState: ItemListScreenUiState.Content,
+    uiState: ItemListScreenUiState,
     navController: NavHostController,
     onItemSelected: OnItemSelected,
     modifier: Modifier = Modifier,
@@ -78,7 +74,7 @@ private fun ContentScreen(
 
 @Composable
 private fun Content(
-    uiState: ItemListScreenUiState.Content,
+    uiState: ItemListScreenUiState,
     onItemSelected: OnItemSelected,
     modifier: Modifier = Modifier
 ) {

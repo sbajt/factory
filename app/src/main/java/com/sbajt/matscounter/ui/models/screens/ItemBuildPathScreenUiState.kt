@@ -4,16 +4,9 @@ import com.sbajt.matscounter.ui.models.appBars.AppBarState
 import com.sbajt.matscounter.ui.models.views.BuildMaterialListWrapper
 import com.sbajt.matscounter.ui.models.views.ItemUiState
 
-sealed class ItemBuildPathScreenUiState {
-
-    object Loading : ItemBuildPathScreenUiState()
-
-    object Empty : ItemBuildPathScreenUiState()
-
-    data class Content(
-        val appBarState: AppBarState.ItemBuildPathAppBar?,
-        val selectedItem: ItemUiState,
-        val selectedItemAmount: Int,
-        val selectedItemBuildMaterialListWrapperList: List<BuildMaterialListWrapper>,
-    ) : ItemBuildPathScreenUiState()
-}
+data class ItemBuildPathScreenUiState(
+    val appBarState: AppBarState.ItemBuildPathAppBar? = null,
+    val selectedItem: ItemUiState,
+    val selectedItemAmount: Int,
+    val selectedItemBuildMaterialListWrapperList: List<BuildMaterialListWrapper>,
+) : BaseScreeUiState

@@ -31,14 +31,6 @@ fun ItemGroupType?.getName() = this
     ?.replace("_", " ")
     ?: ""
 
-fun ItemGroupType?.isGreater(other: ItemGroupType?) = when (this) {
-    ItemGroupType.TIER1 -> other == ItemGroupType.BASIC_MATERIAL
-    ItemGroupType.TIER2 -> other == ItemGroupType.TIER1 || other == ItemGroupType.BASIC_MATERIAL
-    ItemGroupType.TIER3 -> other == ItemGroupType.TIER2 || other == ItemGroupType.TIER1 || other == ItemGroupType.BASIC_MATERIAL
-    ItemGroupType.TIER4 -> other == ItemGroupType.TIER3 || other == ItemGroupType.TIER2 || other == ItemGroupType.TIER1 || other == ItemGroupType.BASIC_MATERIAL
-    else -> false
-}
-
 fun ItemGroupType?.toLowerGroupType(): ItemGroupType = when (this) {
     ItemGroupType.TIER1 -> ItemGroupType.BASIC_MATERIAL
     ItemGroupType.TIER2 -> ItemGroupType.TIER1

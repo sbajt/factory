@@ -9,7 +9,7 @@ import org.koin.core.component.KoinComponent
 class ItemListScreenMapper : KoinComponent {
 
     fun mapToUiState(inputData: InputData): ItemListScreenUiState = with(inputData) {
-        ItemListScreenUiState.Content(
+        ItemListScreenUiState(
             itemUiStateList = itemList.toPersistentList(),
             appBarState = AppBarState.ItemListAppBar(
                 title = "Item list",
