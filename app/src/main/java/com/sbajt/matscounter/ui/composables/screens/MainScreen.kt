@@ -16,9 +16,9 @@ import com.sbajt.matscounter.ui.navigation.ItemList
 import com.sbajt.matscounter.ui.theme.FactoryTheme
 import com.sbajt.matscounter.ui.viewModels.ItemBuildPathScreenViewModel
 import com.sbajt.matscounter.ui.viewModels.ItemDetailsScreenViewModel
-import com.sbajt.matscounter.ui.viewModels.ItemListViewModel
+import com.sbajt.matscounter.ui.viewModels.ItemListScreenViewModel
 
-typealias OnItemSelected = (String?, ItemGroupType?) -> Unit
+typealias OnItemSelected = (String, ItemGroupType) -> Unit
 typealias OnCountChange = (Int) -> Unit
 typealias OnNavigate = () -> Unit
 
@@ -29,16 +29,20 @@ fun MainScreen(
     modifier: Modifier = Modifier,
 ) {
     NavHost(
-        modifier = modifier.background(FactoryTheme.colors.background),
         navController = navController,
         startDestination = ItemList
     ) {
 
         composable<ItemList> {
-            val viewModel = viewModel<ItemListViewModel>()
+            val viewModel = viewModel<ItemListScreenViewModel>()
             val uiState = viewModel.uiState.collectAsStateWithLifecycle().value
             ItemListScreen(
+                modifier = modifier.background(FactoryTheme.colors.background),
                 uiState = uiState,
+                onNavigate = {
+                    viewModel.navigateToItemDetails(navController = navController)
+                },
+                onItemSelected = viewModel::updateSelectedItem,
                 navController = navController,
             )
         }
@@ -47,18 +51,20 @@ fun MainScreen(
             val uiState = viewModel.uiState.collectAsStateWithLifecycle().value
 
             ItemDetailsScreen(
+                modifier = modifier.background(FactoryTheme.colors.background),
                 uiState = uiState,
                 onCountChange = viewModel::updateSelectedItemAmount,
+                navController = navController,
                 onNavigate = {
                     viewModel.navigateToBuildPath(navController = navController)
                 }
-
             )
         }
         composable<ItemBuildPath> {
             val uiState =
                 viewModel<ItemBuildPathScreenViewModel>().uiState.collectAsStateWithLifecycle().value
             ItemBuildPathScreen(
+                modifier = modifier.background(FactoryTheme.colors.background),
                 uiState = uiState
             )
         }

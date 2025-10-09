@@ -1,6 +1,5 @@
 package com.sbajt.matscounter.ui.viewModels
 
-import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.sbajt.matscounter.ui.mappers.BuildPathScreenMapper
@@ -25,18 +24,18 @@ class ItemBuildPathScreenViewModel : ViewModel(), KoinComponent {
         itemsUseCase()
     ) { state, itemList ->
         if (state.selectedItem == null) {
-            throw IllegalStateException("Selected item is null")
-        }
-        mapper.mapToUiState(
-            BuildPathScreenMapper.Companion.InputData(
-                selectedItem = state.selectedItem,
-                selectedItemAmount = state.selectedItemAmount,
-                itemList = itemList,
+            ItemBuildPathScreenUiState.Empty
+        } else {
+            mapper.mapToUiState(
+                BuildPathScreenMapper.Companion.InputData(
+                    selectedItem = state.selectedItem,
+                    selectedItemAmount = state.selectedItemAmount,
+                    itemList = itemList,
+                )
             )
-        )
+        }
     }
         .catch {
-            it.stackTrace.forEach { Log.e(TAG, it.toString()) }
             ItemBuildPathScreenUiState.Empty
         }
         .stateIn(

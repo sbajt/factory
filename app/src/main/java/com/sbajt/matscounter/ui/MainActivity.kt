@@ -52,12 +52,11 @@ class MainActivity : ComponentActivity() {
     @Composable
     private fun setupContent() {
         FactoryTheme {
-            val topPadding = WindowInsets.statusBars.asPaddingValues()
             val bottomPadding = WindowInsets.navigationBars.asPaddingValues()
 
             navController = rememberNavController()
             MainScreen(
-                modifier = Modifier.padding(top = topPadding.calculateTopPadding(), bottom = bottomPadding.calculateBottomPadding()),
+                modifier = Modifier.padding(bottom = bottomPadding.calculateBottomPadding()),
                 navController = navController,
             )
         }

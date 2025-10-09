@@ -29,12 +29,16 @@ import com.sbajt.matscounter.ui.theme.size
 @Composable
 fun ItemView(
     uiState: ItemUiState?,
-    onItemSelected: (String?, ItemGroupType?) -> Unit,
+    onItemSelected: (String, ItemGroupType) -> Unit,
     modifier: Modifier = Modifier
 ) {
     Column(
         modifier = modifier.clickable(
-            onClick = { onItemSelected(uiState?.name, uiState?.groupType) }
+            onClick = {
+                if (uiState?.name != null) {
+                    onItemSelected(uiState.name, uiState.groupType)
+                }
+            }
         ),
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {

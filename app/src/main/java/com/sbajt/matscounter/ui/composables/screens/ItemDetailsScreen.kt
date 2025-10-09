@@ -17,11 +17,14 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.compose.ui.tooling.preview.PreviewParameter
+import androidx.navigation.NavHostController
+import androidx.navigation.compose.rememberNavController
 import com.sbajt.matscounter.ui.composables.previewProviders.ItemDetailsUiStateProvider
 import com.sbajt.matscounter.ui.composables.views.BuildMaterialView
 import com.sbajt.matscounter.ui.composables.views.InputSection
 import com.sbajt.matscounter.ui.composables.views.ItemView
 import com.sbajt.matscounter.ui.models.ItemGroupType
+import com.sbajt.matscounter.ui.models.appBars.AppBarState
 import com.sbajt.matscounter.ui.models.screens.ItemDetailsScreenUiState
 import com.sbajt.matscounter.ui.models.views.InputSectionUiState
 import com.sbajt.matscounter.ui.theme.FactoryTheme
@@ -30,6 +33,7 @@ import com.sbajt.matscounter.ui.theme.FactoryTheme
 fun ItemDetailsScreen(
     uiState: ItemDetailsScreenUiState,
     onCountChange: OnCountChange,
+    navController: NavHostController,
     onNavigate: OnNavigate,
     modifier: Modifier = Modifier,
 ) {
@@ -40,6 +44,7 @@ fun ItemDetailsScreen(
             modifier = modifier,
             onCountChange = onCountChange,
             onNavigate = onNavigate,
+            navController = navController,
             uiState = uiState,
         )
 
@@ -52,14 +57,21 @@ private fun ContentScreen(
     uiState: ItemDetailsScreenUiState.Content,
     onCountChange: OnCountChange,
     onNavigate: OnNavigate,
+    navController: NavHostController,
     modifier: Modifier
 ) {
-    Content(
+    ScaffoldLayout(
         modifier = modifier,
-        uiState = uiState,
-        onCountChange = onCountChange,
-        onNavigate = onNavigate,
-    )
+        appBarState = uiState.appBarState ?: AppBarState.Empty,
+        navController = navController,
+    ) { paddingValues ->
+        Content(
+            modifier = modifier.padding(paddingValues),
+            uiState = uiState,
+            onCountChange = onCountChange,
+            onNavigate = onNavigate,
+        )
+    }
 }
 
 @Composable
@@ -141,6 +153,7 @@ fun DescriptionSectionPreview(@PreviewParameter(ItemDetailsUiStateProvider::clas
             uiState = uiState,
             onCountChange = {},
             onNavigate = {},
+            navController = rememberNavController()
         )
     }
 }

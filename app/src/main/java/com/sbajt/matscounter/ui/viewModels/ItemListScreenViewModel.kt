@@ -1,13 +1,15 @@
 package com.sbajt.matscounter.ui.viewModels
 
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import androidx.navigation.NavHostController
+import com.sbajt.matscounter.ui.mappers.ItemListScreenMapper
 import com.sbajt.matscounter.ui.models.ItemGroupType
-import com.sbajt.matscounter.ui.models.appBars.AppBarState
 import com.sbajt.matscounter.ui.models.screens.ItemListScreenUiState
+import com.sbajt.matscounter.ui.navigation.ItemDetails
 import com.sbajt.matscounter.ui.stateSubject
 import com.sbajt.matscounter.ui.useCases.ItemUiStateListUseCase
-import kotlinx.collections.immutable.toPersistentList
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.SharingStarted.Companion.WhileSubscribed
 import kotlinx.coroutines.flow.combine
@@ -18,8 +20,9 @@ import kotlinx.coroutines.launch
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 
-class ItemListViewModel : ViewModel(), KoinComponent {
+class ItemListScreenViewModel : ViewModel(), KoinComponent {
 
+    private val mapper: ItemListScreenMapper by inject()
     private val itemsUseCase: ItemUiStateListUseCase by inject()
 
     val uiState = combine(
@@ -30,12 +33,11 @@ class ItemListViewModel : ViewModel(), KoinComponent {
         if (list.isEmpty()) {
             ItemListScreenUiState.Empty
         } else {
-            ItemListScreenUiState.Content(
-                itemUiStateList = list.toPersistentList(),
-                appBarState = AppBarState.ItemListAppBar(
-                    title = "Item list",
-                    actionList = emptyList()
-                ),
+            Log.d("ItemListViewModel", "Using ItemListScreenMapper...")
+            mapper.mapToUiState(
+                inputData = ItemListScreenMapper.Companion.InputData(
+                    itemList = list
+                )
             )
         }
     }
@@ -44,6 +46,10 @@ class ItemListViewModel : ViewModel(), KoinComponent {
             WhileSubscribed(5_000),
             ItemListScreenUiState.Loading
         )
+
+    fun navigateToItemDetails(navController: NavHostController) {
+        navController.navigate(ItemDetails)
+    }
 
     fun updateSelectedItem(
         selectedItemName: String?,

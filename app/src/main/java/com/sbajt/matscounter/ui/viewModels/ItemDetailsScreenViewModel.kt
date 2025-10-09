@@ -26,13 +26,18 @@ class ItemDetailsScreenViewModel : ViewModel(), KoinComponent {
         stateSubject,
         itemsUseCase(),
     ) { state, itemList ->
-        mapper.mapToUiState(
-            ItemDetailsScreenMapper.Companion.InputData(
-                selectedItem = state.selectedItem,
-                selectedItemAmount = state.selectedItemAmount,
-                itemList = itemList,
+        if(state.selectedItem == null) {
+            ItemDetailsScreenUiState.Empty
+        } else {
+            Log.d("ItemDetailsScreenViewModel", "Using ItemDetailsScreenMapper...")
+            mapper.mapToUiState(
+                ItemDetailsScreenMapper.Companion.InputData(
+                    selectedItem = state.selectedItem,
+                    selectedItemAmount = state.selectedItemAmount,
+                    itemList = itemList,
+                )
             )
-        )
+        }
     }
         .catch {
             ItemDetailsScreenUiState.Empty
