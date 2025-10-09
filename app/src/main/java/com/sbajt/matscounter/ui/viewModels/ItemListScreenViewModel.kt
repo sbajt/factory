@@ -47,13 +47,10 @@ class ItemListScreenViewModel : ViewModel(), KoinComponent {
             ItemListScreenUiState.Loading
         )
 
-    fun navigateToItemDetails(navController: NavHostController) {
-        navController.navigate(ItemDetails)
-    }
-
     fun updateSelectedItem(
         selectedItemName: String?,
         selectedItemGroupType: ItemGroupType?,
+        navController: NavHostController,
     ) {
         if (selectedItemGroupType != ItemGroupType.BASIC_MATERIAL) {
             val previousSelectedItem = stateSubject.value.selectedItem
@@ -71,5 +68,7 @@ class ItemListScreenViewModel : ViewModel(), KoinComponent {
                 }
             }
         }
+        Log.d("ItemListViewModel", "Navigating to item details...")
+        navController.navigate(ItemDetails)
     }
 }

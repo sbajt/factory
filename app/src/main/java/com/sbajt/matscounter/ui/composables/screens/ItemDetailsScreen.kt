@@ -29,6 +29,7 @@ import com.sbajt.matscounter.ui.models.screens.ItemDetailsScreenUiState
 import com.sbajt.matscounter.ui.models.views.InputSectionUiState
 import com.sbajt.matscounter.ui.theme.FactoryTheme
 
+typealias OnCountChange = (Int) -> Unit
 @Composable
 fun ItemDetailsScreen(
     uiState: ItemDetailsScreenUiState,
@@ -66,7 +67,7 @@ private fun ContentScreen(
         navController = navController,
     ) { paddingValues ->
         Content(
-            modifier = modifier.padding(paddingValues),
+            modifier = Modifier.padding(paddingValues),
             uiState = uiState,
             onCountChange = onCountChange,
             onNavigate = onNavigate,

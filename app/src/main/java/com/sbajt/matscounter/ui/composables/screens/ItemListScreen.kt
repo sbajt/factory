@@ -36,11 +36,11 @@ import com.sbajt.matscounter.ui.models.screens.ItemListScreenUiState
 import com.sbajt.matscounter.ui.theme.FactoryTheme
 import kotlinx.coroutines.launch
 
+typealias OnItemSelected = (String, ItemGroupType) -> Unit
 @Composable
 fun ItemListScreen(
     uiState: ItemListScreenUiState,
     navController: NavHostController,
-    onNavigate: OnNavigate,
     onItemSelected: OnItemSelected,
     modifier: Modifier = Modifier
 ) {
@@ -50,7 +50,6 @@ fun ItemListScreen(
         is ItemListScreenUiState.Content -> ContentScreen(
             modifier = modifier,
             uiState = uiState,
-            onNavigate = onNavigate,
             navController = navController,
             onItemSelected = onItemSelected,
         )
@@ -60,18 +59,17 @@ fun ItemListScreen(
 @Composable
 private fun ContentScreen(
     uiState: ItemListScreenUiState.Content,
-    onNavigate: OnNavigate,
     navController: NavHostController,
     onItemSelected: OnItemSelected,
     modifier: Modifier = Modifier,
 ) {
     ScaffoldLayout(
+        modifier = modifier,
         appBarState = uiState.appBarState ?: AppBarState.Empty,
         navController = navController,
     ) { paddingValues ->
         Content(
             uiState = uiState,
-            onNavigate = onNavigate,
             onItemSelected = onItemSelected,
             modifier = modifier.padding(paddingValues)
         )
@@ -81,7 +79,6 @@ private fun ContentScreen(
 @Composable
 private fun Content(
     uiState: ItemListScreenUiState.Content,
-    onNavigate: OnNavigate,
     onItemSelected: OnItemSelected,
     modifier: Modifier = Modifier
 ) {
@@ -138,7 +135,6 @@ private fun Content(
             ) {
                 items(count = itemUiStatePage.size, key = { index -> "item_$index" }) { index ->
                     ItemView(
-                        modifier = Modifier.clickable { onNavigate() },
                         uiState = itemUiStatePage[index],
                         onItemSelected = onItemSelected,
                     )
@@ -156,7 +152,6 @@ fun GridSectionPreview(@PreviewParameter(ItemListUiStateProvider::class) uiState
             modifier = Modifier.background(FactoryTheme.colors.background),
             uiState = uiState,
             onItemSelected = { _, _ -> },
-            onNavigate = {},
             navController = rememberNavController(),
         )
     }
