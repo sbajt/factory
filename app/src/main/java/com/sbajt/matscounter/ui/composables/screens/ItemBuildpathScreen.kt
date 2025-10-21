@@ -11,6 +11,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.rememberLazyListState
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Text
 import androidx.compose.material3.VerticalDivider
 import androidx.compose.runtime.Composable
@@ -25,6 +26,7 @@ import com.sbajt.matscounter.ui.composables.verticalScrollbar
 import com.sbajt.matscounter.ui.composables.views.Arrow
 import com.sbajt.matscounter.ui.composables.views.BuildMaterialView
 import com.sbajt.matscounter.ui.composables.views.ItemView
+import com.sbajt.matscounter.ui.models.appBars.AppBarState
 import com.sbajt.matscounter.ui.models.screens.ItemBuildPathScreenUiState
 import com.sbajt.matscounter.ui.theme.FactoryTheme
 
@@ -39,8 +41,25 @@ fun ItemBuildPathScreen(
     )
 }
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 private fun ContentScreen(
+    uiState: ItemBuildPathScreenUiState,
+    modifier: Modifier
+) {
+    ScaffoldLayout(
+        modifier = modifier,
+        appBarState = uiState.appBarState ?: AppBarState.Empty,
+    ) { paddingValues ->
+        Content(
+            modifier = Modifier.padding(top = paddingValues.calculateTopPadding()),
+            uiState = uiState,
+        )
+    }
+}
+
+@Composable
+private fun Content(
     uiState: ItemBuildPathScreenUiState,
     modifier: Modifier,
 ) {
@@ -57,7 +76,8 @@ private fun ContentScreen(
                 .fillMaxSize()
                 .verticalScrollbar(
                     listState = lazyListState,
-                    color = FactoryTheme.colors.accent,
+                    totalItemCount = uiState.selectedItemBuildMaterialListWrapperList.size,
+                    color = FactoryTheme.colors.primary,
                 )
                 .background(FactoryTheme.colors.background),
             state = lazyListState,
@@ -129,6 +149,8 @@ fun MainScreenPreview(
     @PreviewParameter(ItemBuildPathUiStateProvider::class) uiState: ItemBuildPathScreenUiState
 ) {
     FactoryTheme {
-        ItemBuildPathScreen(uiState = uiState)
+        ItemBuildPathScreen(
+            uiState = uiState,
+        )
     }
 }

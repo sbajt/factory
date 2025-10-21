@@ -24,8 +24,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.compose.ui.tooling.preview.PreviewParameter
-import androidx.navigation.NavHostController
-import androidx.navigation.compose.rememberNavController
 import com.sbajt.matscounter.ui.composables.previewProviders.ItemListUiStateProvider
 import com.sbajt.matscounter.ui.composables.views.ItemView
 import com.sbajt.matscounter.ui.models.ItemGroupType
@@ -40,14 +38,12 @@ typealias OnItemSelected = (String, ItemGroupType) -> Unit
 @Composable
 fun ItemListScreen(
     uiState: ItemListScreenUiState,
-    navController: NavHostController,
     onItemSelected: OnItemSelected,
     modifier: Modifier = Modifier
 ) {
     ContentScreen(
         modifier = modifier,
         uiState = uiState,
-        navController = navController,
         onItemSelected = onItemSelected,
     )
 }
@@ -55,19 +51,17 @@ fun ItemListScreen(
 @Composable
 private fun ContentScreen(
     uiState: ItemListScreenUiState,
-    navController: NavHostController,
     onItemSelected: OnItemSelected,
     modifier: Modifier = Modifier,
 ) {
     ScaffoldLayout(
         modifier = modifier,
         appBarState = uiState.appBarState ?: AppBarState.Empty,
-        navController = navController,
     ) { paddingValues ->
         Content(
             uiState = uiState,
             onItemSelected = onItemSelected,
-            modifier = modifier.padding(paddingValues)
+            modifier = Modifier.padding(top = paddingValues.calculateTopPadding())
         )
     }
 }
@@ -82,7 +76,7 @@ private fun Content(
         .distinctBy { it.groupType }
         .map { it.groupType } + ItemGroupType.ALL
     val scope = rememberCoroutineScope()
-    val pagerState = rememberPagerState(pageCount = { groupTypeList.hashCode() })
+    val pagerState = rememberPagerState(pageCount = { groupTypeList.size })
     Column(
         modifier = modifier
             .background(FactoryTheme.colors.background)
@@ -119,8 +113,8 @@ private fun Content(
         HorizontalPager(
             verticalAlignment = Alignment.Top,
             state = pagerState
-        ) { page ->
-            val groupType = groupTypeList[page]
+        ) { pageIndex ->
+            val groupType = groupTypeList[pageIndex]
             val itemUiStatePage by remember {
                 mutableStateOf(uiState.itemUiStateList.filter { it.groupType == groupType || groupType == ItemGroupType.ALL })
             }
@@ -148,7 +142,6 @@ fun GridSectionPreview(@PreviewParameter(ItemListUiStateProvider::class) uiState
             modifier = Modifier.background(FactoryTheme.colors.background),
             uiState = uiState,
             onItemSelected = { _, _ -> },
-            navController = rememberNavController(),
         )
     }
 }

@@ -64,7 +64,7 @@ private fun ContentScreen(
         navController = navController,
     ) { paddingValues ->
         Content(
-            modifier = Modifier.padding(paddingValues),
+            modifier = Modifier.padding(top = paddingValues.calculateTopPadding()),
             uiState = uiState,
             onCountChange = onCountChange,
             onNavigate = onNavigate,

@@ -23,7 +23,7 @@ class BuildPathScreenMapper() : KoinComponent {
                 itemList = itemList,
             ),
             appBarState = AppBarState.ItemBuildPathAppBar(
-                title = selectedItem.name,
+                title = "Build path",
                 actionList = emptyList()
             )
         )

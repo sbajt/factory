@@ -20,7 +20,6 @@ import com.sbajt.matscounter.ui.theme.FactoryTheme
 import com.sbajt.matscounter.ui.viewModels.ItemBuildPathScreenViewModel
 import com.sbajt.matscounter.ui.viewModels.ItemDetailsScreenViewModel
 import com.sbajt.matscounter.ui.viewModels.ItemListScreenViewModel
-import java.sql.SQLXML
 
 typealias OnNavigate = () -> Unit
 
@@ -50,7 +49,6 @@ fun MainScreen(
                             navController = navController
                         )
                     },
-                    navController = navController,
                 )
             }
         }
@@ -85,7 +83,7 @@ fun MainScreen(
 }
 
 @Composable
-fun <ScreenUiState: BaseScreeUiState> Screen(
+fun <ScreenUiState : BaseScreeUiState> Screen(
     uiState: ScreenUiState,
     content: @Composable (ScreenUiState) -> Unit
 ) {
@@ -96,7 +94,6 @@ fun <ScreenUiState: BaseScreeUiState> Screen(
         is ItemDetailsScreenUiState -> content.invoke(uiState)
         is ItemBuildPathScreenUiState -> content.invoke(uiState)
     }
-
 }
 
 

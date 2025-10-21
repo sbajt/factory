@@ -7,6 +7,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.draw.drawWithContent
 import androidx.compose.ui.geometry.Offset
+import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.graphics.BlendMode
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
@@ -111,24 +112,25 @@ private fun ContentDrawScope.drawRightFadingEdge(
 
 fun Modifier.verticalScrollbar(
     listState: LazyListState,
+    totalItemCount: Int,
     color: Color,
     thickness: Dp = 4.dp,
     padding: Dp = 0.dp,
 ): Modifier {
     // Only show scrollbar if the content is taller than the visible area
-    return if (listState.layoutInfo.totalItemsCount > listState.layoutInfo.visibleItemsInfo.size) {
+    return if (listState.layoutInfo.totalItemsCount > totalItemCount) {
         this.then(
             Modifier.drawWithContent {
                 drawContent()
 
-                val scrollbarHeight = listState.layoutInfo.viewportSize.height / listState.layoutInfo.totalItemsCount.toFloat()
+                val scrollbarHeight = listState.layoutInfo.viewportSize.height / totalItemCount.toFloat()
                 val scrollbarOffset = listState.firstVisibleItemIndex * scrollbarHeight
 
                 // Draw the scrollbar
                 drawRoundRect(
                     color = color,
                     topLeft = Offset(x = size.width - thickness.toPx() - padding.toPx(), y = scrollbarOffset),
-                    size = androidx.compose.ui.geometry.Size(width = thickness.toPx(), height = scrollbarHeight),
+                    size = Size(width = thickness.toPx(), height = scrollbarHeight),
                 )
             }
         )

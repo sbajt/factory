@@ -21,7 +21,7 @@ import com.sbajt.matscounter.ui.theme.FactoryTheme
 fun ScaffoldLayout(
     modifier: Modifier = Modifier,
     appBarState: AppBarState?,
-    navController: NavController?,
+    navController: NavController? = null,
     content: @Composable (PaddingValues) -> Unit
 ) {
     Scaffold(
@@ -33,8 +33,12 @@ fun ScaffoldLayout(
                         modifier = Modifier.padding(bottom = FactoryTheme.dimensions.medium),
                         style = FactoryTheme.typography.titleTextNormal,
                         color = FactoryTheme.colors.primary,
-                        text = if (appBarState is AppBarState.Empty || appBarState == null) "" else (appBarState as? AppBarState.ItemListAppBar)?.title
-                            ?: ""
+                        text = if (appBarState is AppBarState.Empty || appBarState == null) {
+                            ""
+                        } else {
+                            (appBarState as? BaseAppBarState)?.title
+                                ?: ""
+                        }
                     )
                 },
                 actions = {
@@ -48,7 +52,7 @@ fun ScaffoldLayout(
                 },
                 windowInsets = TopAppBarDefaults.windowInsets,
                 colors = TopAppBarDefaults.topAppBarColors(
-                    containerColor = FactoryTheme.colors.accent,
+                    containerColor = FactoryTheme.colors.secondary,
                 ),
             )
         }
