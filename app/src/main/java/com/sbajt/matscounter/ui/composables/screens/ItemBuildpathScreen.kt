@@ -18,6 +18,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import com.sbajt.matscounter.ui.composables.fadingEdge
@@ -65,21 +66,24 @@ private fun Content(
 ) {
     val lazyListState = rememberLazyListState()
     Box(
-        modifier = modifier.fadingEdge(
-            color = FactoryTheme.colors.fadingEdge,
-            length = FactoryTheme.dimensions.fadingEdge,
-            orientation = Orientation.Vertical,
-        )
+        modifier = modifier
+            .fadingEdge(
+                color = Color.Green,
+                length = FactoryTheme.dimensions.fadingEdge,
+                orientation = Orientation.Vertical,
+            )
+            .background(FactoryTheme.colors.background)
     ) {
         LazyColumn(
             modifier = Modifier
                 .fillMaxSize()
                 .verticalScrollbar(
                     listState = lazyListState,
-                    totalItemCount = uiState.selectedItemBuildMaterialListWrapperList.size,
-                    color = FactoryTheme.colors.primary,
+                    totalItemCount = uiState.selectedItemBuildMaterialListWrapperList.fold(0, { acc, item -> acc + item.buildMaterialsList.size }),
+                    color = FactoryTheme.colors.accent,
                 )
-                .background(FactoryTheme.colors.background),
+                .background(FactoryTheme.colors.background)
+                .padding(vertical = FactoryTheme.dimensions.fadingEdge),
             state = lazyListState,
         ) {
             item {
