@@ -23,7 +23,6 @@ import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import com.sbajt.matscounter.ui.composables.fadingEdge
 import com.sbajt.matscounter.ui.composables.previewProviders.ItemBuildPathUiStateProvider
-import com.sbajt.matscounter.ui.composables.verticalScrollbar
 import com.sbajt.matscounter.ui.composables.views.Arrow
 import com.sbajt.matscounter.ui.composables.views.BuildMaterialView
 import com.sbajt.matscounter.ui.composables.views.ItemView
@@ -68,7 +67,7 @@ private fun Content(
     Box(
         modifier = modifier
             .fadingEdge(
-                color = Color.Green,
+                color = FactoryTheme.colors.fadingEdge,
                 length = FactoryTheme.dimensions.fadingEdge,
                 orientation = Orientation.Vertical,
             )
@@ -77,13 +76,7 @@ private fun Content(
         LazyColumn(
             modifier = Modifier
                 .fillMaxSize()
-                .verticalScrollbar(
-                    listState = lazyListState,
-                    totalItemCount = uiState.selectedItemBuildMaterialListWrapperList.fold(0, { acc, item -> acc + item.buildMaterialsList.size }),
-                    color = FactoryTheme.colors.accent,
-                )
-                .background(FactoryTheme.colors.background)
-                .padding(vertical = FactoryTheme.dimensions.fadingEdge),
+                .background(FactoryTheme.colors.background),
             state = lazyListState,
         ) {
             item {

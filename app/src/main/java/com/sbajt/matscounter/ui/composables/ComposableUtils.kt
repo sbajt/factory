@@ -1,12 +1,9 @@
 package com.sbajt.matscounter.ui.composables
 
 import androidx.compose.foundation.gestures.Orientation
-import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.draw.drawWithContent
 import androidx.compose.ui.geometry.Offset
-import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.graphics.BlendMode
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
@@ -20,27 +17,22 @@ fun Modifier.fadingEdge(
     orientation: Orientation,
 ): Modifier {
     val colorList = listOf(Color.Transparent, color)
-    return then(
-        Modifier
-            .alpha(0.99f)
-            .drawWithContent {
-                drawContent()
+    return drawWithContent {
+        drawContent()
+        if (length > 0.dp) {
+            when (orientation) {
+                Orientation.Horizontal -> {
+                    drawLeftFadingEdge(colorList = colorList, length = length)
+                    drawRightFadingEdge(colorList = colorList, length = length)
+                }
 
-                if (length > 0.dp) {
-                    when (orientation) {
-                        Orientation.Horizontal -> {
-                            drawLeftFadingEdge(colorList = colorList, length = length)
-                            drawRightFadingEdge(colorList = colorList, length = length)
-                        }
-
-                        Orientation.Vertical -> {
-                            drawTopFadingEdge(colorList = colorList, length = length)
-                            drawBottomFadingEdge(colorList = colorList, length = length)
-                        }
-                    }
+                Orientation.Vertical -> {
+                    drawTopFadingEdge(colorList = colorList, length = length)
+                    drawBottomFadingEdge(colorList = colorList, length = length)
                 }
             }
-    )
+        }
+    }
 }
 
 private fun ContentDrawScope.drawTopFadingEdge(
@@ -105,31 +97,3 @@ private fun ContentDrawScope.drawRightFadingEdge(
     )
 }
 
-fun Modifier.verticalScrollbar(
-    listState: LazyListState,
-    totalItemCount: Int,
-    color: Color,
-    thickness: Dp = 4.dp,
-    padding: Dp = 0.dp,
-): Modifier {
-    // Only show scrollbar if the content is taller than the visible area
-    return if (listState.layoutInfo.totalItemsCount > totalItemCount) {
-        this.then(
-            Modifier.drawWithContent {
-                drawContent()
-
-                val scrollbarHeight = listState.layoutInfo.viewportSize.height / totalItemCount.toFloat()
-                val scrollbarOffset = listState.firstVisibleItemIndex * scrollbarHeight
-
-                // Draw the scrollbar
-                drawRoundRect(
-                    color = color,
-                    topLeft = Offset(x = size.width - thickness.toPx() - padding.toPx(), y = scrollbarOffset),
-                    size = Size(width = thickness.toPx(), height = scrollbarHeight),
-                )
-            }
-        )
-    } else {
-        this
-    }
-}
