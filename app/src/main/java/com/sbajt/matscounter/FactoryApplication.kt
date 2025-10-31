@@ -15,9 +15,9 @@ class FactoryApplication : Application() {
         super.onCreate()
 
         startKoin {
-            androidLogger(Level.DEBUG)
             androidContext(this@FactoryApplication)
             modules(dataModule, domainModule, uiModule)
+            printLogger()
         }
     }
 }

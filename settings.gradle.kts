@@ -21,3 +21,4 @@ dependencyResolutionManagement {
 
 rootProject.name = "MatsCounter"
 include(":app")
+include(":execution-time")
