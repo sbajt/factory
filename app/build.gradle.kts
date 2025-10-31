@@ -27,35 +27,37 @@ android {
             )
         }
     }
+
     compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_11
-        targetCompatibility = JavaVersion.VERSION_11
+        sourceCompatibility = JavaVersion.VERSION_21
+        targetCompatibility = JavaVersion.VERSION_21
     }
-    kotlinOptions {
-        jvmTarget = "11"
-    }
+
     buildFeatures {
         compose = true
     }
+
+    dependencies {
+        implementation(libs.androidx.core.ktx)
+        implementation(libs.androidx.lifecycle.runtime.ktx)
+        implementation(libs.androidx.activity.compose)
+        implementation(platform(libs.androidx.compose.bom))
+        implementation(libs.androidx.navigation.compose)
+        implementation(libs.androidx.ui)
+        implementation(libs.androidx.ui.graphics)
+        implementation(libs.androidx.ui.tooling.preview)
+        implementation(libs.androidx.ui.tooling)
+        implementation(libs.androidx.material)
+        implementation(libs.gson)
+        implementation(libs.coil.compose)
+        implementation(libs.coil.network)
+        implementation(libs.kotlinx.collections)
+        implementation(libs.koin.android)
+        implementation(libs.koin.androidx.compose)
+        implementation(libs.numberPicker)
+    }
 }
 
-dependencies {
-
-    implementation(libs.androidx.core.ktx)
-    implementation(libs.androidx.lifecycle.runtime.ktx)
-    implementation(libs.androidx.activity.compose)
-    implementation(platform(libs.androidx.compose.bom))
-    implementation(libs.androidx.navigation.compose)
-    implementation(libs.androidx.ui)
-    implementation(libs.androidx.ui.graphics)
-    implementation(libs.androidx.ui.tooling.preview)
-    implementation(libs.androidx.ui.tooling)
-    implementation(libs.androidx.material)
-    implementation(libs.gson)
-    implementation(libs.coil.compose)
-    implementation(libs.coil.network)
-    implementation(libs.kotlinx.collections)
-    implementation(libs.koin.android)
-    implementation(libs.koin.androidx.compose)
-    implementation(libs.numberPicker)
+kotlin {
+    jvmToolchain(21)
 }
