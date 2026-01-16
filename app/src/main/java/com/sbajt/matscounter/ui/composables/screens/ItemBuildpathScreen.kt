@@ -5,6 +5,7 @@ import androidx.compose.foundation.gestures.Orientation
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -13,12 +14,9 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Text
-import androidx.compose.material3.VerticalDivider
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import com.sbajt.matscounter.ui.composables.fadingEdge
@@ -51,10 +49,14 @@ private fun ContentScreen(
         modifier = modifier,
         appBarState = uiState.appBarState ?: AppBarState.Empty,
     ) { paddingValues ->
-        Content(
-            modifier = Modifier.padding(top = paddingValues.calculateTopPadding()),
-            uiState = uiState,
-        )
+        Box(
+            modifier = Modifier.padding(top = paddingValues.calculateTopPadding())
+        ) {
+            Content(
+                modifier = Modifier,
+                uiState = uiState,
+            )
+        }
     }
 }
 
@@ -63,27 +65,23 @@ private fun Content(
     uiState: ItemBuildPathScreenUiState,
     modifier: Modifier,
 ) {
-    val lazyListState = rememberLazyListState()
     Box(
         modifier = modifier
+            .fillMaxSize()
+            .background(FactoryTheme.colors.background)
             .fadingEdge(
                 color = FactoryTheme.colors.fadingEdge,
                 length = FactoryTheme.dimensions.fadingEdge,
                 orientation = Orientation.Vertical,
             )
-            .background(FactoryTheme.colors.background)
     ) {
+        val lazyListState = rememberLazyListState()
         LazyColumn(
-            modifier = Modifier
-                .fillMaxSize()
-                .background(FactoryTheme.colors.background),
             state = lazyListState,
         ) {
             item {
                 Row(
-                    modifier = modifier
-                        .background(FactoryTheme.colors.background)
-                        .fillMaxWidth(),
+                    modifier = modifier.fillMaxWidth(),
                     horizontalArrangement = Arrangement.spacedBy(
                         FactoryTheme.dimensions.medium, Alignment.CenterHorizontally
                     ),
@@ -97,7 +95,7 @@ private fun Content(
                     Text(
                         style = FactoryTheme.typography.subtitleTextNormal,
                         color = FactoryTheme.colors.primary,
-                        text = remember { "x${uiState.selectedItemAmount}" },
+                        text = "x${uiState.selectedItemAmount}",
                     )
                 }
             }
@@ -130,10 +128,10 @@ private fun Content(
                 }
             }
             item(key = "bottom_space") {
-                VerticalDivider(
+                Spacer(
                     modifier = Modifier
+                        .fillMaxWidth()
                         .height(FactoryTheme.dimensions.large)
-                        .background(FactoryTheme.colors.background)
                 )
             }
         }

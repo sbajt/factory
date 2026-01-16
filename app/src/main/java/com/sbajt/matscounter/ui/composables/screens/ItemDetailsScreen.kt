@@ -46,7 +46,6 @@ fun ItemDetailsScreen(
         navController = navController,
         uiState = uiState,
     )
-
 }
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -63,12 +62,16 @@ private fun ContentScreen(
         appBarState = uiState.appBarState ?: AppBarState.Empty,
         navController = navController,
     ) { paddingValues ->
-        Content(
-            modifier = Modifier.padding(top = paddingValues.calculateTopPadding()),
-            uiState = uiState,
-            onCountChange = onCountChange,
-            onNavigate = onNavigate,
-        )
+        Box(
+            modifier = Modifier.padding(top = paddingValues.calculateTopPadding())
+        ) {
+            Content(
+                modifier = Modifier,
+                uiState = uiState,
+                onCountChange = onCountChange,
+                onNavigate = onNavigate,
+            )
+        }
     }
 }
 

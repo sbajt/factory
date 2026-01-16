@@ -1,7 +1,10 @@
 package com.sbajt.matscounter.ui.composables
 
+import android.R
 import androidx.compose.foundation.gestures.Orientation
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.composed
 import androidx.compose.ui.draw.drawWithContent
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.BlendMode
@@ -15,20 +18,23 @@ fun Modifier.fadingEdge(
     color: Color,
     length: Dp,
     orientation: Orientation,
-): Modifier {
+) = composed {
     val colorList = listOf(Color.Transparent, color)
-    return drawWithContent {
+    val brush = remember(color, length) { Brush.verticalGradient(
+        colors = colorList,
+    ) }
+    drawWithContent {
         drawContent()
         if (length > 0.dp) {
             when (orientation) {
                 Orientation.Horizontal -> {
-                    drawLeftFadingEdge(colorList = colorList, length = length)
-                    drawRightFadingEdge(colorList = colorList, length = length)
+                    drawLeftFadingEdge(brush = brush, length = length)
+                    drawRightFadingEdge(brush = brush, length = length)
                 }
 
                 Orientation.Vertical -> {
-                    drawTopFadingEdge(colorList = colorList, length = length)
-                    drawBottomFadingEdge(colorList = colorList, length = length)
+                    drawTopFadingEdge(brush = brush, length = length)
+                    drawBottomFadingEdge(brush = brush, length = length)
                 }
             }
         }
@@ -36,63 +42,47 @@ fun Modifier.fadingEdge(
 }
 
 private fun ContentDrawScope.drawTopFadingEdge(
-    colorList: List<Color>,
+    brush: Brush,
     length: Dp,
 ) {
     drawRect(
         size = size.copy(height = length.toPx()),
-        brush = Brush.verticalGradient(
-            colors = colorList,
-            startY = 0f,
-            endY = length.toPx(),
-        ),
+        brush = brush,
         blendMode = BlendMode.DstIn
     )
 }
 
 private fun ContentDrawScope.drawBottomFadingEdge(
-    colorList: List<Color>,
+    brush: Brush,
     length: Dp,
 ) {
     drawRect(
         topLeft = Offset(0f, size.height - length.toPx()),
         size = size.copy(height = length.toPx()),
-        brush = Brush.verticalGradient(
-            colors = colorList,
-            startY = size.height,
-            endY = size.height - length.toPx(),
-        ),
+        brush = brush,
         blendMode = BlendMode.DstIn
     )
 }
 
 private fun ContentDrawScope.drawLeftFadingEdge(
-    colorList: List<Color>,
+    brush: Brush,
     length: Dp,
 ) {
     drawRect(
         size = size.copy(width = length.toPx()),
-        brush = Brush.horizontalGradient(
-            colors = colorList,
-            startX = 0f,
-            endX = length.toPx(),
-        ),
+        brush = brush,
         blendMode = BlendMode.DstIn
     )
 }
 
 private fun ContentDrawScope.drawRightFadingEdge(
-    colorList: List<Color>,
+    brush: Brush,
     length: Dp,
 ) {
     drawRect(
         topLeft = Offset(size.width - length.toPx(), 0f),
         size = size.copy(width = length.toPx()),
-        brush = Brush.horizontalGradient(
-            colors = colorList,
-            startX = size.width,
-            endX = size.width - length.toPx(),
-        ),
+        brush = brush,
         blendMode = BlendMode.DstIn
     )
 }

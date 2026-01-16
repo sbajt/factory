@@ -2,6 +2,7 @@ package com.sbajt.matscounter.ui.composables.screens
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -58,11 +59,15 @@ private fun ContentScreen(
         modifier = modifier,
         appBarState = uiState.appBarState ?: AppBarState.Empty,
     ) { paddingValues ->
-        Content(
-            uiState = uiState,
-            onItemSelected = onItemSelected,
+        Box(
             modifier = Modifier.padding(top = paddingValues.calculateTopPadding())
-        )
+        ) {
+            Content(
+                uiState = uiState,
+                onItemSelected = onItemSelected,
+                modifier = Modifier
+            )
+        }
     }
 }
 
