@@ -59,11 +59,6 @@ class MainActivity : ComponentActivity() {
         }
     }
 
-    override fun onBackPressed() {
-        runOnBackPressed()
-        super.onBackPressed()
-    }
-
     @Composable
     private fun setupContent() {
         FactoryTheme {
