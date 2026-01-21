@@ -8,7 +8,6 @@ import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.asPaddingValues
 import androidx.compose.foundation.layout.navigationBars
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.statusBars
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.core.view.WindowCompat
@@ -18,11 +17,8 @@ import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import com.sbajt.matscounter.ui.composables.screens.MainScreen
-import com.sbajt.matscounter.ui.navigation.ItemDetails
 import com.sbajt.matscounter.ui.theme.FactoryTheme
-import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
-import androidx.compose.runtime.collectAsState
 
 class MainActivity : ComponentActivity() {
 
@@ -31,15 +27,7 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         WindowCompat.setDecorFitsSystemWindows(window, false)
-        onBackPressedDispatcher.addCallback(this, object : OnBackPressedCallback(true) {
-            override fun handleOnBackPressed() {
-                launchOnBackPressed()
-                if (isEnabled) {
-                    isEnabled = false
-                    onBackPressedDispatcher.onBackPressed()
-                }
-            }
-        })
+        initBackPress()
         lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
                 setContent {
@@ -47,6 +35,33 @@ class MainActivity : ComponentActivity() {
                 }
             }
         }
+    }
+
+    private fun initBackPress() {
+        onBackPressedDispatcher.addCallback(this, object : OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+                runOnBackPressed()
+                if (isEnabled) {
+                    isEnabled = false
+                    onBackPressedDispatcher.onBackPressed()
+                }
+            }
+        })
+    }
+
+    private fun runOnBackPressed() {
+        lifecycleScope.launch {
+            if (::navController.isInitialized) {
+                if (navController.previousBackStackEntry == null) {
+                    finish()
+                }
+            }
+        }
+    }
+
+    override fun onBackPressed() {
+        runOnBackPressed()
+        super.onBackPressed()
     }
 
     @Composable
@@ -59,24 +74,6 @@ class MainActivity : ComponentActivity() {
                 modifier = Modifier.padding(bottom = bottomPadding.calculateBottomPadding()),
                 navController = navController,
             )
-        }
-    }
-
-    override fun onBackPressed() {
-        launchOnBackPressed()
-        super.onBackPressed()
-    }
-
-    private fun launchOnBackPressed() {
-        lifecycleScope.launch {
-            if (::navController.isInitialized) {
-                val destination = navController.currentBackStackEntry?.destination
-                if (destination == ItemDetails) {
-                    stateSubject.update {
-                        it.copy(selectedItem = null, selectedItemAmount = 0)
-                    }
-                }
-            }
         }
     }
 }
